@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>繩索纏繞摩擦力估算（教官工具）</title>
+  <style>
+    :root { --r: 16px; --pad: 14px; --line:#e6e8ef; --ink:#111827; --muted:#6b7280; }
+    body{
+      margin:0; background:#f6f7fb; color:var(--ink);
+      font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    }
+    .wrap{ max-width:760px; margin:0 auto; padding:16px; }
+    .card{
+      background:#fff; border-radius:var(--r); padding:16px;
+      box-shadow:0 8px 24px rgba(0,0,0,.06); margin:12px 0;
+    }
+    h1{ font-size:18px; margin:0 0 6px; }
+    .sub{ font-size:13px; color:var(--muted); line-height:1.4; }
+    label{ display:block; font-size:13px; color:#333; margin:10px 0 6px; }
+    input, select{
+      width:100%; font-size:16px; padding:12px; border-radius:14px;
+      border:1px solid #d9dbe7; outline:none; background:#fff;
+    }
+    input:focus, select:focus{ border-color:#7b8cff; box-shadow:0 0 0 4px rgba(123,140,255,.15); }
+    .row{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .btnrow{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
+    button{
+      padding:12px; font-size:16px; border:0; border-radius:14px; cursor:pointer;
+    }
+    .primary{ background:#111827; color:#fff; font-weight:700; }
+    .ghost{ background:#eef1ff; color:#1b2a7a; font-weight:600; }
+    .divider{ height:1px; background:var(--line); margin:14px 0; }
+
+    /* segmented toggle */
+    .seg{
+      display:grid; grid-template-columns:1fr 1fr; gap:6px;
+      background:#f3f5fb; border:1px solid #d9dbe7; padding:6px; border-radius:999px;
+    }
+    .seg button{
+      border-radius:999px; padding:10px 10px; font-size:13px; border:0;
+      background:transparent; color:#374151; cursor:pointer;
+    }
+    .seg button.active{ background:#2d5bff; color:#fff; font-weight:700; }
+
+    /* quick n buttons */
+    .quickRow{
+      display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;
+    }
+    .qbtn{
+      padding:10px 12px; border-radius:999px; border:1px solid #d9dbe7;
+      background:#fff; color:#111827; font-weight:700; font-size:14px;
+    }
+    .qbtn:active{ transform: translateY(1px); }
+
+    /* results */
+    .resultTitle{ font-size:15px; font-weight:800; margin:0 0 8px; }
+    .kv{
+      display:flex; justify-content:space-between; align-items:flex-start;
+      padding:10px 0; border-bottom:1px dashed var(--line);
+    }
+    .kv:last-child{ border-bottom:0; }
+    .k{ font-size:13px; color:#374151; }
+    .v{ text-align:right; }
+    .big{ font-size:18px; font-weight:800; }
+    .small{ font-size:12px; color:var(--muted); margin-top:2px; }
+    .badge{
+      display:inline-block; padding:6px 10px; border-radius:999px; font-size:12px; font-weight:800; margin-left:8px;
+      vertical-align:middle;
+    }
+    .b-ok{ background:#e9f7ee; color:#1a6b35; }
+    .b-mid{ background:#fff5df; color:#7a4b00; }
+    .b-high{ background:#ffe8e8; color:#8a1f1f; }
+
+    details{ margin-top:10px; }
+    summary{ cursor:pointer; color:#4b5563; font-size:13px; }
+    .hintBox{
+      margin-top:10px; background:#fff7ed; border-radius:14px; padding:12px; color:#7a4b00; font-size:13px; line-height:1.45;
+    }
+    .foot{ font-size:12px; color:var(--muted); line-height:1.45; }
+    .mono{ font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace; }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <div class="card">
+      <h1>繩索纏繞摩擦力估算</h1>
+      <div class="sub">
+        填入已知 → 直接出答案（結果先顯示 T1/T2，倍率＋顏色作為判斷輔助）<br>
+        公式核心：<span class="mono">T₂ = T₁ × e^( μ × θ )</span>，本工具以「估算＋風險感知」為主。
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="resultTitle">輸入</div>
+
+      <label>纏繞圈數 n（主輸入）</label>
+      <input id="turns" type="number" step="0.01" min="0" value="1.50" />
+
+      <!-- 快速加減（手套友善） -->
+      <div class="quickRow" aria-label="圈數快鍵">
+        <button class="qbtn" type="button" data-dn="-0.50">-0.50</button>
+        <button class="qbtn" type="button" data-dn="-0.25">-0.25</button>
+        <button class="qbtn" type="button" data-dn="0.25">+0.25</button>
+        <button class="qbtn" type="button" data-dn="0.50">+0.50</button>
+        <button class="qbtn" type="button" id="nHalf">0.5</button>
+        <button class="qbtn" type="button" id="nOne">1.0</button>
+        <button class="qbtn" type="button" id="nTwo">2.0</button>
+      </div>
+
+      <label>摩擦條件（情境選擇）</label>
+      <select id="preset">
+        <option value="0.20">繩索 ↔ 金屬（偏滑）</option>
+        <option value="0.25" selected>繩索 ↔ 金屬（一般乾燥）</option>
+        <option value="0.35">繩索 ↔ 樹皮（乾）</option>
+        <option value="0.45">繩索 ↔ 樹皮（濕/苔/泥）</option>
+        <option value="0.30">繩索 ↔ 繩索（乾）</option>
+        <option value="0.38">繩索 ↔ 繩索（濕）</option>
+        <option value="custom">自訂 μ（進階）</option>
+      </select>
+
+      <div class="row">
+        <div>
+          <label>摩擦係數 μ（可微調）</label>
+          <input id="mu" type="number" step="0.01" min="0" value="0.25" />
+        </div>
+        <div>
+          <label>已知哪一端？</label>
+          <div class="seg" role="tablist" aria-label="已知哪一端">
+            <button id="btnT1" class="active" type="button">我知道手端 T1</button>
+            <button id="btnT2" type="button">我知道負重端 T2</button>
+          </div>
+        </div>
+      </div>
+
+      <label id="tLabel">已知拉力（T1）</label>
+      <div class="row">
+        <div>
+          <input id="tVal" type="number" step="0.1" min="0" value="20" />
+        </div>
+        <div>
+          <select id="tUnit">
+            <option value="kgf" selected>kgf</option>
+            <option value="N">N</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="btnrow">
+        <button class="primary" id="calc" type="button">計算</button>
+        <button class="ghost" id="reset" type="button">重設</button>
+      </div>
+
+      <div class="foot" style="margin-top:10px;">
+        提醒：μ 受材質、濕度、粉塵、表面粗糙度影響很大；結果用於「快速估算」與「風險判斷提示」。
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="resultTitle">結果</div>
+
+      <!-- 結果先顯示 T1 / T2（kgf + N） -->
+      <div id="forceBlock">
+        <div class="kv">
+          <div class="k">手端 T1</div>
+          <div class="v">
+            <div class="big" id="T1kgf">—</div>
+            <div class="small" id="T1N">—</div>
+          </div>
+        </div>
+        <div class="kv">
+          <div class="k">負重端 T2</div>
+          <div class="v">
+            <div class="big" id="T2kgf">—</div>
+            <div class="small" id="T2N">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- 倍率＋顏色（輔助判斷） -->
+      <div class="kv" style="border-bottom:0;">
+        <div class="k">摩擦放大倍率 ×M（輔助判斷）</div>
+        <div class="v">
+          <span class="big" id="mult">—</span>
+          <span class="badge b-mid" id="badge">—</span>
+          <div class="small" id="thetaInfo">—</div>
+        </div>
+      </div>
+
+      <!-- (2) 倍率等級說明（老師用語版） -->
+      <div class="foot" id="legend" style="margin-top:10px;">
+        倍率等級說明（教學用）：低～中等（<span class="mono">M&lt;3</span>）／偏高（<span class="mono">3≤M&lt;10</span>）／高放大（<span class="mono">10≤M&lt;30</span>）／危險級（<span class="mono">M≥30</span>）
+      </div>
+
+      <div class="hintBox" id="hintBox" style="display:none;"></div>
+
+      <details>
+        <summary>檢視技術細節（給主授老師/教官查核用）</summary>
+        <div class="foot" style="margin-top:8px;">
+          θ（弧度）= n × 2π；本次 θ = <span class="mono" id="thetaRad">—</span> rad（≈ <span class="mono" id="thetaTurns">—</span> 圈）<br>
+          使用 μ = <span class="mono" id="muUsed">—</span><br>
+          公式：<span class="mono">T₂ = T₁ × e^( μ × θ )</span>
+        </div>
+      </details>
+    </div>
+
+  </div>
+
+<script>
+  const KGF_TO_N = 9.80665;
+  const $ = (id) => document.getElementById(id);
+  let knowSide = "T1";
+
+  function setKnowSide(side){
+    knowSide = side;
+    $("btnT1").classList.toggle("active", side === "T1");
+    $("btnT2").classList.toggle("active", side === "T2");
+    $("tLabel").textContent = side === "T1" ? "已知拉力（T1）" : "已知拉力（T2）";
+  }
+
+  function fmt(n){
+    if (!isFinite(n)) return "—";
+    const a = Math.abs(n);
+    if (a >= 1000) return n.toFixed(1);
+    if (a >= 10) return n.toFixed(2);
+    return n.toFixed(3);
+  }
+
+  function toN(value, unit){
+    if (!isFinite(value) || value < 0) return NaN;
+    return unit === "kgf" ? value * KGF_TO_N : value;
+  }
+
+  function toKGF(valueN){
+    if (!isFinite(valueN)) return NaN;
+    return valueN / KGF_TO_N;
+  }
+
+  function badgeFor(M){
+    if (!isFinite(M) || M <= 0) return { cls:"b-high", text:"輸入異常", hint:"請確認圈數、μ、拉力皆為非負數。"};
+    if (M < 3)  return { cls:"b-ok",  text:"低～中等", hint:"倍率在可控區間，但仍需依現場SOP與保護措施操作。"};
+    if (M < 10) return { cls:"b-mid", text:"偏高",     hint:"倍率明顯放大：多半圈差很多，注意鎖死/放手控制與護繩。"};
+    if (M < 30) return { cls:"b-high",text:"高放大",   hint:"高倍率區：非常容易鎖死與升溫磨耗，建議降低纏繞或改系統配置。"};
+    return { cls:"b-high",text:"危險級", hint:"極高倍率：不可預期且極易鎖死/發熱磨耗，建議立即改配置（減圈數/換材質/增加保護）。"};
+  }
+
+  function clampTurns(n){
+    if (!isFinite(n) || n < 0) return 0;
+    return Math.max(0, Math.round(n * 100) / 100); // 兩位小數
+  }
+
+  function adjustTurns(delta){
+    const cur = parseFloat($("turns").value);
+    const next = clampTurns((isFinite(cur) ? cur : 0) + delta);
+    $("turns").value = next.toFixed(2);
+  }
+
+  function setTurns(v){
+    $("turns").value = clampTurns(v).toFixed(2);
+  }
+
+  function calc(){
+    const n = parseFloat($("turns").value);
+    const mu = parseFloat($("mu").value);
+    const tVal = parseFloat($("tVal").value);
+    const unit = $("tUnit").value;
+
+    if (!isFinite(n) || n < 0 || !isFinite(mu) || mu < 0 || !isFinite(tVal) || tVal < 0){
+      $("hintBox").style.display = "block";
+      $("hintBox").textContent = "⚠ 請確認：圈數 n、μ、拉力皆為非負數。";
+      return;
+    }
+
+    const theta = n * 2 * Math.PI;
+    const M = Math.exp(mu * theta);
+    const knownN = toN(tVal, unit);
+
+    let T1N, T2N;
+    if (knowSide === "T1"){ T1N = knownN; T2N = T1N * M; }
+    else { T2N = knownN; T1N = T2N / M; }
+
+    $("T1kgf").textContent = `${fmt(toKGF(T1N))} kgf`;
+    $("T1N").textContent   = `≈ ${fmt(T1N)} N`;
+    $("T2kgf").textContent = `${fmt(toKGF(T2N))} kgf`;
+    $("T2N").textContent   = `≈ ${fmt(T2N)} N`;
+
+    $("mult").textContent = `× ${fmt(M)}`;
+    const b = badgeFor(M);
+    $("badge").className = `badge ${b.cls}`;
+    $("badge").textContent = b.text;
+
+    $("thetaInfo").textContent = `n=${fmt(n)} 圈（θ≈${fmt(theta)} rad）`;
+    $("thetaRad").textContent = fmt(theta);
+    $("thetaTurns").textContent = fmt(n);
+    $("muUsed").textContent = fmt(mu);
+
+    $("hintBox").style.display = "block";
+    $("hintBox").textContent = `⚠ 提醒：${b.hint}`;
+  }
+
+  function reset(){
+    setTurns(1.50);
+    $("preset").value = "0.25";
+    $("mu").value = "0.25";
+    setKnowSide("T1");
+    $("tVal").value = "20";
+    $("tUnit").value = "kgf";
+
+    $("T1kgf").textContent = "—";
+    $("T1N").textContent = "—";
+    $("T2kgf").textContent = "—";
+    $("T2N").textContent = "—";
+    $("mult").textContent = "—";
+    $("badge").className = "badge b-mid";
+    $("badge").textContent = "—";
+    $("thetaInfo").textContent = "—";
+    $("thetaRad").textContent = "—";
+    $("thetaTurns").textContent = "—";
+    $("muUsed").textContent = "—";
+    $("hintBox").style.display = "none";
+    $("hintBox").textContent = "";
+  }
+
+  // 事件
+  $("btnT1").addEventListener("click", () => setKnowSide("T1"));
+  $("btnT2").addEventListener("click", () => setKnowSide("T2"));
+
+  $("preset").addEventListener("change", () => {
+    const v = $("preset").value;
+    if (v !== "custom") $("mu").value = v;
+  });
+
+  // 圈數快鍵
+  document.querySelectorAll("[data-dn]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      adjustTurns(parseFloat(btn.getAttribute("data-dn")));
+    });
+  });
+  $("nHalf").addEventListener("click", ()=>setTurns(0.5));
+  $("nOne").addEventListener("click", ()=>setTurns(1.0));
+  $("nTwo").addEventListener("click", ()=>setTurns(2.0));
+
+  $("calc").addEventListener("click", calc);
+  $("reset").addEventListener("click", reset);
+
+  // Enter 快算（方便教官）
+  ["turns","mu","tVal"].forEach(id=>{
+    $(id).addEventListener("keydown", (e)=>{ if(e.key==="Enter") calc(); });
+  });
+
+  reset();
+</script>
+</body>
+</html>
