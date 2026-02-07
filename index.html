@@ -51,6 +51,7 @@ input,select{
 .mid{background:#3a2503;color:#f59e0b}
 .high{background:#3b0a0a;color:#ef4444}
 .small{font-size:12px;color:var(--muted);margin-top:6px}
+#suggest{line-height:1.6; white-space:normal}
 .kv{display:flex;justify-content:space-between;border-bottom:1px dashed var(--line);padding:10px 0}
 .kv:last-child{border-bottom:0}
 .explain{font-size:13px;color:#cbd5f5;line-height:1.75}
@@ -168,13 +169,23 @@ Rope Friction Tutor<br>
 </div>
 
 <label>摩擦條件（情境選擇）</label>
-<select id="mu">
-<option value="0.25">繩索 ↔ 金屬（一般乾燥）</option>
-<option value="0.35">繩索 ↔ 樹皮（一般乾燥）</option>
-<option value="0.45">繩索 ↔ 樹皮（潮濕）</option>
-<option value="0.40">繩索 ↔ 水泥（一般乾燥）</option>
-<option value="0.50">繩索 ↔ 水泥（潮濕）</option>
+<select id="muPreset">
+  <option value="0.18">繩索 ↔ 金屬（偏滑）</option>
+  <option value="0.25" selected>繩索 ↔ 金屬（一般乾燥）</option>
+  <option value="0.35">繩索 ↔ 樹皮（乾）</option>
+  <option value="0.45">繩索 ↔ 樹皮（濕/苔/泥）</option>
+  <option value="0.40">繩索 ↔ 水泥/混凝土（乾）</option>
+  <option value="0.50">繩索 ↔ 水泥/混凝土（濕）</option>
+  <option value="0.22">繩索 ↔ 繩索（新繩）</option>
+  <option value="0.30">繩索 ↔ 繩索（舊繩／毛）</option>
+  <option value="custom">自訂 μ（進階）</option>
 </select>
+
+<label style="margin-top:10px">摩擦係數 μ（可微調）</label>
+<input id="muVal" type="number" step="0.01" value="0.25" inputmode="decimal"/>
+<div class="kMini">建議範圍：0.05～0.80（依材質、濕度、粉塵、表面粗糙度會有明顯差異）</div>
+<div class="kMini">不確定就先用「一般乾燥」或「新繩」，看倍率落在哪一個區間，再回來微調。</div>
+
 
 <label>k 建議情境</label>
 <select id="kSel">
@@ -238,6 +249,7 @@ Rope Friction Tutor<br>
 <b>③ 怎麼快速使用（30 秒版）</b><br>
 1. 輸入你實際繞了幾圈（n）<br>
 2. 選擇大概的摩擦情境與 k 建議情境<br>
+<span style="color:#94a3b8">小提醒：不確定摩擦情境時，先選「一般乾燥」；繩索 ↔ 繩索不確定時，先選「新繩」。</span><br>
 3. 看「實際建議摩擦倍率」跟下面的提示文字<br>
 如果看到「偏高」或「高放大」，代表可以停下來想一想：<b>要不要少繞一點，或換一種配置。</b><br><br>
 
@@ -272,7 +284,7 @@ k 代表：<b>你繞的角度中，有多少比例真的在工作。</b><br><br>
 教學架構與工程判斷 / 徐世豐<br>
 工具設計與互動介面 / 吳佩芳（朵朵）<br>
 AI 協作輔助 / ChatGPT<br>
-版本 v3.7｜2026
+版本 v3.7.5｜2026
 <button type="button" class="collapseBtn" data-collapse="#infoC" style="margin-top:10px">收合</button>
 </div>
 </details>
@@ -310,6 +322,24 @@ function refreshKUI(){
     const cur = parseFloat(kCustom.value);
     if(Number.isNaN(cur)) kCustom.value = "0.70";
   }
+
+function refreshMuUI(){
+  const isCustom = muPreset.value === "custom";
+  // 選到預設情境：直接帶入對應 μ，並允許微調
+  if(!isCustom){
+    const v = parseFloat(muPreset.value);
+    if(!Number.isNaN(v)) muVal.value = v.toFixed(2);
+  }
+}
+
+function getMuValue(){
+  let v = parseFloat(muVal.value);
+  if(Number.isNaN(v)) v = 0.25;
+  // 合理夾限，避免輸入太離譜導致爆表
+  v = clamp(v, 0.01, 1.20);
+  muVal.value = v.toFixed(2);
+  return v;
+}
 }
 
 function getKValue(){
@@ -323,10 +353,12 @@ function getKValue(){
 
 function resetAll(){
   n.value="1.50";
-  mu.value="0.35";
+  muPreset.value="0.25";
+  muVal.value="0.25";
   kSel.value="0.7";
   kCustom.value="0.70";
   refreshKUI();
+  refreshMuUI();
   setSide("T1");
   force.value="1";
   // clear outputs
@@ -336,7 +368,7 @@ function resetAll(){
 }
 
 function calc(){
-  const nn=+n.value, muv=+mu.value, f=+force.value;
+  const nn=+n.value, muv=getMuValue(), f=+force.value;
   const kVal=getKValue();
   const theta=nn*2*Math.PI;
   const Mv=Math.exp(muv*theta);
@@ -348,9 +380,9 @@ function calc(){
   Meff.textContent="× "+Me.toFixed(2);
   outT1.textContent=T1.toFixed(2)+" kgf";
   outT2.textContent=T2.toFixed(2)+" kgf";
-  if(Me<3){badge.className="badge good";badge.textContent="低～中等";suggest.textContent="建議：可降低圈數以提升操作順暢度";}
-  else if(Me<10){badge.className="badge mid";badge.textContent="偏高";suggest.textContent="建議：注意放手控制與熱累積";}
-  else{badge.className="badge high";badge.textContent="高放大";suggest.textContent="建議：降低圈數或改變系統配置";}
+  if(Me<3){badge.className="badge good";badge.textContent="低～中等";suggest.textContent="建議：摩擦偏低，操作較順但可能較滑。若需要更省力或增加控制感，可再加一點圈數或調整配置。";}
+  else if(Me<10){badge.className="badge mid";badge.textContent="偏高";suggest.textContent="建議：摩擦適中偏高，已具良好制動效果。操作時留意放手控制與繩索溫度。";}
+  else{badge.className="badge high";badge.textContent="高放大";suggest.textContent="建議：摩擦偏大，可能卡滯、熱累積或放手不易。可考慮減少圈數，或改變繞法／接觸材質／系統配置，以取得較好操作性。";}
 }
 
 /* 底部「收合」按鈕：一按就收合 */
@@ -366,6 +398,8 @@ document.addEventListener("click", function(e){
 
 // UI hooks
 kSel.addEventListener("change", refreshKUI);
+muPreset.addEventListener("change", ()=>{ refreshMuUI(); });
+muVal.addEventListener("blur", ()=>{ /* normalize */ getMuValue(); });
 
 resetAll(); // initialize defaults cleanly
 </script>
