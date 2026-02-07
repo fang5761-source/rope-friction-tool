@@ -83,7 +83,6 @@ details summary{
   justify-content:space-between;
 }
 details summary::-webkit-details-marker{display:none;}
-/* subtle chevron */
 details summary::after{
   content:"▸";
   color:var(--muted);
@@ -130,6 +129,19 @@ details[open] summary::after{ transform: rotate(90deg); }
   margin-left:6px;
   color:var(--muted);
 }
+.kCustomWrap{
+  display:none;
+  margin-top:10px;
+}
+.kCustomWrap.show{
+  display:block;
+}
+.kMini{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:6px;
+  line-height:1.5;
+}
 </style>
 </head>
 <body>
@@ -166,10 +178,16 @@ Rope Friction Tutor<br>
 
 <label>k 建議情境</label>
 <select id="kSel">
-<option value="0.8">穩定操作（示範 / 靜態）</option>
-<option value="0.7" selected>一般教學（半動態）</option>
-<option value="0.5">動態操作（快速 / 濕滑）</option>
+<option value="0.8">穩定操作（示範 / 靜態｜站定、慢慢做）</option>
+<option value="0.7" selected>一般教學（半動態｜邊講邊做、偶爾移動）</option>
+<option value="0.5">動態操作（快速 / 濕滑｜走動、調整、容易滑）</option>
+<option value="custom">自訂（工程判斷）</option>
 </select>
+
+<div class="kCustomWrap" id="kCustomWrap">
+  <input id="kCustom" type="number" step="0.01" value="0.70" min="0.30" max="1.00" inputmode="decimal"/>
+  <div class="kMini">範圍建議：0.30～1.00（貼合與受力越完整，k 越接近 1.00）</div>
+</div>
 
 <label>已知哪一端？</label>
 <div class="toggle">
@@ -254,7 +272,7 @@ k 代表：<b>你繞的角度中，有多少比例真的在工作。</b><br><br>
 教學架構與工程判斷 / 徐世豐<br>
 工具設計與互動介面 / 吳佩芳（朵朵）<br>
 AI 協作輔助 / ChatGPT<br>
-版本 v3.6｜2026
+版本 v3.7｜2026
 <button type="button" class="collapseBtn" data-collapse="#infoC" style="margin-top:10px">收合</button>
 </div>
 </details>
@@ -270,17 +288,45 @@ AI 協作輔助 / ChatGPT<br>
 
 <script>
 let knownSide="T1";
+
 function setSide(s){
   knownSide=s;
   btnT1.classList.toggle("active",s==="T1");
   btnT2.classList.toggle("active",s==="T2");
   forceLabel.textContent=s==="T1"?"已知拉力（T1，kgf）":"已知拉力（T2，kgf）";
 }
-function adj(d){n.value=(Math.max(0,(+n.value||0)+d)).toFixed(2)}
+
+function adj(d){ n.value=(Math.max(0,(+n.value||0)+d)).toFixed(2) }
+
+function clamp(num, min, max){
+  if(Number.isNaN(num)) return min;
+  return Math.min(max, Math.max(min, num));
+}
+
+function refreshKUI(){
+  const isCustom = kSel.value === "custom";
+  kCustomWrap.classList.toggle("show", isCustom);
+  if(isCustom){
+    const cur = parseFloat(kCustom.value);
+    if(Number.isNaN(cur)) kCustom.value = "0.70";
+  }
+}
+
+function getKValue(){
+  if(kSel.value === "custom"){
+    const v = clamp(parseFloat(kCustom.value), 0.30, 1.00);
+    kCustom.value = v.toFixed(2);
+    return v;
+  }
+  return parseFloat(kSel.value);
+}
+
 function resetAll(){
   n.value="1.50";
   mu.value="0.35";
   kSel.value="0.7";
+  kCustom.value="0.70";
+  refreshKUI();
   setSide("T1");
   force.value="1";
   // clear outputs
@@ -288,16 +334,17 @@ function resetAll(){
   outT1.textContent="—"; outT2.textContent="—"; suggest.textContent="—";
   badge.className="badge mid"; badge.textContent="—";
 }
+
 function calc(){
   const nn=+n.value, muv=+mu.value, f=+force.value;
-  const kVal=+kSel.value;
+  const kVal=getKValue();
   const theta=nn*2*Math.PI;
   const Mv=Math.exp(muv*theta);
   const Me=Mv*kVal;
   let T1,T2;
-  if(knownSide==="T1"){T1=f;T2=f*Me}else{T2=f;T1=f/Me}
+  if(knownSide==="T1"){ T1=f; T2=f*Me } else { T2=f; T1=f/Me }
   M.textContent=Mv.toFixed(2);
-  k.textContent=kVal;
+  k.textContent=kVal.toFixed(2);
   Meff.textContent="× "+Me.toFixed(2);
   outT1.textContent=T1.toFixed(2)+" kgf";
   outT2.textContent=T2.toFixed(2)+" kgf";
@@ -316,6 +363,9 @@ document.addEventListener("click", function(e){
   block.removeAttribute("open");
   block.querySelector("summary")?.scrollIntoView({behavior:"smooth", block:"start"});
 });
+
+// UI hooks
+kSel.addEventListener("change", refreshKUI);
 
 resetAll(); // initialize defaults cleanly
 </script>
