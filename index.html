@@ -284,7 +284,7 @@ k 代表：<b>你繞的角度中，有多少比例真的在工作。</b><br><br>
 教學架構與工程判斷 / 徐世豐<br>
 工具設計與互動介面 / 吳佩芳（朵朵）<br>
 AI 協作輔助 / ChatGPT<br>
-版本 v3.7.5｜2026
+版本 v3.7.6｜2026
 <button type="button" class="collapseBtn" data-collapse="#infoC" style="margin-top:10px">收合</button>
 </div>
 </details>
@@ -322,6 +322,7 @@ function refreshKUI(){
     const cur = parseFloat(kCustom.value);
     if(Number.isNaN(cur)) kCustom.value = "0.70";
   }
+}
 
 function refreshMuUI(){
   const isCustom = muPreset.value === "custom";
