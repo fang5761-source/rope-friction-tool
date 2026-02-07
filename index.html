@@ -1,11 +1,10 @@
-
 <!doctype html>
 <html lang="zh-Hant-TW">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>戰繩｜纏繞摩擦力教學工具（Rope Friction Tutor）</title>
-  <meta name="apple-mobile-web-app-title" content="纏繞摩擦力估算">
+<meta name="apple-mobile-web-app-title" content="纏繞摩擦力估算">
 <style>
 :root{
   --bg:#0b1220;--panel:#121a2f;--panel2:#0f172a;--line:#233056;
@@ -65,13 +64,46 @@ input,select{
   background:linear-gradient(135deg,#38bdf8,#0ea5e9);
   color:#020617;border:0
 }
+
+/* Details base */
+details{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#020617;
+  padding:10px 12px;
+}
+details + details{margin-top:12px;}
 details summary{
   cursor:pointer;
   font-weight:900;
   color:#cbd5f5;
   list-style:none;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
 details summary::-webkit-details-marker{display:none;}
+/* subtle chevron */
+details summary::after{
+  content:"▸";
+  color:var(--muted);
+  transform: rotate(0deg);
+  transition: transform .15s ease;
+}
+details[open] summary::after{ transform: rotate(90deg); }
+
+.collapseBtn{
+  margin-top:12px;
+  width:100%;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.04);
+  color:rgba(255,255,255,.85);
+  cursor:pointer;
+  font-weight:900;
+}
+
 .footer{
   font-size:12px;color:#cbd5f5;
   line-height:1.6;
@@ -117,10 +149,10 @@ Rope Friction Tutor<br>
 <label>纏繞圈數 n</label>
 <input id="n" type="number" step="0.01" value="1.50"/>
 <div class="quick">
-<button onclick="adj(-0.25)">-0.25</button>
-<button onclick="adj(-0.5)">-0.5</button>
-<button onclick="adj(0.25)">+0.25</button>
-<button onclick="adj(0.5)">+0.5</button>
+<button type="button" onclick="adj(-0.25)">-0.25</button>
+<button type="button" onclick="adj(-0.5)">-0.5</button>
+<button type="button" onclick="adj(0.25)">+0.25</button>
+<button type="button" onclick="adj(0.5)">+0.5</button>
 </div>
 
 <label>摩擦條件（μ）</label>
@@ -141,8 +173,8 @@ Rope Friction Tutor<br>
 
 <label>已知哪一端？</label>
 <div class="toggle">
-<button id="btnT1" class="active" onclick="setSide('T1')">已知手端 T1</button>
-<button id="btnT2" onclick="setSide('T2')">已知負重端 T2</button>
+<button type="button" id="btnT1" class="active" onclick="setSide('T1')">已知手端 T1</button>
+<button type="button" id="btnT2" onclick="setSide('T2')">已知負重端 T2</button>
 </div>
 
 <label id="forceLabel">已知拉力（T1，kgf）</label>
@@ -150,8 +182,8 @@ Rope Friction Tutor<br>
 <div class="hintInline">數值：<b>1</b> <span class="pill">預設值</span>（不知道填多少時，先用預設值看「倍率」就好）</div>
 
 <div class="actions">
-<button class="calc" onclick="calc()">計算</button>
-<button class="reset" onclick="resetAll()">重設</button>
+<button type="button" class="calc" onclick="calc()">計算</button>
+<button type="button" class="reset" onclick="resetAll()">重設</button>
 </div>
 </div>
 
@@ -171,8 +203,9 @@ Rope Friction Tutor<br>
 </div>
 
 <div class="card">
-<details>
-<summary>第一次使用？先看這裡 ▸</summary>
+
+<details id="infoA">
+<summary>第一次使用？先看這裡</summary>
 <div class="explain" style="margin-top:10px">
 <b>① 這個工具是在幫你看什麼？</b><br>
 這個工具不是在幫你算「對不對」，而是在幫你看：<b>現在這樣繞，合不合理、好不好用。</b><br>
@@ -196,30 +229,36 @@ Rope Friction Tutor<br>
 • T1：你手上「出力」的那一邊<br>
 • T2：繩索最後「承受重量」的那一邊<br><br>
 <b>不知道要填多少時，就先用預設值 1 看「倍率」就好。</b>
+
+<button type="button" class="collapseBtn" data-collapse="#infoA">收合</button>
 </div>
 </details>
 
-<details style="margin-top:12px">
-<summary>K 的工程意義與使用說明 ▸</summary>
+<details id="infoB" style="margin-top:12px">
+<summary>K 的工程意義與使用說明</summary>
 <div class="explain" style="margin-top:10px">
 k 代表：<b>你繞的角度中，有多少比例真的在工作。</b><br><br>
 理論公式假設每一圈都完全貼合並產生摩擦；但在實際操作中，貼合、受力分佈、動態操作與繩索狀況
 都會使「有效摩擦角度」小於幾何角度。<br><br>
 工程上可表示為：<br>
 <span class="mono">k = θ_eff / θ_total</span>
+
+<button type="button" class="collapseBtn" data-collapse="#infoB">收合</button>
 </div>
 </details>
 
-<details style="margin-top:12px">
-<summary>開發與版本資訊 ▸</summary>
+<details id="infoC" style="margin-top:12px">
+<summary>開發與版本資訊</summary>
 <div class="meta">
 本工具由 <b>散木團隊</b> 開發製作<br>
 教學架構與工程判斷 / 徐世豐<br>
 工具設計與互動介面 / 吳佩芳（朵朵）<br>
 AI 協作輔助 / ChatGPT<br>
-版本 v1.0｜2026
+版本 v3.6｜2026
+<button type="button" class="collapseBtn" data-collapse="#infoC" style="margin-top:10px">收合</button>
 </div>
 </details>
+
 </div>
 
 <div class="footer">
@@ -266,9 +305,19 @@ function calc(){
   else if(Me<10){badge.className="badge mid";badge.textContent="偏高";suggest.textContent="建議：注意放手控制與熱累積";}
   else{badge.className="badge high";badge.textContent="高放大";suggest.textContent="建議：降低圈數或改變系統配置";}
 }
+
+/* 底部「收合」按鈕：一按就收合 */
+document.addEventListener("click", function(e){
+  const btn = e.target.closest("[data-collapse]");
+  if(!btn) return;
+  const selector = btn.getAttribute("data-collapse");
+  const block = document.querySelector(selector);
+  if(!block) return;
+  block.removeAttribute("open");
+  block.querySelector("summary")?.scrollIntoView({behavior:"smooth", block:"start"});
+});
+
 resetAll(); // initialize defaults cleanly
 </script>
 </body>
 </html>
-
-
