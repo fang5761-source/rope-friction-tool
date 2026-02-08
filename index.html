@@ -143,6 +143,43 @@ details[open] summary::after{ transform: rotate(90deg); }
   margin-top:6px;
   line-height:1.5;
 }
+
+/* --- Details UX polish (v3.16) --- */
+/* 讓所有可展開標題（summary）有一致的「整塊可點」手感 */
+details summary{
+  padding:12px 12px;          /* 提升點擊區域 */
+  border-radius:12px;
+  margin:-10px -12px;         /* 抵消 details 內 padding，讓 summary 撐滿整框 */
+}
+/* summary 用 section class 時，避免多餘的下方間距 */
+details summary.section{ margin:-10px -12px; }
+
+/* hover / active：滑鼠與觸控都有回饋 */
+details summary:hover{
+  background:rgba(255,255,255,.04);
+}
+details summary:active{
+  background:rgba(255,255,255,.07);
+}
+
+/* 展開時的 header 微亮，讓狀態更明確 */
+details[open] summary{
+  background:rgba(56,189,248,.06);
+}
+
+/* 公式區塊內容：內距更沈穩 */
+#formulaDetails .explain{
+  padding:4px 2px 2px 2px;
+  line-height:1.8;
+}
+#formulaDetails .explain .mono{
+  font-size:14px;
+}
+/* 常見誤解那行與框保持更舒服的距離 */
+#formulaDetails + .hintInline{
+  margin-top:12px;
+}
+
 </style>
 </head>
 <body>
@@ -154,17 +191,33 @@ details[open] summary::after{ transform: rotate(90deg); }
 </div>
 
 <div class="card">
-<div class="section">計算模型與公式</div>
-<div class="explain">
-<b>核心公式：</b><br>
-<span class="mono">T₂ = T₁ × e^( μ × θ )</span><br><br>
+<details id="formulaDetails">
+  <summary class="section" style="display:flex;justify-content:space-between;align-items:center">
+    <span>計算模型與公式</span>
+    <span class="arrow" style="font-size:14px;color:#94a3b8">▸</span>
+  </summary>
 
-<b>工程修正：</b><br>
-<span class="mono">θ_eff = k × θ</span><br><br>
+  <div class="explain" style="margin-top:10px">
 
-<b>實際估算：</b><br>
-<span class="mono">T₂ ≈ T₁ × e^( μ × θ_eff )</span>
+<b>核心公式：</b>
+<span class="mono">T₂ = T₁ × e^( μ × θ )</span><br>
+<span style="color:#94a3b8">（純理論，用來理解摩擦放大的趨勢）</span><br><br>
+
+<b>工程修正：</b>
+<span class="mono">θ_eff = k × θ</span><br>
+<span style="color:#94a3b8">（實際操作時，角度不可能全部有效）</span><br><br>
+
+<b>實際估算：</b>
+<span class="mono">T₂ ≈ T₁ × e^( μ × θ_eff )</span><br>
+<span style="color:#94a3b8">（現場判斷時，看這一行就好）</span>
+
 </div>
+</details>
+
+<div class="hintInline" style="margin-top:12px">
+<b>常見誤解：</b>摩擦倍率越大，不代表越安全，過大的摩擦反而會讓放手與控制變得困難。
+</div>
+
 </div>
 
 <div class="card">
@@ -321,7 +374,7 @@ k 代表：<b>你繞的角度中，有多少比例真的在工作。</b><br><br>
 工具設計與互動介面／吳佩芳（朵朵）<br>
 AI 協作輔助／ChatGPT<br><br>
 <b>本工具之摩擦力模型與情境設定，源自「子惠繩」與子惠結在實務操作中的纏繞摩擦需求。<br><br>
-版本 v3.10｜2026
+版本 v5.08｜2026
 </div>
 </details>
 
@@ -454,5 +507,31 @@ muVal.addEventListener("blur", ()=>{ /* normalize */ getMuValue(); });
 
 resetAll(); // initialize defaults cleanly
 </script>
+
+<script>
+const formulaDetails = document.getElementById('formulaDetails');
+const formulaHeader = formulaDetails?.previousElementSibling;
+const arrow = formulaHeader?.querySelector('span:last-child');
+
+if(formulaDetails && arrow){
+  const syncArrow = ()=>{
+    arrow.textContent = formulaDetails.hasAttribute('open') ? "▾" : "▸";
+  };
+  formulaHeader.addEventListener('click', syncArrow);
+  syncArrow();
+}
+</script>
+
+<script>
+const fd = document.getElementById('formulaDetails');
+if(fd){
+  const arrow = fd.querySelector('.arrow');
+  const sync = ()=> arrow.textContent = fd.open ? "▾" : "▸";
+  fd.addEventListener('toggle', sync);
+  sync();
+}
+</script>
 </body>
+
+
 </html>
