@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>戰繩｜纏繞摩擦力教學工具（Rope Friction Tutor）</title>
+<title>繩索纏繞摩擦力估算</title>
 <meta name="apple-mobile-web-app-title" content="纏繞摩擦力估算">
 <style>
 :root{
@@ -149,7 +149,7 @@ details[open] summary::after{ transform: rotate(90deg); }
 <div class="wrap">
 
 <div class="card">
-<h1>戰繩｜纏繞摩擦力教學工具</h1>
+<h1>繩索纏繞摩擦力估算</h1>
 <div class="sub">
 Rope Friction Tutor<br>
 核心公式：<span class="mono">T₂ = T₁ × e^( μ × θ )</span>
@@ -221,9 +221,7 @@ Rope Friction Tutor<br>
 <div class="result-main">
 <div class="small">實際建議摩擦倍率（含 k）</div>
 <div class="big" id="Meff">—</div>
-<div class="badge mid" id="badge">—</div>
 <div class="small">理論倍率 ×<span id="M">—</span> ｜ k = <span id="k">—</span></div>
-<div class="small" id="suggest">—</div>
 </div>
 <div style="margin-top:14px">
 <div class="kv"><div>T1 手端</div><div id="outT1">—</div></div>
@@ -309,9 +307,9 @@ k 代表：<b>你繞的角度中，有多少比例真的在工作。</b><br><br>
 <div class="meta">
 本工具由 <b>散木團隊</b> 開發製作<br>
 教學架構與工程判斷 / 徐世豐<br>
-工具設計與互動介面 / 吳佩芳（朵朵）<br>
+工具設計與互動介面 / 吳佩芳（朵朵）<br>「子惠繩」與子惠結之纏繞摩擦需求，為本工具之設計啟發<br>
 AI 協作輔助 / ChatGPT<br>
-版本 v3.8｜2026
+版本 v3.9｜2026
 <button type="button" class="collapseBtn" data-collapse="#infoC" style="margin-top:10px">收合</button>
 </div>
 </details>
@@ -409,8 +407,7 @@ function resetAll(){
   force.value="1";
   // clear outputs
   M.textContent="—"; k.textContent="—"; Meff.textContent="—";
-  outT1.textContent="—"; outT2.textContent="—"; suggest.textContent="—";
-  badge.className="badge mid"; badge.textContent="—";
+  outT1.textContent="—"; outT2.textContent="—";
 }
 
 function calc(){
@@ -426,9 +423,6 @@ function calc(){
   Meff.textContent="× "+Me.toFixed(2);
   outT1.textContent=T1.toFixed(2)+" kgf";
   outT2.textContent=T2.toFixed(2)+" kgf";
-  if(Me<3){badge.className="badge good";badge.textContent="低～中等";suggest.textContent="建議：摩擦偏低，操作較順但可能較滑。若需要更省力或增加控制感，可再加一點圈數或調整配置。";}
-  else if(Me<10){badge.className="badge mid";badge.textContent="偏高";suggest.textContent="建議：摩擦適中偏高，已具良好制動效果。操作時留意放手控制與繩索溫度。";}
-  else{badge.className="badge high";badge.textContent="高放大";suggest.textContent="建議：摩擦偏大，可能卡滯、熱累積或放手不易。可考慮減少圈數，或改變繞法／接觸材質／系統配置，以取得較好操作性。";}
 }
 
 /* 底部「收合」按鈕：一按就收合 */
