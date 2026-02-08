@@ -180,6 +180,51 @@ details[open] summary{
   margin-top:12px;
 }
 
+
+/* --- Formula line comfort (v5.08) --- */
+.mono.formula{
+  white-space:nowrap;
+  display:inline-block;
+  max-width:100%;
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  padding-bottom:2px; /* 給 iOS 一點呼吸，避免字緣貼底 */
+}
+/* 讓公式列在窄螢幕更沈穩：字微小一點、行距更舒適 */
+@media (max-width: 420px){
+  #formulaDetails .explain .mono.formula{ font-size:13px; }
+  #formulaDetails .explain{ line-height:1.85; }
+}
+
+
+/* --- Formula label new-line layout (v5.08) --- */
+#formulaDetails .explain b + br + .mono.formula{
+  margin-top:6px;
+}
+
+
+/* --- Formula calm & spacing polish (v3.17 / v5.08) --- */
+#formulaDetails .explain{
+  line-height:1.9;
+}
+
+/* 公式行：稍微內縮，像板書置中，但不真置中 */
+#formulaDetails .mono.formula{
+  display:block;
+  margin:6px 0 2px 0;
+  padding-left:12px;
+}
+
+/* 三段公式之間的節奏一致 */
+#formulaDetails .explain b{
+  display:block;
+  margin-top:16px;
+}
+#formulaDetails .explain b:first-child{
+  margin-top:0;
+}
+
 </style>
 </head>
 <body>
@@ -193,22 +238,20 @@ details[open] summary{
 <div class="card">
 <details id="formulaDetails">
   <summary class="section" style="display:flex;justify-content:space-between;align-items:center">
-    <span>計算模型與公式</span>
-    <span class="arrow" style="font-size:14px;color:#94a3b8">▸</span>
-  </summary>
+    <span>計算模型與公式</span></summary>
 
   <div class="explain" style="margin-top:10px">
 
-<b>核心公式：</b>
-<span class="mono">T₂ = T₁ × e^( μ × θ )</span><br>
+<b>核心公式：</b><br>
+<span class="mono formula">T₂=T₁×e^(μ×θ)</span><br>
 <span style="color:#94a3b8">（純理論，用來理解摩擦放大的趨勢）</span><br><br>
 
-<b>工程修正：</b>
-<span class="mono">θ_eff = k × θ</span><br>
+<b>工程修正：</b><br>
+<span class="mono formula">θ_eff=k×θ</span><br>
 <span style="color:#94a3b8">（實際操作時，角度不可能全部有效）</span><br><br>
 
-<b>實際估算：</b>
-<span class="mono">T₂ ≈ T₁ × e^( μ × θ_eff )</span><br>
+<b>實際估算：</b><br>
+<span class="mono formula">T₂≈T₁×e^(μ×θ_eff)</span><br>
 <span style="color:#94a3b8">（現場判斷時，看這一行就好）</span>
 
 </div>
@@ -522,15 +565,6 @@ if(formulaDetails && arrow){
 }
 </script>
 
-<script>
-const fd = document.getElementById('formulaDetails');
-if(fd){
-  const arrow = fd.querySelector('.arrow');
-  const sync = ()=> arrow.textContent = fd.open ? "▾" : "▸";
-  fd.addEventListener('toggle', sync);
-  sync();
-}
-</script>
 </body>
 
 
