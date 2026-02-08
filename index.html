@@ -2,61 +2,140 @@
 <html lang="zh-Hant-TW">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <title>繩索纏繞摩擦力估算</title>
+
 <meta name="apple-mobile-web-app-title" content="纏繞摩擦力估算">
+<meta name="theme-color" content="#0B1220">
+
 <style>
 :root{
   --bg:#0b1220;--panel:#121a2f;--panel2:#0f172a;--line:#233056;
-  --text:#e5e7eb;--muted:#94a3b8;--accent:#38bdf8;--r:18px;
+  --text:#e5e7eb;--muted:#94a3b8;--accent:#38bdf8;
+  --good:#22c55e;--warn:#f59e0b;--danger:#ef4444;
+  --r:18px;
 }
 *{box-sizing:border-box;}
+html,body{height:auto; min-height:100%;}
 body{
   margin:0;
-  background:radial-gradient(1200px 600px at 10% -20%, #1e293b 0%, transparent 50%),var(--bg);
+  background:
+    radial-gradient(1200px 600px at 10% -20%, #1e293b 0%, transparent 55%),
+    radial-gradient(900px 450px at 110% 10%, #172554 0%, transparent 55%),
+    var(--bg);
   color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  overflow-x:hidden;
 }
-.wrap{max-width:860px;margin:0 auto;padding:16px;}
+.wrap{
+  max-width:860px;
+  margin:0 auto;
+  padding:16px;
+  padding-bottom:36px;
+}
 .card{
   background:linear-gradient(180deg,var(--panel),var(--panel2));
+  border:1px solid var(--line);
   border-radius:var(--r);
-  padding:18px;margin-bottom:14px;border:1px solid var(--line);
+  padding:18px;
+  margin-bottom:14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.18);
 }
-h1{font-size:20px;margin:0;}
-.sub{font-size:13px;color:var(--muted);margin-top:4px}
-.formula{
-  margin-top:14px;
-  padding-top:12px;
-  border-top:1px dashed var(--line);
-  font-family:ui-monospace,monospace;
-}
-.formula .core{font-size:15px;font-weight:600;color:#eaf6ff}
-.formula .line{font-size:14px;color:#cbd5f5;margin-top:6px}
-.section{font-size:15px;font-weight:900;margin-bottom:10px}
-label{display:block;font-size:13px;color:#cbd5f5;margin:10px 0 6px;font-weight:700}
+h1{font-size:18px;margin:0 0 6px;letter-spacing:.2px}
+.sub{font-size:13px;color:var(--muted);line-height:1.7}
+.section{font-size:15px;font-weight:900;margin:0 0 10px}
+label{display:block;font-size:13px;color:#cbd5f5;margin:10px 0 6px;font-weight:800}
 input,select{
-  width:100%;padding:12px;border-radius:14px;border:1px solid var(--line);
-  background:#020617;color:var(--text);font-size:15px;
+  width:100%;
+  padding:12px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  background:#020617;
+  color:var(--text);
+  font-size:15px;
+  outline:none;
 }
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-.actions button{padding:12px;border-radius:14px;border:0;font-weight:900;font-size:15px}
+.quick{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-top:10px;
+}
+.quick button{
+  background:#020617;
+  border:1px solid var(--line);
+  color:var(--text);
+  padding:10px;
+  border-radius:999px;
+  font-weight:900;
+  cursor:pointer;
+}
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:14px;
+}
+.actions button{
+  padding:12px;border-radius:14px;border:0;
+  font-weight:1000;font-size:15px;cursor:pointer;
+}
 .calc{background:linear-gradient(135deg,#38bdf8,#0ea5e9);color:#020617}
 .reset{background:#020617;color:#cbd5f5;border:1px solid var(--line)}
-.result-main{
-  text-align:center;padding:18px 12px;border-radius:var(--r);
-  background:#020617;border:1px solid var(--line);
+.toggle{display:flex;gap:8px;margin-top:6px}
+.toggle button{
+  flex:1;padding:10px;border-radius:999px;border:1px solid var(--line);
+  background:#020617;color:#cbd5f5;font-weight:1000;cursor:pointer
 }
-.big{font-size:42px;font-weight:1000;letter-spacing:.5px}
-.small{font-size:12px;color:var(--muted);margin-top:6px}
+.toggle button.active{
+  background:linear-gradient(135deg,#38bdf8,#0ea5e9);
+  color:#020617;border:0
+}
+.hintInline{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.6}
+.hintInline .pill{
+  display:inline-block;padding:2px 8px;border-radius:999px;
+  border:1px solid var(--line);background:#020617;margin-left:6px;color:var(--muted)
+}
+.kMini{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.6}
+.result-main{
+  text-align:center;
+  padding:18px 12px;
+  border-radius:var(--r);
+  background:#020617;
+  border:1px solid var(--line);
+}
+.big{font-size:40px;font-weight:1000;letter-spacing:.5px}
+.badge{display:inline-block;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:1000;margin-top:6px}
+.good{background:#052e16;color:#22c55e}
+.mid{background:#3a2503;color:#f59e0b}
+.high{background:#3b0a0a;color:#ef4444}
+.small{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.6}
 .kv{display:flex;justify-content:space-between;border-bottom:1px dashed var(--line);padding:10px 0}
 .kv:last-child{border-bottom:0}
-details summary{cursor:pointer;font-weight:900;color:#cbd5f5;list-style:none}
-details summary::-webkit-details-marker{display:none}
-.meta{font-size:12px;color:#94a3b8;line-height:1.6;margin-top:8px}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+
+details{border:1px solid var(--line);border-radius:14px;background:#020617}
+details + details{margin-top:12px}
+summary{
+  cursor:pointer;
+  font-weight:1000;
+  color:#cbd5f5;
+  padding:12px 14px;
+  list-style:none;
+}
+summary::-webkit-details-marker{display:none;}
+.detailsBody{padding:0 14px 14px 14px;color:#cbd5f5;font-size:13px;line-height:1.8}
+.bullets{margin:10px 0 0 0;padding-left:0}
+.bullets li{list-style:none;margin:8px 0}
+.bullets li::before{content:"• ";color:var(--muted);font-weight:900}
+.collapseRow{display:flex;justify-content:flex-end;margin-top:12px}
+.collapseBtn{
+  background:#0b1220;border:1px solid var(--line);color:#cbd5f5;
+  padding:8px 12px;border-radius:999px;font-weight:900;cursor:pointer;
+}
 .footer{
   font-size:12px;color:#cbd5f5;
-  line-height:1.6;
+  line-height:1.7;
   padding:12px 14px;
   border:1px solid var(--line);
   border-radius:14px;
@@ -65,60 +144,283 @@ details summary::-webkit-details-marker{display:none}
 }
 </style>
 </head>
+
 <body>
 <div class="wrap">
 
-<div class="card">
-  <h1>繩索纏繞摩擦力估算</h1>
-  <div class="sub">Rope Friction Estimator</div>
-
-  <div class="formula">
-    <div class="core">核心公式：T₂ = T₁ × e^( μ × θ )</div>
-    <div class="line">工程修正：θ_eff = k × θ</div>
-    <div class="line">實際估算：T₂ ≈ T₁ × e^( μ × θ_eff )</div>
+  <div class="card">
+    <h1>繩索纏繞摩擦力估算</h1>
+    <div class="sub">
+      Rope Friction Estimator<br>
+      核心公式：<span class="mono">T₂ = T₁ × e^( μ × θ )</span><br>
+      工程修正：<span class="mono">θ_eff = k × θ</span><br>
+      實際估算：<span class="mono">T₂ ≈ T₁ × e^( μ × θ_eff )</span>
+    </div>
   </div>
-</div>
 
-<div class="card">
-  <div class="section">結果</div>
-  <div class="result-main">
-    <div class="small">實際摩擦倍率（含 k）</div>
-    <div class="big" id="Meff">—</div>
-    <div class="small">理論倍率 ×<span id="M">—</span> ｜ k = <span id="k">—</span></div>
+  <div class="card" id="inputCard">
+    <div class="section">輸入條件</div>
+
+    <label>纏繞圈數 n（主輸入）</label>
+    <input id="n" type="number" step="0.01" value="1.50" inputmode="decimal"/>
+    <div class="quick">
+      <button type="button" onclick="adj(-0.25)">-0.25</button>
+      <button type="button" onclick="adj(-0.5)">-0.50</button>
+      <button type="button" onclick="adj(0.25)">+0.25</button>
+      <button type="button" onclick="adj(0.5)">+0.50</button>
+    </div>
+
+    <label>摩擦條件（情境選擇）</label>
+    <select id="muPreset">
+      <option value="0.18">繩索 ↔ 金屬（偏滑）</option>
+      <option value="0.25" selected>繩索 ↔ 金屬（一般乾燥）</option>
+      <option value="0.35">繩索 ↔ 樹皮（乾）</option>
+      <option value="0.45">繩索 ↔ 樹皮（濕/苔/泥）</option>
+      <option value="0.40">繩索 ↔ 水泥/混凝土（乾）</option>
+      <option value="0.50">繩索 ↔ 水泥/混凝土（濕）</option>
+      <option value="0.22">繩索 ↔ 繩索（乾）</option>
+      <option value="0.30">繩索 ↔ 繩索（濕）</option>
+      <option value="custom">自訂 μ（進階）</option>
+    </select>
+
+    <label>摩擦係數 μ（可微調）</label>
+    <input id="muVal" type="number" step="0.01" value="0.25" inputmode="decimal"/>
+    <div class="kMini">建議範圍：0.05～0.80（依材質、濕度、粉塵、表面粗糙度會有明顯差異）</div>
+
+    <label>k 建議情境</label>
+    <select id="kSel">
+      <option value="0.8">穩定操作（站定、慢慢做 / 靜態示範）</option>
+      <option value="0.7" selected>一般教學（走動調整、口令操作 / 半動態）</option>
+      <option value="0.5">動態操作（快速動作、濕滑風險 / 動態）</option>
+      <option value="custom">自訂 k（工程判斷）</option>
+    </select>
+
+    <div id="kCustomWrap" style="display:none">
+      <label>k 值（自訂）</label>
+      <input id="kVal" type="number" step="0.01" value="0.70" inputmode="decimal"/>
+      <div class="kMini">建議範圍：0.30～1.00（越接近 1 代表貼合越完整）</div>
+    </div>
+
+    <label>已知哪一端？</label>
+    <div class="toggle">
+      <button type="button" id="btnT1" class="active" onclick="setSide('T1')">已知手端 T1</button>
+      <button type="button" id="btnT2" onclick="setSide('T2')">已知負重端 T2</button>
+    </div>
+
+    <label id="forceLabel">已知拉力（T1，kgf）</label>
+    <input id="force" type="number" step="0.01" value="1" inputmode="decimal"/>
+    <div class="hintInline">數值：<b>1</b> <span class="pill">預設值</span>（不知道填多少時，先用預設值看「倍率」就好）</div>
+
+    <div class="actions">
+      <button class="calc" type="button" onclick="calc()">計算</button>
+      <button class="reset" type="button" onclick="resetAll()">重設</button>
+    </div>
   </div>
-  <div style="margin-top:14px">
-    <div class="kv"><div>T1 手端</div><div id="outT1">—</div></div>
-    <div class="kv"><div>T2 負重端</div><div id="outT2">—</div></div>
+
+  <div class="card" id="resultCard">
+    <div class="section">結果</div>
+    <div class="result-main">
+      <div class="small">實際摩擦倍率（含 k）</div>
+      <div class="big" id="Meff">—</div>
+      <div class="badge mid" id="badge">—</div>
+      <div class="small">理論倍率 ×<span id="M">—</span> ｜ k = <span id="k">—</span></div>
+      <div class="small" id="suggest">—</div>
+    </div>
+
+    <div style="margin-top:14px">
+      <div class="kv"><div>T1 手端</div><div id="outT1">—</div></div>
+      <div class="kv"><div>T2 負重端</div><div id="outT2">—</div></div>
+    </div>
   </div>
+
+  <!-- A / B / C：預設收合，底部有收合按鈕 -->
+  <details id="dA">
+    <summary>第一次使用？先看這裡</summary>
+    <div class="detailsBody">
+      <b>① 這個工具是在幫你看什麼？</b><br>
+      不是在幫你算「對不對」，而是在幫你看：<b>現在這樣繞，合不合理、好不好用。</b><br>
+      算出來的倍率，代表「繩索把力量放大了多少倍」。<br>
+      <b>倍率越大，不一定越安全，反而可能代表操作會變得困難。</b><br><br>
+
+      <b>② 為什麼圈數不能一直加？</b><br>
+      每多繞一圈，摩擦力不是慢慢增加，而是「變很快地增加」。<br>
+      圈數太多常見問題：放手不好控制、繩索容易過熱、動作變卡不順。<br>
+      所以重點不是鼓勵你多繞，而是幫你找「剛剛好」的圈數。<br><br>
+
+      <b>③ 快速使用（30 秒）</b><br>
+      1. 輸入你實際繞了幾圈（n）<br>
+      2. 選摩擦情境與 k 情境（或自訂）<br>
+      3. 看「實際摩擦倍率」與提示文字：偏高/高放大時，考慮少繞或換配置。<br><br>
+
+      <b>④ T1 / T2 是什麼？</b><br>
+      <b>T1 / T2 不是數學題，只是分清楚哪一邊出力、哪一邊承受。</b><br>
+      • T1：你手上「出力」的那一邊<br>
+      • T2：繩索最後「承受重量」的那一邊<br><br>
+      <b>不知道要填多少時，就先用預設值 1 看倍率就好。</b>
+
+      <div class="collapseRow">
+        <button class="collapseBtn" type="button" onclick="collapse('dA')">收合</button>
+      </div>
+    </div>
+  </details>
+
+  <details id="dB">
+    <summary>K 的工程意義與使用說明</summary>
+    <div class="detailsBody">
+      k 代表：<b>你繞的角度中，有多少比例真的在工作。</b><br><br>
+      理論公式假設每一圈都完全貼合並產生摩擦；但在實際操作中，貼合、受力分佈、動態操作與繩索狀況
+      都會使「有效摩擦角度」小於幾何角度。<br><br>
+      工程表示：<span class="mono">k = θ_eff / θ_total</span><br>
+      本工具計算採用：<span class="mono">θ_eff = k × θ</span>
+
+      <div class="collapseRow">
+        <button class="collapseBtn" type="button" onclick="collapse('dB')">收合</button>
+      </div>
+    </div>
+  </details>
+
+  <details id="dC">
+    <summary>開發與版本資訊</summary>
+    <div class="detailsBody">
+      <ul class="bullets">
+        <li>本工具由 <b>散木團隊</b> 開發製作</li>
+        <li>教學架構與工程判斷 / 徐世豐</li>
+        <li>工具設計與互動介面 / 吳佩芳（朵朵）</li>
+        <li>「子惠繩」與子惠結之纏繞摩擦需求，為本工具之設計啟發</li>
+        <li>AI 協作輔助 / ChatGPT</li>
+      </ul>
+      <div style="margin-top:12px;color:var(--muted);font-size:12px">版本 v3.9.1｜2026</div>
+
+      <div class="collapseRow">
+        <button class="collapseBtn" type="button" onclick="collapse('dC')">收合</button>
+      </div>
+    </div>
+  </details>
+
+  <div class="footer">
+    【教學使用聲明】本工具為教學與風險判斷輔助使用；所有結果皆為估算值，
+    不得取代現場判斷、標準作業程序（SOP）與安全保護措施。
+  </div>
+
 </div>
 
-<div class="card">
-<details>
-<summary>第一次使用？先看這裡 ▸</summary>
-<div class="meta">
-本工具用於協助理解繩索纏繞時的摩擦力放大效果，
-目的在於教學與估算，並非取代現場判斷。
-</div>
-</details>
+<script>
+let knownSide="T1";
 
-<details style="margin-top:12px">
-<summary>開發與版本資訊 ▸</summary>
-<div class="meta">
-本工具為「子惠繩」相關纏繞摩擦力研究與教學應用之延伸估算工具。<br>
-開發製作：散木團隊<br>
-教學架構與工程判斷：徐世豐<br>
-工具設計與互動介面：吳佩芳（朵朵）<br>
-AI 協作輔助：ChatGPT<br>
-版本 v3.11｜2026
-</div>
-</details>
-</div>
+function clamp(x,min,max){ return Math.min(max, Math.max(min, x)); }
 
-<div class="footer">
-【教學使用聲明】本工具為教學與風險判斷輔助使用，
-所有結果皆為估算值，不得取代現場判斷、標準作業程序（SOP）與安全保護措施。
-</div>
+function setSide(s){
+  knownSide=s;
+  btnT1.classList.toggle("active",s==="T1");
+  btnT2.classList.toggle("active",s==="T2");
+  forceLabel.textContent = (s==="T1") ? "已知拉力（T1，kgf）" : "已知拉力（T2，kgf）";
+}
 
-</div>
+function adj(d){
+  const v = (+n.value||0) + d;
+  n.value = (Math.max(0, v)).toFixed(2);
+}
+
+function refreshMuUI(){
+  const isCustom = (muPreset.value === "custom");
+  if(!isCustom){
+    const v = parseFloat(muPreset.value);
+    if(!Number.isNaN(v)) muVal.value = v.toFixed(2);
+  }
+}
+
+function getMuValue(){
+  let v = parseFloat(muVal.value);
+  if(Number.isNaN(v)) v = 0.25;
+  v = clamp(v, 0.01, 1.20);
+  muVal.value = v.toFixed(2);
+  return v;
+}
+
+function refreshKUI(){
+  const isCustom = (kSel.value === "custom");
+  kCustomWrap.style.display = isCustom ? "block" : "none";
+  if(!isCustom){
+    const v = parseFloat(kSel.value);
+    if(!Number.isNaN(v)) kVal.value = v.toFixed(2);
+  }
+}
+
+function getKValue(){
+  const isCustom = (kSel.value === "custom");
+  let v = parseFloat(isCustom ? kVal.value : kSel.value);
+  if(Number.isNaN(v)) v = 0.70;
+  v = clamp(v, 0.10, 1.00);
+  kVal.value = v.toFixed(2);
+  return v;
+}
+
+function resetAll(){
+  n.value="1.50";
+  muPreset.value="0.25";
+  muVal.value="0.25";
+  kSel.value="0.7";
+  kVal.value="0.70";
+  refreshMuUI();
+  refreshKUI();
+  setSide("T1");
+  force.value="1";
+
+  M.textContent="—"; k.textContent="—"; Meff.textContent="—";
+  outT1.textContent="—"; outT2.textContent="—"; suggest.textContent="—";
+  badge.className="badge mid"; badge.textContent="—";
+}
+
+function calc(){
+  const nn = +n.value;
+  const muv = getMuValue();
+  const kNum = getKValue();
+  const f = +force.value;
+
+  const theta = nn * 2 * Math.PI;
+  const Mv = Math.exp(muv * theta);
+  const Me = Mv * kNum;
+
+  let T1, T2;
+  if(knownSide==="T1"){
+    T1=f; T2=f*Me;
+  }else{
+    T2=f; T1=f/Me;
+  }
+
+  M.textContent = Mv.toFixed(2);
+  k.textContent = kNum.toFixed(2);
+  Meff.textContent = "× " + Me.toFixed(2);
+  outT1.textContent = (isFinite(T1)?T1:0).toFixed(2) + " kgf";
+  outT2.textContent = (isFinite(T2)?T2:0).toFixed(2) + " kgf";
+
+  if(Me < 3){
+    badge.className="badge good"; badge.textContent="低～中等";
+    suggest.textContent="建議：倍率偏低～中等，通常較好控制。";
+  }else if(Me < 10){
+    badge.className="badge mid"; badge.textContent="偏高";
+    suggest.textContent="建議：注意放手控制與熱累積；必要時減圈或換配置。";
+  }else if(Me < 30){
+    badge.className="badge high"; badge.textContent="高放大";
+    suggest.textContent="建議：優先降低圈數或改變系統配置，避免卡滯/過熱。";
+  }else{
+    badge.className="badge high"; badge.textContent="危險級";
+    suggest.textContent="建議：倍率過高，請立即調整（減圈/改配置/加保護），避免失控與過熱。";
+  }
+}
+
+function collapse(id){
+  const d = document.getElementById(id);
+  if(d) d.open = false;
+  d.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+muPreset.addEventListener("change", refreshMuUI);
+muVal.addEventListener("blur", getMuValue);
+kSel.addEventListener("change", refreshKUI);
+kVal.addEventListener("blur", getKValue);
+
+resetAll();
+</script>
 </body>
 </html>
