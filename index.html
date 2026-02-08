@@ -54,7 +54,7 @@ input,select{
 #suggest{line-height:1.6; white-space:normal}
 .kv{display:flex;justify-content:space-between;border-bottom:1px dashed var(--line);padding:10px 0}
 .kv:last-child{border-bottom:0}
-.explain{font-size:13px;color:#cbd5f5;line-height:1.75}
+.explain{font-size:13px;color:#cbd5f5;line-height:1.45}
 .mono{font-family:ui-monospace,monospace}
 .toggle{display:flex;gap:8px;margin-top:6px}
 .toggle button{
@@ -181,7 +181,7 @@ details[open] summary{
 }
 
 
-/* --- Formula line comfort (v5.08) --- */
+/* --- Formula line comfort (v5.09) --- */
 .mono.formula{
   white-space:nowrap;
   display:inline-block;
@@ -193,20 +193,20 @@ details[open] summary{
 }
 /* 讓公式列在窄螢幕更沈穩：字微小一點、行距更舒適 */
 @media (max-width: 420px){
-  #formulaDetails .explain .mono.formula{ font-size:13px; }
-  #formulaDetails .explain{ line-height:1.85; }
+  #formulaDetails .explain .mono.formula{ font-size:15px; }
+  #formulaDetails .explain{ line-height:1.45; }
 }
 
 
-/* --- Formula label new-line layout (v5.08) --- */
+/* --- Formula label new-line layout (v5.09) --- */
 #formulaDetails .explain b + br + .mono.formula{
   margin-top:6px;
 }
 
 
-/* --- Formula calm & spacing polish (v3.17 / v5.08) --- */
+/* --- Formula calm & spacing polish (v3.17 / v5.09) --- */
 #formulaDetails .explain{
-  line-height:1.9;
+  line-height:1.45;
 }
 
 /* 公式行：稍微內縮，像板書置中，但不真置中 */
@@ -214,15 +214,31 @@ details[open] summary{
   display:block;
   margin:6px 0 2px 0;
   padding-left:12px;
+  font-size:16px;
+  font-weight:800;
+  letter-spacing:0.2px;
 }
 
 /* 三段公式之間的節奏一致 */
 #formulaDetails .explain b{
   display:block;
-  margin-top:16px;
+  margin-top:12px;
 }
 #formulaDetails .explain b:first-child{
   margin-top:0;
+}
+
+
+/* --- Formula blocks: title / formula / note (v5.09) --- */
+#formulaDetails .formulaBlock{ margin-top:14px; }
+#formulaDetails .formulaBlock:first-child{ margin-top:0; }
+#formulaDetails .fTitle{
+  font-weight:900;
+  color:#cbd5f5;
+}
+#formulaDetails .fNote{
+  color:var(--muted);
+  margin-top:4px;
 }
 
 </style>
@@ -241,19 +257,23 @@ details[open] summary{
     <span>計算模型與公式</span></summary>
 
   <div class="explain" style="margin-top:10px">
+  <div class="formulaBlock">
+    <div class="fTitle">核心公式：</div>
+    <div class="mono formula">T₂=T₁×e^(μ×θ)</div>
+    <div class="fNote">（純理論，用來理解摩擦放大的趨勢）</div>
+  </div>
 
-<b>核心公式：</b><br>
-<span class="mono formula">T₂=T₁×e^(μ×θ)</span><br>
-<span style="color:#94a3b8">（純理論，用來理解摩擦放大的趨勢）</span><br><br>
+  <div class="formulaBlock">
+    <div class="fTitle">工程修正：</div>
+    <div class="mono formula">θ_eff=k×θ</div>
+    <div class="fNote">（實際操作時，角度不可能全部有效）</div>
+  </div>
 
-<b>工程修正：</b><br>
-<span class="mono formula">θ_eff=k×θ</span><br>
-<span style="color:#94a3b8">（實際操作時，角度不可能全部有效）</span><br><br>
-
-<b>實際估算：</b><br>
-<span class="mono formula">T₂≈T₁×e^(μ×θ_eff)</span><br>
-<span style="color:#94a3b8">（現場判斷時，看這一行就好）</span>
-
+  <div class="formulaBlock">
+    <div class="fTitle">實際估算：</div>
+    <div class="mono formula">T₂≈T₁×e^(μ×θ_eff)</div>
+    <div class="fNote">（現場判斷時，看這一行就好）</div>
+  </div>
 </div>
 </details>
 
