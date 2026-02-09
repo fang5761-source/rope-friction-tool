@@ -66,13 +66,11 @@ input,select{
   color:#020617;border:0
 }
 
-.subtitle{
-  font-size: 13px;        /* 比主標小 1.5 級 */
+.subtitle{font-size: 13px;        /* 比主標小 1.5 級 */
   color: var(--muted);    /* 你原本就有的灰藍色 */
   font-weight: 400;       /* 不加粗 */
   margin-top: 4px;        /* 和主標留一點呼吸 */
-  line-height: 1.45;      /* 穩，但不鬆散 */
-}
+  line-height: 1.45;      /* 穩，但不鬆散 */;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
 
 
@@ -143,12 +141,7 @@ details[open] summary::after{ transform: rotate(90deg); }
 }
 
 /* K=1 提醒：在結果卡內預設會置中，這裡改為靠左、更好讀 */
-#kNote{ text-align:left; width:100%; margin-top:10px; 
-  padding-left:0;
-  padding-right:0;
-  margin-left:0;
-  margin-right:0;
-}
+#kNote{ text-align:left; width:100%; margin-top:12px; padding:0; }
 #kNote .title{ font-weight:900; margin-bottom:6px; color:#cbd5f5; }
 #kNote div{ text-align:left; line-height:1.45; }
 .kCustomWrap{
@@ -267,26 +260,6 @@ details[open] summary{
   overflow: hidden;
 }
 
-.hero::after{
-  content: "";
-  position: absolute;
-
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-
-  width: 56px;
-  height: 56px;
-
-  background-image: url("sunmoon_logo.png?cb=520");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-
-  opacity: 0.42;
-  pointer-events: none;
-}
-
 .infoBox{
   font-size:13px;
   color:#cbd5f5;
@@ -306,10 +279,7 @@ details[open] summary{
   font-size:12px;
   margin-top:6px;
 }
-.infoBox ul{
-  margin:6px 0 0;
-  padding-left:18px;
-}
+.infoBox ul{margin:6px 0 0; padding-left:20px; list-style-position:outside;}
 .infoBox li{
   margin:6px 0;
 }
@@ -318,7 +288,7 @@ details[open] summary{
 /* ===== Header (Title + Subtitle + Logo) ===== */
 .card.hero{padding:18px 18px 16px}
 .title-wrap{display:flex;align-items:center;justify-content:space-between;gap:14px}
-.title-text h1{margin:0;font-size:20px;font-weight:1000;letter-spacing:.2px}
+.title-text h1{margin:0;font-size:20px;font-weight:1000;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .title-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:10px 0 8px}
 .subtitle{font-size:13px;color:var(--muted);letter-spacing:.2px}
 .title-logo{
@@ -327,7 +297,7 @@ details[open] summary{
   background-size:contain;
   background-repeat:no-repeat;
   background-position:center;
-  opacity:.38;
+  opacity:.85;
   flex-shrink:0;
   border-radius:14px;
   filter:drop-shadow(0 0 10px rgba(56,189,248,.18));
@@ -345,7 +315,7 @@ details[open] summary{
         <div class="title-divider"></div>
         <div class="subtitle">散木團隊｜教學與判斷輔助工具</div>
       </div>
-      <div class="title-logo" aria-hidden="true"></div>
+      <img class="title-logo" src="./sunmoon_logo.png" alt="散木團隊 LOGO"/>
     </div>
   </div>
 
