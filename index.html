@@ -313,7 +313,7 @@ details[open] summary{
 <div class="section">輸入條件</div>
 
 <label>纏繞圈數 n</label>
-<input id="n" type="number" step="0.01" value="1.50"/>
+<input id="n" type="number" step="0.01" value="3"/>
 <div class="quick">
 <button type="button" onclick="adj(-0.25)">-0.25</button>
 <button type="button" onclick="adj(-0.5)">-0.5</button>
@@ -323,15 +323,15 @@ details[open] summary{
 
 <label>摩擦條件（情境選擇）</label>
 <select id="muPreset">
+  <option value="0.25" selected>繩索 ↔ 繩索（舊繩／毛）</option>
   <option value="0.18">繩索 ↔ 金屬（偏滑）</option>
-  <option value="0.25" selected>繩索 ↔ 金屬（一般乾燥）</option>
+  <option value="0.25">繩索 ↔ 金屬（一般乾燥）</option>
   <option value="0.35">繩索 ↔ 樹皮（乾）</option>
   <option value="0.45">繩索 ↔ 樹皮（濕/苔/泥）</option>
   <option value="0.40">繩索 ↔ 水泥/混凝土（乾）</option>
   <option value="0.50">繩索 ↔ 水泥/混凝土（濕）</option>
   <option value="0.22">繩索 ↔ 繩索（新繩）</option>
-  <option value="0.30">繩索 ↔ 繩索（舊繩／毛）</option>
-  <option value="custom">自訂 μ（進階）</option>
+<option value="custom">自訂 μ（進階）</option>
 </select>
 
 <label style="margin-top:10px">摩擦係數 μ（可微調）</label>
@@ -343,9 +343,9 @@ details[open] summary{
 <label>k 建議情境</label>
 <select id="kSel">
 <option value="0.8">穩定操作（示範 / 靜態｜站定、慢慢做）</option>
-<option value="0.7" selected>一般教學（半動態｜邊講邊做、偶爾移動）</option>
+<option value="0.7">一般教學（半動態｜邊講邊做、偶爾移動）</option>
 <option value="0.5">動態操作（快速 / 濕滑｜走動、調整、容易滑）</option>
-<option value="custom">自訂（工程判斷）</option>
+<option value="custom" selected>自訂（工程判斷）</option>
 </select>
 
 <div class="kCustomWrap" id="kCustomWrap">
@@ -375,10 +375,17 @@ details[open] summary{
 <div class="small">實際建議摩擦倍率（含 k）</div>
 <div class="big" id="Meff">—</div>
 <div class="small">理論倍率 ×<span id="M">—</span> ｜ k = <span id="k">—</span></div>
+<div class="hintInline" id="kNote" style="display:none;margin-top:10px"></div>
 </div>
 <div style="margin-top:14px">
 <div class="kv"><div>T1 手端</div><div id="outT1">—</div></div>
 <div class="kv"><div>T2 負重端</div><div id="outT2">—</div></div>
+</div>
+<div id="tExplain" class="footer" style="display:none;margin-top:12px">
+<b>T1 / T2 代表什麼意思？</b><br>
+• <b>T1（手端）</b>：代表你在打繩結、操作時所施加的力量。<br>
+• <b>T2（負重端）</b>：代表經過纏繞後，所產生並作用在負重端的摩擦力。<br>
+• 這個計算是在幫你看：<b>目前的纏繞方式，會把 T1 的操作力量放大成多少的 T2。</b>
 </div>
 </div>
 
@@ -574,11 +581,11 @@ function getKValue(){
 }
 
 function resetAll(){
-  n.value="1.50";
+  n.value="3";
   muPreset.value="0.25";
   muVal.value="0.25";
-  kSel.value="0.7";
-  kCustom.value="0.70";
+  kSel.value="custom";
+  kCustom.value="1.00";
   refreshKUI();
   refreshMuUI();
   setSide("T1");
@@ -586,6 +593,9 @@ function resetAll(){
   // clear outputs
   M.textContent="—"; k.textContent="—"; Meff.textContent="—";
   outT1.textContent="—"; outT2.textContent="—";
+  kNote.style.display="none";
+  kNote.textContent="";
+  tExplain.style.display="none";
 }
 
 function calc(){
@@ -601,6 +611,16 @@ function calc(){
   Meff.textContent="× "+Me.toFixed(2);
   outT1.textContent=T1.toFixed(2)+" kgf";
   outT2.textContent=T2.toFixed(2)+" kgf";
+  // 額外提示：K=1 的工程提醒（僅在 K=1 時顯示）
+  if (Math.abs(kVal - 1.0) < 1e-9) {
+    kNote.style.display = "block";
+    kNote.textContent = "提醒：K＝1 代表「完全貼合、全角度都在工作」的理想假設；現場動態、鬆緊與接觸狀態不同時，實際有效摩擦通常會小於這個估算。";
+  } else {
+    kNote.style.display = "none";
+    kNote.textContent = "";
+  }
+  // T1/T2 說明（算完才顯示）
+  tExplain.style.display = "block";
 }
 
 /* 底部「收合」按鈕：一按就收合 */
