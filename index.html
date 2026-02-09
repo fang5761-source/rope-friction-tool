@@ -130,6 +130,16 @@ details[open] summary::after{ transform: rotate(90deg); }
   margin-left:6px;
   color:var(--muted);
 }
+
+/* K=1 提醒：在結果卡內預設會置中，這裡改為靠左、更好讀 */
+#kNote{ text-align:left; width:100%; margin-top:10px; 
+  padding-left:0;
+  padding-right:0;
+  margin-left:0;
+  margin-right:0;
+}
+#kNote .title{ font-weight:900; margin-bottom:6px; color:#cbd5f5; }
+#kNote div{ text-align:left; line-height:1.45; }
 .kCustomWrap{
   display:none;
   margin-top:10px;
@@ -257,12 +267,12 @@ details[open] summary{
   width: 44px;
   height: 44px;
 
-  background-image: url("icon-192.png");
+  background-image: url("sunmoon_logo.png?cb=520");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 
-  opacity: 0.24;
+  opacity: 0.34;
   pointer-events: none;
 }
 
