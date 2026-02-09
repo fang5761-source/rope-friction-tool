@@ -317,13 +317,70 @@ details[open] summary{
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="title-wrap">
+  <div class="title-text">
+    <h1>繩索纏繞摩擦力估算</h1>
 
-<div class="card hero">
+    <div class="title-divider"></div>
 
-<h1>繩索纏繞摩擦力估算</h1>
-<div class="subtitle">
-  散木團隊｜教學與判斷輔助工具
+    <div class="subtitle">
+      散木團隊｜教學與判斷輔助工具
+    </div>
+  </div>
+
+/* 主標整體容器 */
+.title-wrap{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+/* 左側文字區 */
+.title-text{
+  display: flex;
+  flex-direction: column;
+}
+
+/* 主標 */
+.title-text h1{
+  margin: 0;
+}
+
+/* 主標與副標的間隔線 */
+.title-divider{
+  width: 48px;
+  height: 1px;
+  background: rgba(140,160,190,0.35);
+  margin: 6px 0 6px 0;
+}
+
+/* 副標 */
+.subtitle{
+  font-size: 13px;          /* 比主標小 1.5 級 */
+  color: var(--muted);      /* 你原本的灰藍 */
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+/* 右側 LOGO */
+.title-logo{
+  width: 56px;
+  height: 56px;
+  background-image: url("sunmoon_logo.png?cb=520");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.34;
+  flex-shrink: 0;
+}
+
+
+
+
+
+  <div class="title-logo"></div>
 </div>
 
 <div class="card">
