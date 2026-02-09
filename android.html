@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Android 安裝｜繩索纏繞摩擦力估算</title>
+
+  <!-- 重要：讓 Android 正確吃到 manifest -->
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="theme-color" content="#0B1220">
+
+  <style>
+    :root{
+      --bg:#0b1220;--panel:#121a2f;--line:#233056;
+      --text:#e5e7eb;--muted:#94a3b8;--accent:#38bdf8;--r:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:radial-gradient(1200px 600px at 10% -20%, #1e293b 0%, transparent 50%),var(--bg);
+      color:var(--text);
+      font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    }
+    .wrap{max-width:860px;margin:0 auto;padding:16px}
+    .card{
+      background:linear-gradient(180deg,var(--panel),#0f172a);
+      border-radius:var(--r);
+      padding:18px;margin-bottom:14px;border:1px solid var(--line);
+    }
+    h1{font-size:18px;margin:0 0 8px}
+    .sub{color:var(--muted);font-size:14px;line-height:1.6}
+    .steps{margin-top:10px;line-height:1.8}
+    .steps .n{display:inline-block;width:22px;height:22px;border-radius:999px;
+      background:#020617;border:1px solid var(--line);text-align:center;line-height:22px;
+      margin-right:8px;color:var(--muted);font-weight:800;font-size:13px}
+    .btnRow{display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px}
+    .btn{
+      padding:14px 14px;border-radius:14px;border:0;font-weight:900;font-size:15px;
+      background:linear-gradient(135deg,#38bdf8,#0ea5e9);color:#020617;
+    }
+    .ghost{
+      background:#020617;color:#cbd5f5;border:1px solid var(--line);
+    }
+    .note{margin-top:10px;color:var(--muted);font-size:13px;line-height:1.7}
+    .tag{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid var(--line);
+      background:#020617;color:var(--muted);font-size:12px;margin-left:6px}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Android 安裝入口</h1>
+      <div class="sub">
+        這頁只做一件事：讓你把「繩索纏繞摩擦力估算」加到主畫面。<span class="tag">Android 專用</span>
+      </div>
+
+      <div class="steps">
+        <div><span class="n">1</span>用 <b>Chrome</b> 打開這一頁</div>
+        <div><span class="n">2</span>右上角 <b>⋮</b> → <b>加入主畫面</b></div>
+        <div><span class="n">3</span>按 <b>安裝 / 新增</b>（完成）</div>
+      </div>
+
+      <div class="btnRow">
+        <button class="btn" id="openApp">進入工具</button>
+        <button class="btn ghost" id="forceReload">如果沒有出現 icon，點我修復一次</button>
+      </div>
+
+      <div class="note">
+        若第一次沒有顯示 icon，通常是手機記住舊版本。<br>
+        點「修復一次」會幫你做一次強制刷新，然後你再按一次「加入主畫面」就好。
+      </div>
+    </div>
+  </div>
+
+<script>
+  // 進入主工具
+  document.getElementById('openApp').addEventListener('click', () => {
+    location.href = './index.html';
+  });
+
+  // 強制刷新：避免 Android 讀到舊快取（對 3C 不熟的人很友善）
+  document.getElementById('forceReload').addEventListener('click', () => {
+    const url = new URL(location.href);
+    url.searchParams.set('v', Date.now().toString());
+    location.href = url.toString();
+  });
+</script>
+</body>
+</html>
