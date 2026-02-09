@@ -60,7 +60,6 @@ input,select{
 .toggle button{
   flex:1;padding:10px;border-radius:999px;border:1px solid var(--line);
   background:#020617;color:#cbd5f5;font-weight:900
-  font-size:20px;
 }
 .toggle button.active{
   background:linear-gradient(135deg,#38bdf8,#0ea5e9);
@@ -242,12 +241,32 @@ details[open] summary{
   margin-top:4px;
 }
 
+.hero{
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  top:16px;
+  right:20px;
+  width:72px;
+  height:72px;
+  background-image:url("icon-192.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  opacity:0.35;
+  pointer-events:none;
+}
+
 </style>
 </head>
 <body>
 <div class="wrap">
 
-<div class="card">
+<div class="card hero">
+
 <h1>繩索纏繞摩擦力估算</h1>
 <div class="sub">Rope Friction Estimator</div>
 </div>
@@ -615,6 +634,3 @@ if(formulaDetails && arrow){
 
 
 </html>
-
-
-
