@@ -266,6 +266,33 @@ details[open] summary{
   pointer-events: none;
 }
 
+.infoBox{
+  font-size:13px;
+  color:#cbd5f5;
+  line-height:1.45;
+  padding:12px 14px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#020617;
+}
+.infoBox .title{
+  font-weight:900;
+  color:#cbd5f5;
+  margin-bottom:6px;
+}
+.infoBox .muted{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:6px;
+}
+.infoBox ul{
+  margin:6px 0 0;
+  padding-left:18px;
+}
+.infoBox li{
+  margin:6px 0;
+}
+
 </style>
 </head>
 <body>
@@ -381,11 +408,13 @@ details[open] summary{
 <div class="kv"><div>T1 手端</div><div id="outT1">—</div></div>
 <div class="kv"><div>T2 負重端</div><div id="outT2">—</div></div>
 </div>
-<div id="tExplain" class="footer" style="display:none;margin-top:12px">
-<b>T1 / T2 代表什麼意思？</b><br>
-• <b>T1（手端）</b>：代表你在打繩結、操作時所施加的力量。<br>
-• <b>T2（負重端）</b>：代表經過纏繞後，所產生並作用在負重端的摩擦力。<br>
-• 這個計算是在幫你看：<b>目前的纏繞方式，會把 T1 的操作力量放大成多少的 T2。</b>
+<div id="tExplain" class="infoBox" style="display:none;margin-top:12px">
+  <div class="title">T1 / T2 代表什麼意思？</div>
+  <ul>
+    <li><b>T1（手端）</b>：代表你在打繩結、操作時所施加的力量。</li>
+    <li><b>T2（負重端）</b>：代表經過纏繞後，所產生並作用在負重端的摩擦力。</li>
+    <li>這個計算是在幫你看：<b>目前的纏繞方式，會把 T1 的操作力量放大成多少的 T2。</b></li>
+  </ul>
 </div>
 </div>
 
@@ -594,7 +623,7 @@ function resetAll(){
   M.textContent="—"; k.textContent="—"; Meff.textContent="—";
   outT1.textContent="—"; outT2.textContent="—";
   kNote.style.display="none";
-  kNote.textContent="";
+  kNote.innerHTML="";
   tExplain.style.display="none";
 }
 
@@ -614,10 +643,10 @@ function calc(){
   // 額外提示：K=1 的工程提醒（僅在 K=1 時顯示）
   if (Math.abs(kVal - 1.0) < 1e-9) {
     kNote.style.display = "block";
-    kNote.textContent = "提醒：K＝1 代表「完全貼合、全角度都在工作」的理想假設；現場動態、鬆緊與接觸狀態不同時，實際有效摩擦通常會小於這個估算。";
+    kNote.innerHTML = `<div class="title">提醒</div><div>K＝1 代表「完全貼合、全角度都在工作」的理想假設；現場動態、鬆緊與接觸狀態不同時，實際有效摩擦通常會小於這個估算。</div>`;
   } else {
     kNote.style.display = "none";
-    kNote.textContent = "";
+    kNote.innerHTML = "";
   }
   // T1/T2 說明（算完才顯示）
   tExplain.style.display = "block";
