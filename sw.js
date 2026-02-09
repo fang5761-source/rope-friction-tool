@@ -1,12 +1,13 @@
-// v5.18 — force-refresh caches when assets change
-const CACHE_NAME = "rope-friction-tool-v5.18";
+// sw.js (v5.20) - cache-busted to ensure logo/assets update
+const CACHE_NAME = "rope-friction-cache-v5.20";
 const CORE_ASSETS = [
   "./",
   "./index.html",
+  "./android.html",
   "./manifest-friction.webmanifest",
-  "./apple-touch-icon.png",
   "./icon-192.png",
   "./icon-512.png",
+  "./apple-touch-icon.png",
   "./sunmoon_logo.png"
 ];
 
@@ -20,42 +21,47 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
-    await Promise.all(keys.map((k) => (k !== CACHE_NAME ? caches.delete(k) : null)));
+    await Promise.all(keys.map((k) => (k !== CACHE_NAME ? caches.delete(k) : Promise.resolve())));
     await self.clients.claim();
   })());
 });
 
-// Cache-first for same-origin, network-first for HTML navigation
+// Network-first for navigations (HTML), cache-first for static assets.
 self.addEventListener("fetch", (event) => {
   const req = event.request;
   const url = new URL(req.url);
 
-  // Only handle same-origin
+  // Only handle same-origin requests
   if (url.origin !== self.location.origin) return;
 
-  // Navigations: network-first (so updates show up)
-  if (req.mode === "navigate") {
+  // Always network-first for navigations to avoid stale HTML
+  if (req.mode === "navigate" || (req.headers.get("accept") || "").includes("text/html")) {
     event.respondWith((async () => {
       try {
         const fresh = await fetch(req);
         const cache = await caches.open(CACHE_NAME);
-        cache.put("./index.html", fresh.clone());
+        cache.put(req, fresh.clone());
         return fresh;
       } catch (e) {
-        const cached = await caches.match("./index.html");
-        return cached || caches.match("./");
+        const cached = await caches.match(req);
+        return cached || caches.match("./index.html");
       }
     })());
     return;
   }
 
-  // Other assets: cache-first
+  // For other assets: cache-first, but DO NOT ignore querystring
   event.respondWith((async () => {
-    const cached = await caches.match(req);
+    const cached = await caches.match(req, { ignoreSearch: false });
     if (cached) return cached;
-    const res = await fetch(req);
-    const cache = await caches.open(CACHE_NAME);
-    cache.put(req, res.clone());
-    return res;
+
+    try {
+      const fresh = await fetch(req);
+      const cache = await caches.open(CACHE_NAME);
+      cache.put(req, fresh.clone());
+      return fresh;
+    } catch (e) {
+      return cached;
+    }
   })());
 });
