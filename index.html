@@ -2,7 +2,7 @@
 <html lang="zh-Hant-TW">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <title>繩索纏繞摩擦力估算</title>
 <meta name="apple-mobile-web-app-title" content="纏繞摩擦力估算">
 <style>
@@ -18,7 +18,7 @@ body{
   color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
 }
-.wrap{max-width:860px;margin:0 auto;padding:16px;}
+.wrap{max-width:860px;margin:0 auto;padding:16px; padding-bottom:92px;}
 .card{
   background:linear-gradient(180deg,var(--panel),var(--panel2));
   border-radius:var(--r);
@@ -316,6 +316,58 @@ details[open] summary{
     drop-shadow(0 0 6px rgba(212,175,55,.10))
     drop-shadow(0 0 10px rgba(56,189,248,.10));
 }
+
+
+/* === iOS 防誤觸縮放（雙擊放大 / 手勢放大） === */
+html, body{
+  touch-action: manipulation; /* 降低雙擊縮放干擾（支援的瀏覽器） */
+}
+
+/* === 底部分享列（固定在底部，不擋內容） === */
+.bottomBar{
+  position:fixed;
+  left:0; right:0; bottom:0;
+  padding:10px 12px;
+  background:rgba(2,6,23,.92);
+  backdrop-filter: blur(8px);
+  border-top:1px solid var(--line);
+  z-index:9999;
+}
+.bottomBar .inner{
+  max-width:860px;
+  margin:0 auto;
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.shareBtn{
+  flex:1;
+  padding:12px 14px;
+  border-radius:14px;
+  border:1px solid rgba(56,189,248,.35);
+  background:linear-gradient(135deg, rgba(56,189,248,.95), rgba(14,165,233,.9));
+  color:#020617;
+  font-weight:1000;
+  font-size:15px;
+}
+.shareBtn:active{ transform: translateY(1px); }
+
+.toast{
+  position:fixed;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:70px;
+  background:rgba(0,0,0,.78);
+  color:#fff;
+  padding:10px 12px;
+  border-radius:999px;
+  font-size:13px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .18s ease;
+  z-index:10000;
+}
+.toast.show{ opacity:1; }
 
 </style>
 </head>
@@ -716,6 +768,95 @@ if(formulaDetails && arrow){
 
 
 </div>
+
+<!-- 底部分享 -->
+<div class="bottomBar" role="region" aria-label="分享">
+  <div class="inner">
+    <button type="button" class="shareBtn" onclick="shareToLine()">分享給 LINE / 複製連結</button>
+  </div>
+</div>
+<div id="toast" class="toast" aria-live="polite"></div>
+
+
+<script>
+/* ===========================
+   iOS：只防雙擊縮放（保留兩指縮放）
+   目標：避免 iPhone「快速按兩下就放大」干擾操作，同時保留兩指縮放
+   =========================== */
+(function(){
+  // 1) 保留兩指縮放：不阻擋 gesture 事件（讓 pinch zoom 正常）
+  // 2) 防雙擊放大（double-tap zoom）
+  let lastTouchEnd = 0;
+  document.addEventListener("touchend", function(e){
+    const now = Date.now();
+    if(now - lastTouchEnd <= 300){
+      e.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, {passive:false});
+})();
+</script>
+
+<script>
+/* ===========================
+   分享：優先呼叫系統分享（iOS/Android）
+   不支援時就複製一段可貼到 LINE 的文字
+   =========================== */
+function showToast(msg){
+  const t = document.getElementById("toast");
+  if(!t) return;
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(showToast._timer);
+  showToast._timer = setTimeout(()=>t.classList.remove("show"), 1600);
+}
+
+async function copyText(text){
+  try{
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+  }catch(err){}
+  // fallback
+  try{
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly","");
+    ta.style.position="fixed";
+    ta.style.left="-9999px";
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    return ok;
+  }catch(err){
+    return false;
+  }
+}
+
+async function shareToLine(){
+  const url = location.href;
+  const title = document.title || "散木工具";
+  const text = `${title}\n${url}`;
+
+  // 系統分享（iOS 會直接跳出分享面板，可選 LINE）
+  if(navigator.share){
+    try{
+      await navigator.share({ title, text, url });
+      showToast("已開啟分享面板");
+      return;
+    }catch(err){
+      // 使用者取消也會進來，改用複製不打擾
+    }
+  }
+
+  // 退而求其次：直接複製
+  const ok = await copyText(text);
+  showToast(ok ? "已複製，可貼到 LINE 群組" : "複製失敗：請手動長按複製網址");
+}
+</script>
+
 </body>
 
 
