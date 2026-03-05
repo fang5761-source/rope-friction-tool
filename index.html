@@ -598,6 +598,11 @@ k 代表：<b>你繞的角度中，有多少比例真的在工作。</b><br><br>
 </div>
 
 
+<div id="androidInstallWrap" style="margin:10px 0 14px; display:none;">
+  <button type="button" class="shareInlineBtn" id="installBtn">安裝（加入主畫面）</button>
+  <div class="hintInline">提示：若看到此按鈕，可直接安裝；若沒看到，代表目前瀏覽器不支援一鍵安裝，請依下方步驟手動加入。</div>
+</div>
+
 <b>iOS（iPhone）</b><br>
 1. 點開連結（可直接從 LINE 開啟）<br>
 2. 點選下方的「分享」圖示，往下滑<br>
@@ -903,8 +908,49 @@ async function shareToLine(){
   const ok = await copyText(clipboardText);
   showToast(ok ? "已複製，可貼到 LINE 群組" : "複製失敗：請手動長按複製網址");
 }
-</script>
 
+// Android「安裝到主畫面」(PWA install prompt)
+// 只有在符合條件的瀏覽器（多半是 Chrome / Samsung Internet）才會觸發 beforeinstallprompt
+let deferredInstallPrompt = null;
+const installWrap = document.getElementById('androidInstallWrap');
+const installBtn = document.getElementById('installBtn');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  // 阻止瀏覽器自動彈出提示，改由我們的「安裝」按鈕觸發
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  if (installWrap) installWrap.style.display = 'block';
+});
+
+window.addEventListener('appinstalled', () => {
+  deferredInstallPrompt = null;
+  if (installWrap) installWrap.style.display = 'none';
+  try { showToast('已安裝到主畫面'); } catch(_) {}
+});
+
+if (installBtn) {
+  installBtn.addEventListener('click', async () => {
+    if (!deferredInstallPrompt) {
+      try { showToast('此瀏覽器暫不支援一鍵安裝'); } catch(_) {}
+      return;
+    }
+    deferredInstallPrompt.prompt();
+    try {
+      const choice = await deferredInstallPrompt.userChoice;
+      // choice.outcome: 'accepted' | 'dismissed'
+      if (choice && choice.outcome === 'accepted') {
+        try { showToast('已送出安裝'); } catch(_) {}
+      } else {
+        try { showToast('已取消安裝'); } catch(_) {}
+      }
+    } catch(_) {}
+    deferredInstallPrompt = null;
+    if (installWrap) installWrap.style.display = 'none';
+  });
+}
+
+
+</script>
 </body>
 
 
