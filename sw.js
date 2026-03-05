@@ -1,67 +1,49 @@
-// sw.js (v5.20) - cache-busted to ensure logo/assets update
-const CACHE_NAME = "rope-friction-cache-v5.20";
-const CORE_ASSETS = [
+/* sw.js — simple offline cache for the teaching app */
+const CACHE_NAME = "fall-impact-v112-2026";
+const ASSETS = [
   "./",
   "./index.html",
-  "./android.html",
-  "./manifest-friction.webmanifest",
+  "./manifest.webmanifest",
+  "./sunmoon_logo.png",
   "./icon-192.png",
-  "./icon-512.png",
-  "./apple-touch-icon.png",
-  "./sunmoon_logo.png"
+  "./icon-512.png"
 ];
 
 self.addEventListener("install", (event) => {
-  self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(CORE_ASSETS))
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(ASSETS))
+      .then(() => self.skipWaiting())
   );
 });
 
 self.addEventListener("activate", (event) => {
-  event.waitUntil((async () => {
-    const keys = await caches.keys();
-    await Promise.all(keys.map((k) => (k !== CACHE_NAME ? caches.delete(k) : Promise.resolve())));
-    await self.clients.claim();
-  })());
+  event.waitUntil(
+    caches.keys()
+      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k))))
+      .then(() => self.clients.claim())
+  );
 });
 
-// Network-first for navigations (HTML), cache-first for static assets.
 self.addEventListener("fetch", (event) => {
   const req = event.request;
-  const url = new URL(req.url);
+  // Only handle GET
+  if (req.method !== "GET") return;
 
-  // Only handle same-origin requests
-  if (url.origin !== self.location.origin) return;
-
-  // Always network-first for navigations to avoid stale HTML
-  if (req.mode === "navigate" || (req.headers.get("accept") || "").includes("text/html")) {
-    event.respondWith((async () => {
-      try {
-        const fresh = await fetch(req);
-        const cache = await caches.open(CACHE_NAME);
-        cache.put(req, fresh.clone());
-        return fresh;
-      } catch (e) {
-        const cached = await caches.match(req);
-        return cached || caches.match("./index.html");
-      }
-    })());
-    return;
-  }
-
-  // For other assets: cache-first, but DO NOT ignore querystring
-  event.respondWith((async () => {
-    const cached = await caches.match(req, { ignoreSearch: false });
-    if (cached) return cached;
-
-    try {
-      const fresh = await fetch(req);
-      const cache = await caches.open(CACHE_NAME);
-      cache.put(req, fresh.clone());
-      return fresh;
-    } catch (e) {
-      return cached;
-    }
-  })());
+  event.respondWith(
+    caches.match(req).then((cached) => {
+      if (cached) return cached;
+      return fetch(req).then((res) => {
+        // Cache same-origin successful responses
+        try {
+          const url = new URL(req.url);
+          if (url.origin === self.location.origin && res && res.status === 200) {
+            const copy = res.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
+          }
+        } catch (_) {}
+        return res;
+      }).catch(() => cached);
+    })
+  );
 });
