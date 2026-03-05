@@ -18,7 +18,7 @@
 <meta name="twitter:description" content="散木團隊｜繩索教學輔助工具｜快速估算繩索纏繞摩擦力（張力比）">
 <meta name="twitter:image" content="">
 <link rel="icon" type="image/png" sizes="192x192" href="friction-icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="friction-friction-icon-512.png">
+<link rel="icon" type="image/png" sizes="512x512" href="friction-icon-512.png">
 <link rel="apple-touch-icon" href="friction-apple-touch-icon.png">
 
 <meta name="apple-mobile-web-app-title" content="纏繞摩擦力估算">
@@ -428,7 +428,7 @@ html, body{
 
 </div>
 
-<div class="card">
+<div class="card" id="inputCard">
 <div class="section">輸入條件</div>
 
 <label>纏繞圈數 n</label>
@@ -484,11 +484,11 @@ html, body{
 
 <div class="actions">
 <button type="button" class="calc" onclick="calc()">計算</button>
-<button type="button" class="reset" onclick="resetAll()">重設</button>
+<button type="button" class="reset" onclick="resetAll(true)">重設</button>
 </div>
 </div>
 
-<div class="card">
+<div class="card" id="resultCard">
 <div class="section">結果（建議以此判斷）</div>
 <div class="result-main">
 <div class="small">實際建議摩擦倍率（含 k）</div>
@@ -726,7 +726,7 @@ function getKValue(){
   return parseFloat(kSel.value);
 }
 
-function resetAll(){
+function resetAll(shouldScroll=false){
   n.value="3";
   muPreset.value="0.25";
   muVal.value="0.25";
@@ -742,6 +742,16 @@ function resetAll(){
   kNote.style.display="none";
   kNote.innerHTML="";
   tExplain.style.display="none";
+
+// 重設後：回到輸入區（手感更像 App，不用自己往上滑）
+if(shouldScroll){
+  const inputCard = document.getElementById('inputCard');
+  if(inputCard){
+    inputCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }else{
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
 }
 
 function calc(){
@@ -767,6 +777,12 @@ function calc(){
   }
   // T1/T2 說明（算完才顯示）
   tExplain.style.display = "block";
+
+  // 計算後：把「結果區」順順滑到畫面上方（方便不用一直往下找）
+  const resultCard = document.getElementById('resultCard');
+  if(resultCard){
+    resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
 
 /* 底部「收合」按鈕：一按就收合 */
