@@ -17,9 +17,9 @@
 <meta name="twitter:title" content="繩索纏繞摩擦力估算">
 <meta name="twitter:description" content="散木團隊｜繩索教學輔助工具｜快速估算繩索纏繞摩擦力（張力比）">
 <meta name="twitter:image" content="">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="friction-icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="friction-friction-icon-512.png">
+<link rel="apple-touch-icon" href="friction-apple-touch-icon.png">
 
 <meta name="apple-mobile-web-app-title" content="纏繞摩擦力估算">
 <style>
@@ -35,7 +35,7 @@ body{
   color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
 }
-.wrap{max-width:860px;margin:0 auto;padding:16px; padding-bottom:92px;}
+.wrap{max-width:860px;margin:0 auto;padding:16px;}
 .card{
   background:linear-gradient(180deg,var(--panel),var(--panel2));
   border-radius:var(--r);
@@ -340,40 +340,34 @@ html, body{
   touch-action: manipulation; /* 降低雙擊縮放干擾（支援的瀏覽器） */
 }
 
-/* === 底部分享列（固定在底部，不擋內容） === */
-.bottomBar{
-  position:fixed;
-  left:0; right:0; bottom:0;
-  padding:10px 12px;
-  background:rgba(2,6,23,.92);
-  backdrop-filter: blur(8px);
-  border-top:1px solid var(--line);
-  z-index:9999;
-}
-.bottomBar .inner{
-  max-width:860px;
-  margin:0 auto;
+/* === 分享按鈕（低調版：放在說明/頁尾內，不固定黏底） === */
+.shareInlineBtn{
+  width:100%;
   display:flex;
-  gap:10px;
   align-items:center;
-}
-.shareBtn{
-  flex:1;
-  padding:12px 14px;
+  justify-content:center;
+  gap:10px;
+  padding:11px 12px;
   border-radius:14px;
-  border:1px solid rgba(56,189,248,.35);
-  background:linear-gradient(135deg, rgba(56,189,248,.95), rgba(14,165,233,.9));
-  color:#020617;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.04);
+  color:#cbd5f5;
   font-weight:1000;
-  font-size:15px;
+  font-size:14px;
 }
-.shareBtn:active{ transform: translateY(1px); }
+.shareInlineBtn:active{ transform: translateY(1px); }
+.shareInlineBtn img{
+  width:22px;height:22px;
+  border-radius:6px;
+  flex-shrink:0;
+}
+
 
 .toast{
   position:fixed;
   left:50%;
   transform:translateX(-50%);
-  bottom:70px;
+  bottom:24px;
   background:rgba(0,0,0,.78);
   color:#fff;
   padding:10px 12px;
@@ -596,6 +590,14 @@ k 代表：<b>你繞的角度中，有多少比例真的在工作。</b><br><br>
 你可以直接點開連結使用，不一定要加入主畫面。<br>
 如果希望之後開啟更方便，可以依照下面步驟，將捷徑加入主畫面。<br><br>
 
+<div style="margin:10px 0 14px">
+  <button type="button" class="shareInlineBtn" onclick="shareToLine()">
+    分享 / 複製連結（貼到 LINE）
+  </button>
+  <div class="hintInline">提示：LINE 的預覽圖可能會有快取，需要時可在網址後加 <span class="pill">?v=1</span> 重新抓取。</div>
+</div>
+
+
 <b>iOS（iPhone）</b><br>
 1. 點開連結（可直接從 LINE 開啟）<br>
 2. 點選下方的「分享」圖示，往下滑<br>
@@ -645,8 +647,8 @@ AI 協作輔助／ChatGPT<br><br>
   const ogUrl = document.querySelector('meta[property="og:url"]');
   const twImg = document.querySelector('meta[name="twitter:image"]');
   const ogImg = document.querySelector('meta[property="og:image"]');
-  // 以 512 icon 當作預覽圖（請確保 repo 有 icon-512.png）
-  const imgUrl = location.origin + location.pathname.replace(/[^\/]*$/, '') + 'icon-512.png';
+  // 以 512 icon 當作預覽圖（請確保 repo 有 friction-icon-512.png）
+  const imgUrl = location.origin + location.pathname.replace(/[^\/]*$/, '') + 'friction-friction-icon-512.png';
 
   if(ogUrl) ogUrl.setAttribute('content', canonicalUrl);
   if(ogImg) ogImg.setAttribute('content', imgUrl);
@@ -803,12 +805,6 @@ if(formulaDetails && arrow){
 
 </div>
 
-<!-- 底部分享 -->
-<div class="bottomBar" role="region" aria-label="分享">
-  <div class="inner">
-    <button type="button" class="shareBtn" onclick="shareToLine()">分享給 LINE / 複製連結</button>
-  </div>
-</div>
 <div id="toast" class="toast" aria-live="polite"></div>
 
 
@@ -869,7 +865,7 @@ async function copyText(text){
   }
 }
 
-async async function shareToLine(){
+async function shareToLine(){
   const url = location.href;
   const title = document.title || "散木工具";
   // 分享文字不再重複塞網址（網址交給 url 欄位）
