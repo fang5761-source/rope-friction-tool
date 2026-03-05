@@ -4,6 +4,23 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <title>繩索纏繞摩擦力估算</title>
+<meta name="description" content="散木團隊｜繩索教學輔助工具｜快速估算繩索纏繞摩擦力（張力比）">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="散木團隊">
+<meta property="og:title" content="繩索纏繞摩擦力估算">
+<meta property="og:description" content="散木團隊｜繩索教學輔助工具｜快速估算繩索纏繞摩擦力（張力比）">
+<meta property="og:url" content="">
+<meta property="og:image" content="">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="繩索纏繞摩擦力估算">
+<meta name="twitter:description" content="散木團隊｜繩索教學輔助工具｜快速估算繩索纏繞摩擦力（張力比）">
+<meta name="twitter:image" content="">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
 <meta name="apple-mobile-web-app-title" content="纏繞摩擦力估算">
 <style>
 :root{
@@ -619,6 +636,23 @@ AI 協作輔助／ChatGPT<br><br>
 </div>
 
 <script>
+
+// 動態補上 OG URL / Image（讓 GitHub Pages 不同子路徑也正確）
+// 注意：LINE 抓預覽是由伺服器端爬蟲讀取「HTML 原始碼」的 meta。
+// 這段主要用來保險：若你未來換路徑，頁面自己也能保持一致。
+(function(){
+  const canonicalUrl = location.origin + location.pathname;
+  const ogUrl = document.querySelector('meta[property="og:url"]');
+  const twImg = document.querySelector('meta[name="twitter:image"]');
+  const ogImg = document.querySelector('meta[property="og:image"]');
+  // 以 512 icon 當作預覽圖（請確保 repo 有 icon-512.png）
+  const imgUrl = location.origin + location.pathname.replace(/[^\/]*$/, '') + 'icon-512.png';
+
+  if(ogUrl) ogUrl.setAttribute('content', canonicalUrl);
+  if(ogImg) ogImg.setAttribute('content', imgUrl);
+  if(twImg) twImg.setAttribute('content', imgUrl);
+})();
+
 let knownSide="T1";
 
 const n = document.getElementById("n");
@@ -835,10 +869,11 @@ async function copyText(text){
   }
 }
 
-async function shareToLine(){
+async async function shareToLine(){
   const url = location.href;
   const title = document.title || "散木工具";
-  const text = `${title}\n${url}`;
+  // 分享文字不再重複塞網址（網址交給 url 欄位）
+  const text = `${title}`;
 
   // 系統分享（iOS 會直接跳出分享面板，可選 LINE）
   if(navigator.share){
@@ -851,8 +886,9 @@ async function shareToLine(){
     }
   }
 
-  // 退而求其次：直接複製
-  const ok = await copyText(text);
+  // 退而求其次：直接複製（只放一次網址）
+  const clipboardText = `${title}\n${url}`;
+  const ok = await copyText(clipboardText);
   showToast(ok ? "已複製，可貼到 LINE 群組" : "複製失敗：請手動長按複製網址");
 }
 </script>
