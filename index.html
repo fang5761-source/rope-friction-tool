@@ -1430,7 +1430,7 @@ function resetAll(){
 if("serviceWorker" in navigator){
   window.addEventListener("load", ()=>{
     // 只註冊一次，避免 Android 上反覆 controllerchange → reload 造成閃爍/點擊失效
-    navigator.serviceWorker.register("./sw.js?v=123").catch(()=>{});
+    navigator.serviceWorker.register("./sw.js").catch(()=>{});
   });
 }
 
@@ -1835,6 +1835,44 @@ document.addEventListener('DOMContentLoaded', ()=>{
   document.querySelectorAll('details > summary').forEach((s)=>{
     s.style.touchAction = 'manipulation';
   });
+
+  // PATCH2：Samsung/Android 某些機型會同時觸發 click + 觸控事件，導致 <details>「秒開秒合」
+  // 做法：在 summary 上攔截 pointerup，自己切換 open，並在短時間內忽略後續 click。
+  (function(){
+    const ua = navigator.userAgent || "";
+    const isSamsung = /SamsungBrowser/i.test(ua);
+    const isAndroid = /Android/i.test(ua);
+    if(!(isSamsung || isAndroid)) return;
+
+    document.querySelectorAll('details > summary').forEach((s)=>{
+      let lastToggleAt = 0;
+      // 阻止後續 click 造成第二次切換
+      s.addEventListener('click', (e)=>{
+        const now = Date.now();
+        if(now - lastToggleAt < 350){
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, true);
+
+      s.addEventListener('pointerup', (e)=>{
+        // 只處理主要指標（手指/滑鼠）
+        if(e.button && e.button !== 0) return;
+        const d = s.parentElement;
+        if(!d || d.tagName.toLowerCase() !== 'details') return;
+
+        // 避免在 summary 內點到連結/按鈕時干擾
+        const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : "";
+        if(['a','button','input','select','textarea','label'].includes(tag)) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+        lastToggleAt = Date.now();
+        d.open = !d.open;
+      }, {passive:false, capture:true});
+    });
+  })();
+
 
   // 預設全部收合（除非 HTML 明確寫 open）
   document.querySelectorAll('details').forEach((d)=>{

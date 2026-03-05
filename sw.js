@@ -1,9 +1,11 @@
 /* sw.js — simple offline cache for the teaching app */
-const CACHE_NAME = "fall-impact-v112-2026";
+const CACHE_NAME = "fall-impact-v113-2026";
 const ASSETS = [
   "./",
   "./index.html",
+  "./index.html?v=123",
   "./manifest.webmanifest",
+  "./manifest.webmanifest?v=123",
   "./sunmoon_logo.png",
   "./icon-192.png",
   "./icon-512.png"
