@@ -1,109 +1,103 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Capstan 繩索張力放大公式</title>
 
-<title>Capstan 繩索張力放大公式</title>
+  <meta name="theme-color" content="#0b1220">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-<style>
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: #f5f6f7;
-  color: #333;
-  text-align: center;
-}
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f6f7;
+      color: #333;
+      text-align: center;
+    }
 
-.container {
-  max-width: 420px;
-  margin: 0 auto;
-  padding: 40px 20px;
-}
+    .container {
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
 
-.logo {
-  width: 90px;
-  margin-bottom: 16px;
-}
+    .logo {
+      width: 90px;
+      margin-bottom: 16px;
+    }
 
-h1 {
-  font-size: 22px;
-  margin-bottom: 10px;
-}
+    h1 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
 
-.subtitle {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 30px;
-}
+    .subtitle {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 30px;
+    }
 
-.btn {
-  display: block;
-  width: 100%;
-  padding: 14px;
-  margin: 10px 0;
-  font-size: 16px;
-  border-radius: 10px;
-  border: none;
-  background: #2F3A33;
-  color: white;
-  text-decoration: none;
-}
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      margin: 10px 0;
+      font-size: 16px;
+      border-radius: 10px;
+      border: none;
+      background: #2F3A33;
+      color: white;
+      text-decoration: none;
+      box-sizing: border-box;
+    }
 
-.btn.secondary {
-  background: #ffffff;
-  color: #2F3A33;
-  border: 1px solid #2F3A33;
-}
+    .note {
+      font-size: 13px;
+      color: #888;
+      margin-top: 20px;
+      line-height: 1.6;
+    }
 
-.note {
-  font-size: 13px;
-  color: #888;
-  margin-top: 20px;
-  line-height: 1.6;
-}
-
-.guide {
-  text-align: left;
-  font-size: 14px;
-  margin-top: 30px;
-  line-height: 1.7;
-}
-</style>
+    .guide {
+      text-align: left;
+      font-size: 14px;
+      margin-top: 30px;
+      line-height: 1.7;
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="container">
+  <div class="container">
+    <img src="sunmoon_logo.png" class="logo" alt="散木團隊 Logo">
 
-  <img src="sunmoon_logo.png" class="logo">
+    <h1>Capstan 繩索張力放大公式</h1>
+    <div class="subtitle">散木｜繩索教學現場工具</div>
 
-  <h1>Capstan 繩索張力放大公式</h1>
-  <div class="subtitle">散木｜繩索教學現場工具</div>
+    <a href="/app/" class="btn">👉 進入計算工具</a>
 
-  <a href="/app/" class="btn">👉 進入計算工具</a>
+    <div class="note">
+      若主畫面名稱或 icon 尚未更新，請重新加入主畫面
+    </div>
 
-  <div class="note">
-    若主畫面名稱或 icon 尚未更新，請重新加入主畫面
+    <div class="guide">
+      <strong>📱 iPhone 安裝方式</strong><br>
+      1. 請用 Safari 開啟本頁<br>
+      2. 點擊下方「分享」按鈕<br>
+      3. 選擇「加入主畫面」<br><br>
+
+      <strong>🤖 Android 安裝方式</strong><br>
+      1. 點開連結（可直接從 LINE 開啟）<br>
+      2. 點選畫面右下角的「⋮」<br>
+      3. 選擇「使用預設瀏覽器開啟」<br>
+      4. 在畫面右上角點選「⋮」<br>
+      5. 往下滑，選擇「加入主畫面」或「安裝 App」<br><br>
+
+      ⚠️ 若直接進入全畫面，請先刪除舊主畫面圖示再重新操作
+    </div>
   </div>
-
-  <div class="guide">
-    <strong>📱 iPhone 安裝方式</strong><br>
-    1. 請用 Safari 開啟本頁<br>
-    2. 點擊下方「分享」按鈕<br>
-    3. 選擇「加入主畫面」<br><br>
-
-    <strong>🤖 Android 安裝方式</strong><br>
-    1. 點開連結（可直接從 LINE 開啟）<br>
-    2. 點選畫面右下角的「⋮」<br>
-    3. 選擇「使用預設瀏覽器開啟」<br>
-    4. 在畫面右上角點選「⋮」<br>
-    5. 往下滑，選擇「加入主畫面」或「安裝 App」<br><br>
-
-    ⚠️ 若直接進入全畫面，請先刪除舊主畫面圖示再重新操作
-  </div>
-
-</div>
 
 </body>
 </html>
