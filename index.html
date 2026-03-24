@@ -36,6 +36,7 @@ body{
   background:radial-gradient(1200px 600px at 10% -20%, #1e293b 0%, transparent 50%),var(--bg);
   color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  touch-action: manipulation;
 }
 .wrap{max-width:860px;margin:0 auto;padding:16px;}
 .card{
@@ -44,23 +45,21 @@ body{
   padding:18px;margin-bottom:14px;border:1px solid var(--line);
 }
 
-/* ===== Header (針對 iPhone 優化：小字體 + 防擠壓) ===== */
+/* ===== Header (修正 iPhone 擠壓與標題顯示) ===== */
 .card.hero{padding:18px 18px 16px}
 .title-wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.title-text{flex:1; min-width: 0;} /* 關鍵：這行確保文字不會撐開容器 */
+.title-text{flex:1; min-width: 0;} 
 .title-text h1{
   margin:0;
-  font-size:16px; /* 再次縮小字體以應對窄螢幕 */
+  font-size:16px; 
   font-weight:1000;
   letter-spacing:.2px;
-  white-space: normal; /* 允許換行 */
+  white-space: normal; 
   line-height:1.4;
   color: #fff;
 }
 .title-divider{
-  width:100%;
-  height:1px;
-  margin:10px 0 8px;
+  width:100%; height:1px; margin:10px 0 8px;
   background:linear-gradient(90deg, transparent, rgba(212,175,55,0.2), transparent);
 }
 .subtitle{font-size:12px;color:var(--muted);letter-spacing:.2px;line-height:1.4;}
@@ -68,7 +67,7 @@ body{
   width:52px;height:52px;
   object-fit: contain;
   opacity:0.75; 
-  flex-shrink:0; /* 絕對不允許 Logo 被縮小 */
+  flex-shrink:0; 
   border-radius:12px;
   filter: drop-shadow(0 0 6px rgba(56,189,248,.15));
 }
@@ -149,6 +148,17 @@ details[open] summary::after{ transform: rotate(90deg); }
 }
 .toast.show{ opacity:1; }
 
+.update-banner {
+  position: fixed;
+  bottom: 80px; left: 50%; transform: translateX(-50%);
+  background: var(--accent); color: #020617; padding: 12px 20px;
+  border-radius: 14px; font-weight: 1000; z-index: 99999;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5); display: none;
+  align-items: center; gap: 12px; animation: slideUp 0.3s ease-out;
+}
+.update-banner.show { display: flex; }
+@keyframes slideUp { from { bottom: 0; opacity: 0; } to { bottom: 80px; opacity: 1; } }
+
 .shareInlineBtn{
   width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:11px 12px;border-radius:14px;
   border:1px solid var(--line);background:rgba(255,255,255,.04);color:#cbd5f5;font-weight:1000;font-size:14px;
@@ -170,20 +180,26 @@ details[open] summary::after{ transform: rotate(90deg); }
     </div>
   </div>
 
-  <!-- 公式部分 -->
+  <!-- 公式與計算模型 -->
   <div class="card">
     <details id="formulaDetails">
       <summary class="section"><span>計算模型與公式</span></summary>
       <div class="explain" style="margin-top:10px">
-        <b>核心公式：</b><br>
-        <span class="mono">T₂=T₁×e^(μ×θ)</span><br>
-        <div class="hintInline">（純理論，用來理解摩擦放大的趨勢）</div>
-        <b style="display:block;margin-top:10px">工程修正：</b>
-        <span class="mono">θ_eff=k×θ</span><br>
-        <div class="hintInline">（實際操作時，角度不可能全部有效）</div>
-        <b style="display:block;margin-top:10px">實際估算：</b>
-        <span class="mono">T₂≈T₁×e^(μ×θ_eff)</span><br>
-        <div class="hintInline">（現場判斷時，看這一行就好）</div>
+        <div style="margin-bottom:12px">
+          <b>核心公式：</b><br>
+          <span class="mono">T₂=T₁×e^(μ×θ)</span><br>
+          <div class="hintInline">（純理論，用來理解摩擦放大的趨勢）</div>
+        </div>
+        <div style="margin-bottom:12px">
+          <b>工程修正：</b><br>
+          <span class="mono">θ_eff=k×θ</span><br>
+          <div class="hintInline">（實際操作時，角度不可能全部有效）</div>
+        </div>
+        <div>
+          <b>實際估算：</b><br>
+          <span class="mono">T₂≈T₁×e^(μ×θ_eff)</span><br>
+          <div class="hintInline">（現場判斷時，看這一行就好）</div>
+        </div>
       </div>
     </details>
     <div class="hintInline" style="margin-top:12px">
@@ -191,9 +207,10 @@ details[open] summary::after{ transform: rotate(90deg); }
     </div>
   </div>
 
-  <!-- 輸入條件 -->
+  <!-- 輸入條件區 -->
   <div class="card" id="inputCard">
     <div class="section">輸入條件</div>
+
     <label>纏繞圈數 n</label>
     <input id="n" type="number" step="0.01" value="3"/>
     <div class="quick">
@@ -209,25 +226,26 @@ details[open] summary::after{ transform: rotate(90deg); }
       <option value="0.18">繩索 ↔ 金屬（偏滑）</option>
       <option value="0.25">繩索 ↔ 金屬（一般乾燥）</option>
       <option value="0.35">繩索 ↔ 樹皮（乾）</option>
+      <option value="0.45">繩索 ↔ 樹皮（濕/苔/泥）</option>
       <option value="0.22">繩索 ↔ 繩索（新繩）</option>
       <option value="custom">自訂 μ（進階）</option>
     </select>
 
     <label style="margin-top:10px">摩擦係數 μ（可微調）</label>
     <input id="muVal" type="number" step="0.01" value="0.25" inputmode="decimal"/>
-    <div class="kMini">建議範圍：0.05～0.80</div>
+    <div class="kMini">建議範圍：0.05～0.80（依材質、濕度而明顯不同）</div>
 
     <label>k 建議情境</label>
     <select id="kSel" onchange="refreshKUI()">
       <option value="0.8">穩定操作（示範 / 靜態）</option>
       <option value="0.7">一般教學（半動態）</option>
       <option value="0.5">動態操作（快速 / 走動）</option>
-      <option value="custom" selected>自訂（工程判斷）</option>
+      <option value="custom" selected>自訂（工程判斷）</button>
     </select>
 
     <div class="kCustomWrap" id="kCustomWrap">
       <input id="kCustom" type="number" step="0.01" value="0.70" min="0.30" max="1.00" inputmode="decimal"/>
-      <div class="kMini">範圍建議：0.30～1.00</div>
+      <div class="kMini">範圍建議：0.30～1.00（受力越完整，k 越接近 1.00）</div>
     </div>
 
     <label>已知哪一端？</label>
@@ -238,6 +256,7 @@ details[open] summary::after{ transform: rotate(90deg); }
 
     <label id="forceLabel">已知拉力（T1，kgf）</label>
     <input id="force" type="number" value="1"/>
+    <div class="hintInline">數值：<b>1</b> <span class="pill">預設值</span>（可用 1 看倍率）</div>
 
     <div class="actions">
       <button type="button" class="calc" onclick="calc()">計算</button>
@@ -245,7 +264,7 @@ details[open] summary::after{ transform: rotate(90deg); }
     </div>
   </div>
 
-  <!-- 結果 -->
+  <!-- 結果區 -->
   <div class="card" id="resultCard">
     <div class="section">結果（建議以此判斷）</div>
     <div class="result-main">
@@ -260,21 +279,32 @@ details[open] summary::after{ transform: rotate(90deg); }
     <div id="tExplain" class="infoBox" style="display:none;margin-top:12px">
       <div class="title">T1 / T2 代表什麼意思？</div>
       <ul>
-        <li><b>T1（手端）</b>：代表你在打繩結、操作時所施加的力量。</li>
-        <li><b>T2（負重端）</b>：代表經過纏繞後，產生的摩擦放大效果。</li>
+        <li><b>T1（手端）</b>：你在操作時施加的力量。</li>
+        <li><b>T2（負重端）</b>：經過纏繞後產生並作用在負重端的摩擦力。</li>
+        <li>目前的配置，會把 T1 的操作力量放大成多少的 T2。</li>
       </ul>
     </div>
   </div>
 
-  <!-- 說明與資訊區 (確保完整) -->
+  <!-- 說明資訊區 (全數補回) -->
   <div class="card">
     <details id="infoA">
       <summary>第一次使用？先看這裡</summary>
       <div class="explain" style="margin-top:10px">
         <b>【為什麼要看摩擦力？】</b><br>
-        很多人會直覺認為繞多一點就安全，但在實際操作中，摩擦力太大反而可能讓控制變得困難。<br><br>
+        很多人會直覺繞多一點就安全。但在實際操作中，<b>摩擦力太大反而可能讓控制變得困難，增加風險。</b><br><br>
+        摩擦力影響的是：<br>
+        • 放手是否順暢<br>
+        • 動作是否可控<br>
+        • 繩索是否過熱<br><br>
         <b>【這個工具在幫你做什麼？】</b><br>
-        幫你把「直覺」變成數值。當你心中有一個繞法時，看一眼摩擦是否太大、是否還在可控範圍內。<br><br>
+        幫你把「直覺」變成數據。當你繞完後，看一眼：<br>
+        • 摩擦是否太大？<br>
+        • 是否還在你能控制的範圍？<br><br>
+        <b>【怎麼快速使用（30 秒版）】</b><br>
+        1. 輸入實際繞了幾圈（n）。<br>
+        2. 選擇摩擦情境（如：一般乾燥）。<br>
+        3. 看「實際建議摩擦倍率」，若看到「偏高」代表可以少繞一點。
         <button type="button" class="collapseBtn" data-collapse="#infoA">收合</button>
       </div>
     </details>
@@ -282,8 +312,12 @@ details[open] summary::after{ transform: rotate(90deg); }
     <details id="infoB" style="margin-top:12px">
       <summary>K 的工程意義與使用說明</summary>
       <div class="explain" style="margin-top:10px">
-        k 代表：<b>你繞的角度中，有多少比例真的在工作。</b><br><br>
-        理論公式假設每一圈都完全貼合；但實務上因受力不均，有效摩擦角度會小於幾何角度。<br>
+        k 代表：<b>你繞的角度中，有多少比例真的在產生摩擦。</b><br><br>
+        理論公式假設每一圈都完全貼合；實務上因受力不均、鬆緊不同，有效角度會小於幾何角度。<br>
+        工程表示法：<span class="mono">k = θ_eff / θ_total</span><br><br>
+        <b>K 的建議選用：</b><br>
+        • 0.8：站定、緩慢施作時選用。<br>
+        • 0.5：動態走動、快速操作時選用。
         <button type="button" class="collapseBtn" data-collapse="#infoB">收合</button>
       </div>
     </details>
@@ -292,7 +326,15 @@ details[open] summary::after{ transform: rotate(90deg); }
       <summary>加入主畫面（選用）</summary>
       <div class="explain" style="margin-top:10px">
         <button type="button" class="shareInlineBtn" onclick="shareToLine()">分享 / 複製連結</button>
-        <p><b>iOS：</b>點擊「分享」圖示並選擇「加入主畫面」。</p>
+        <div style="margin: 14px 0;">
+          <b>iOS（iPhone）</b><br>
+          1. 點擊瀏覽器底部的「分享」圖示。<br>
+          2. 往下滑動找到「加入主畫面」。<br>
+          3. 點擊「加入」。<br><br>
+          <b>Android</b><br>
+          1. 點擊右上角或右下角的「⋮」。<br>
+          2. 選擇「加到主畫面」或「安裝」。
+        </div>
         <button type="button" class="collapseBtn" data-collapse="#addToHome">收合</button>
       </div>
     </details>
@@ -305,14 +347,20 @@ details[open] summary::after{ transform: rotate(90deg); }
         哲學分析顧問／林秀珍教授<br>
         工具設計與互動介面／吳佩芳（朵朵）<br>
         AI 協作輔助／ChatGPT<br><br>
-        <b>版本 v5.10｜2026</b>
+        <b>版本 v5.13｜2026</b>
       </div>
     </details>
   </div>
 
   <div class="footer">
-    【教學使用聲明】本工具為教學與風險判斷輔助使用，所有結果皆為估算值。
+    【教學使用聲明】本工具為教學與判斷輔助使用，所有結果皆為估算值，不得取代現場判斷。
   </div>
+</div>
+
+<!-- 自動更新提示橫幅 -->
+<div id="updateBanner" class="update-banner">
+  <span>💡 發現新版本！</span>
+  <button onclick="location.reload(true)" style="background:#020617; color:#fff; border:0; padding:8px 16px; border-radius:10px; font-weight:900; cursor:pointer;">立即更新</button>
 </div>
 
 <div id="toast" class="toast"></div>
@@ -396,9 +444,20 @@ document.addEventListener("click", function(e){
   document.querySelector(btn.getAttribute("data-collapse")).removeAttribute("open");
 });
 
+/* PWA 自動更新偵測 */
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(()=>{});
+  navigator.serviceWorker.register('./sw.js').then(reg => {
+    reg.addEventListener('updatefound', () => {
+      const newWorker = reg.installing;
+      newWorker.addEventListener('statechange', () => {
+        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+          document.getElementById('updateBanner').classList.add('show');
+        }
+      });
+    });
+  }).catch(()=>{});
+  navigator.serviceWorker.ready.then(reg => {
+    if (reg.waiting) document.getElementById('updateBanner').classList.add('show');
   });
 }
 </script>
