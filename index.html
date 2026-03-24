@@ -44,42 +44,33 @@ body{
   padding:18px;margin-bottom:14px;border:1px solid var(--line);
 }
 
-/* ===== Header (修正標題過長與 Logo 擠壓問題) ===== */
+/* ===== Header (針對 iPhone 優化：小字體 + 防擠壓) ===== */
 .card.hero{padding:18px 18px 16px}
-.title-wrap{display:flex;align-items:center;justify-content:space-between;gap:14px}
-.title-text{flex:1; min-width: 0;} 
+.title-wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.title-text{flex:1; min-width: 0;} /* 關鍵：這行確保文字不會撐開容器 */
 .title-text h1{
   margin:0;
-  font-size:18px; 
+  font-size:16px; /* 再次縮小字體以應對窄螢幕 */
   font-weight:1000;
   letter-spacing:.2px;
-  white-space: normal; 
-  line-height:1.3;
+  white-space: normal; /* 允許換行 */
+  line-height:1.4;
   color: #fff;
 }
 .title-divider{
   width:100%;
   height:1px;
   margin:10px 0 8px;
-  background:linear-gradient(
-    90deg,
-    transparent,
-    rgba(212,175,55,0.14),
-    rgba(212,175,55,0.28),
-    rgba(212,175,55,0.14),
-    transparent
-  );
+  background:linear-gradient(90deg, transparent, rgba(212,175,55,0.2), transparent);
 }
-.subtitle{font-size:13px;color:var(--muted);letter-spacing:.2px;line-height:1.4;}
+.subtitle{font-size:12px;color:var(--muted);letter-spacing:.2px;line-height:1.4;}
 .title-logo{
-  width:56px;height:56px;
+  width:52px;height:52px;
   object-fit: contain;
-  opacity:0.65; 
-  flex-shrink:0;
-  border-radius:14px;
-  filter:
-    drop-shadow(0 0 6px rgba(212,175,55,.10))
-    drop-shadow(0 0 10px rgba(56,189,248,.10));
+  opacity:0.75; 
+  flex-shrink:0; /* 絕對不允許 Logo 被縮小 */
+  border-radius:12px;
+  filter: drop-shadow(0 0 6px rgba(56,189,248,.15));
 }
 
 .section{font-size:15px;font-weight:900;margin-bottom:10px}
@@ -167,6 +158,7 @@ details[open] summary::after{ transform: rotate(90deg); }
 <body>
 
 <div class="wrap">
+  <!-- Header -->
   <div class="card hero">
     <div class="title-wrap">
       <div class="title-text">
@@ -178,6 +170,7 @@ details[open] summary::after{ transform: rotate(90deg); }
     </div>
   </div>
 
+  <!-- 公式部分 -->
   <div class="card">
     <details id="formulaDetails">
       <summary class="section"><span>計算模型與公式</span></summary>
@@ -198,6 +191,7 @@ details[open] summary::after{ transform: rotate(90deg); }
     </div>
   </div>
 
+  <!-- 輸入條件 -->
   <div class="card" id="inputCard">
     <div class="section">輸入條件</div>
     <label>纏繞圈數 n</label>
@@ -221,7 +215,7 @@ details[open] summary::after{ transform: rotate(90deg); }
 
     <label style="margin-top:10px">摩擦係數 μ（可微調）</label>
     <input id="muVal" type="number" step="0.01" value="0.25" inputmode="decimal"/>
-    <div class="kMini">建議範圍：0.05～0.80（依材質、濕度、表面粗糙度而定）</div>
+    <div class="kMini">建議範圍：0.05～0.80</div>
 
     <label>k 建議情境</label>
     <select id="kSel" onchange="refreshKUI()">
@@ -233,7 +227,7 @@ details[open] summary::after{ transform: rotate(90deg); }
 
     <div class="kCustomWrap" id="kCustomWrap">
       <input id="kCustom" type="number" step="0.01" value="0.70" min="0.30" max="1.00" inputmode="decimal"/>
-      <div class="kMini">範圍建議：0.30～1.00（受力越完整，k 越接近 1.00）</div>
+      <div class="kMini">範圍建議：0.30～1.00</div>
     </div>
 
     <label>已知哪一端？</label>
@@ -244,7 +238,6 @@ details[open] summary::after{ transform: rotate(90deg); }
 
     <label id="forceLabel">已知拉力（T1，kgf）</label>
     <input id="force" type="number" value="1"/>
-    <div class="hintInline">數值：<b>1</b> <span class="pill">預設值</span>（可用預設值看倍率）</div>
 
     <div class="actions">
       <button type="button" class="calc" onclick="calc()">計算</button>
@@ -252,6 +245,7 @@ details[open] summary::after{ transform: rotate(90deg); }
     </div>
   </div>
 
+  <!-- 結果 -->
   <div class="card" id="resultCard">
     <div class="section">結果（建議以此判斷）</div>
     <div class="result-main">
@@ -267,12 +261,12 @@ details[open] summary::after{ transform: rotate(90deg); }
       <div class="title">T1 / T2 代表什麼意思？</div>
       <ul>
         <li><b>T1（手端）</b>：代表你在打繩結、操作時所施加的力量。</li>
-        <li><b>T2（負重端）</b>：代表經過纏繞後，所產生的摩擦力放大效果。</li>
-        <li>目前的纏繞方式，會把 T1 的操作力量放大成多少的 T2。</li>
+        <li><b>T2（負重端）</b>：代表經過纏繞後，產生的摩擦放大效果。</li>
       </ul>
     </div>
   </div>
 
+  <!-- 說明與資訊區 (確保完整) -->
   <div class="card">
     <details id="infoA">
       <summary>第一次使用？先看這裡</summary>
@@ -281,10 +275,6 @@ details[open] summary::after{ transform: rotate(90deg); }
         很多人會直覺認為繞多一點就安全，但在實際操作中，摩擦力太大反而可能讓控制變得困難。<br><br>
         <b>【這個工具在幫你做什麼？】</b><br>
         幫你把「直覺」變成數值。當你心中有一個繞法時，看一眼摩擦是否太大、是否還在可控範圍內。<br><br>
-        <b>【怎麼快速使用】</b><br>
-        1. 輸入繞了幾圈 (n)<br>
-        2. 選擇摩擦情境與 k 情境<br>
-        3. 看「建議摩擦倍率」，若看到「偏高」代表可以考慮少繞一點。
         <button type="button" class="collapseBtn" data-collapse="#infoA">收合</button>
       </div>
     </details>
@@ -294,7 +284,6 @@ details[open] summary::after{ transform: rotate(90deg); }
       <div class="explain" style="margin-top:10px">
         k 代表：<b>你繞的角度中，有多少比例真的在工作。</b><br><br>
         理論公式假設每一圈都完全貼合；但實務上因受力不均，有效摩擦角度會小於幾何角度。<br>
-        <span class="mono">k = θ_eff / θ_total</span>
         <button type="button" class="collapseBtn" data-collapse="#infoB">收合</button>
       </div>
     </details>
@@ -303,11 +292,7 @@ details[open] summary::after{ transform: rotate(90deg); }
       <summary>加入主畫面（選用）</summary>
       <div class="explain" style="margin-top:10px">
         <button type="button" class="shareInlineBtn" onclick="shareToLine()">分享 / 複製連結</button>
-        <div id="androidInstallWrap" style="margin-top:10px; display:none;">
-          <button type="button" class="shareInlineBtn" id="installBtn">安裝（加入主畫面）</button>
-        </div>
         <p><b>iOS：</b>點擊「分享」圖示並選擇「加入主畫面」。</p>
-        <p><b>Android：</b>點擊「⋮」選擇「加到主畫面」。</p>
         <button type="button" class="collapseBtn" data-collapse="#addToHome">收合</button>
       </div>
     </details>
@@ -320,13 +305,13 @@ details[open] summary::after{ transform: rotate(90deg); }
         哲學分析顧問／林秀珍教授<br>
         工具設計與互動介面／吳佩芳（朵朵）<br>
         AI 協作輔助／ChatGPT<br><br>
-        <b>版本 v5.09｜2026</b>
+        <b>版本 v5.10｜2026</b>
       </div>
     </details>
   </div>
 
   <div class="footer">
-    【教學使用聲明】本工具為教學與風險判斷輔助使用，所有結果皆為估算值，不得取代現場判斷。
+    【教學使用聲明】本工具為教學與風險判斷輔助使用，所有結果皆為估算值。
   </div>
 </div>
 
@@ -335,27 +320,19 @@ details[open] summary::after{ transform: rotate(90deg); }
 <script>
 let knownSide="T1";
 const n = document.getElementById("n");
-const muPreset = document.getElementById("muPreset");
 const muVal = document.getElementById("muVal");
 const kSel = document.getElementById("kSel");
 const kCustomWrap = document.getElementById("kCustomWrap");
 const kCustom = document.getElementById("kCustom");
-const btnT1 = document.getElementById("btnT1");
-const btnT2 = document.getElementById("btnT2");
-const forceLabel = document.getElementById("forceLabel");
-const force = document.getElementById("force");
-const M = document.getElementById("M");
-const k = document.getElementById("k");
-const Meff = document.getElementById("Meff");
 const outT1 = document.getElementById("outT1");
 const outT2 = document.getElementById("outT2");
 const tExplain = document.getElementById("tExplain");
 
 function setSide(s){
   knownSide=s;
-  btnT1.classList.toggle("active",s==="T1");
-  btnT2.classList.toggle("active",s==="T2");
-  forceLabel.textContent=s==="T1"?"已知拉力（T1，kgf）":"已知拉力（T2，kgf）";
+  document.getElementById("btnT1").classList.toggle("active",s==="T1");
+  document.getElementById("btnT2").classList.toggle("active",s==="T2");
+  document.getElementById("forceLabel").textContent=s==="T1"?"已知拉力（T1，kgf）":"已知拉力（T2，kgf）";
 }
 
 function adj(d){ n.value=(Math.max(0,(+n.value||0)+d)).toFixed(2) }
@@ -365,38 +342,37 @@ function refreshKUI(){
 }
 
 function refreshMuUI(){
-  if(muPreset.value !== "custom"){
-    muVal.value = parseFloat(muPreset.value).toFixed(2);
-  }
+  const preset = document.getElementById("muPreset").value;
+  if(preset !== "custom") muVal.value = parseFloat(preset).toFixed(2);
 }
 
 function resetAll(shouldScroll=false){
-  n.value="3"; muPreset.value="0.25"; muVal.value="0.25";
-  kSel.value="custom"; kCustom.value="0.70"; refreshKUI(); refreshMuUI();
-  setSide("T1"); force.value="1";
-  M.textContent="—"; k.textContent="—"; Meff.textContent="—";
-  outT1.textContent="—"; outT2.textContent="—"; tExplain.style.display="none";
+  n.value="3"; muVal.value="0.25"; kSel.value="custom"; kCustom.value="0.70";
+  refreshKUI(); refreshMuUI(); setSide("T1");
+  document.getElementById("force").value="1";
+  document.getElementById("M").textContent="—"; document.getElementById("k").textContent="—"; 
+  document.getElementById("Meff").textContent="—"; outT1.textContent="—"; outT2.textContent="—";
+  tExplain.style.display="none";
   if(shouldScroll) window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function calc(){
-  const nn=+n.value, muv=parseFloat(muVal.value)||0.25, f=+force.value;
+  const nn=+n.value, muv=parseFloat(muVal.value)||0.25, f=+document.getElementById("force").value;
   const kVal = kSel.value === "custom" ? parseFloat(kCustom.value) : parseFloat(kSel.value);
   const theta=nn*2*Math.PI;
   const Mv=Math.exp(muv*theta);
   const Me=Math.exp(muv*theta*kVal);
   let T1,T2;
   if(knownSide==="T1"){ T1=f; T2=f*Me } else { T2=f; T1=f/Me }
-  M.textContent=Mv.toFixed(1);
-  k.textContent=kVal.toFixed(2);
-  Meff.textContent="× "+Me.toFixed(1);
+  document.getElementById("M").textContent=Mv.toFixed(1);
+  document.getElementById("k").textContent=kVal.toFixed(2);
+  document.getElementById("Meff").textContent="× "+Me.toFixed(1);
   outT1.textContent=T1.toFixed(2)+" kgf";
   outT2.textContent=T2.toFixed(2)+" kgf";
   tExplain.style.display = "block";
   document.getElementById('resultCard').scrollIntoView({ behavior: 'smooth' });
 }
 
-/* Toast 與 分享功能 */
 function showToast(msg){
   const t = document.getElementById("toast");
   t.textContent = msg; t.classList.add("show");
@@ -414,21 +390,10 @@ async function shareToLine(){
   }
 }
 
-/* 收合邏輯 */
 document.addEventListener("click", function(e){
   const btn = e.target.closest("[data-collapse]");
   if(!btn) return;
   document.querySelector(btn.getAttribute("data-collapse")).removeAttribute("open");
-});
-
-// PWA Service Worker 與 安裝
-let deferredInstallPrompt = null;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault(); deferredInstallPrompt = e;
-  document.getElementById('androidInstallWrap').style.display = 'block';
-});
-document.getElementById('installBtn')?.addEventListener('click', () => {
-  deferredInstallPrompt?.prompt();
 });
 
 if ('serviceWorker' in navigator) {
