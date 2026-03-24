@@ -1,737 +1,109 @@
-<!doctype html>
-<html lang="zh-Hant-TW">
+<!DOCTYPE html>
+<html lang="zh-Hant">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Capstan 繩索張力放大公式</title>
-<meta name="theme-color" content="#0b1220"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<meta name="apple-mobile-web-app-title" content="Capstan公式"/>
-<link rel="manifest" href="./manifest.webmanifest?v=5.09.1"/>
-<link rel="icon" href="./sunmoon_logo.png?v=5.09.1"/>
-<link rel="apple-touch-icon" href="./sunmoon_logo.png?v=5.09.1"/>
+
 <style>
-:root{
-  --bg:#0b1220;--panel:#121a2f;--panel2:#0f172a;--line:#233056;
-  --text:#e5e7eb;--muted:#94a3b8;--accent:#38bdf8;
-  --good:#22c55e;--warn:#f59e0b;--danger:#ef4444;--r:18px;
-}
-*{box-sizing:border-box;}
-body{
-  margin:0;
-  background:radial-gradient(1200px 600px at 10% -20%, #1e293b 0%, transparent 50%),var(--bg);
-  color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
-}
-.wrap{max-width:860px;margin:0 auto;padding:16px;}
-.card{
-  background:linear-gradient(180deg,var(--panel),var(--panel2));
-  border-radius:var(--r);
-  padding:18px;margin-bottom:14px;border:1px solid var(--line);
-}
-h1{font-size:18px;margin:0 0 6px;}
-.sub{font-size:13px;color:var(--muted);line-height:1.6}
-.section{font-size:15px;font-weight:900;margin-bottom:10px}
-label{display:block;font-size:13px;color:#cbd5f5;margin:10px 0 6px;font-weight:700}
-input,select{
-  width:100%;padding:12px;border-radius:14px;border:1px solid var(--line);
-  background:#020617;color:var(--text);font-size:15px;
-}
-.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
-.quick button{
-  background:#020617;border:1px solid var(--line);color:var(--text);
-  padding:10px;border-radius:999px;font-weight:800;
-}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-.actions button{padding:12px;border-radius:14px;border:0;font-weight:900;font-size:15px}
-.calc{background:linear-gradient(135deg,#38bdf8,#0ea5e9);color:#020617}
-.reset{background:#020617;color:#cbd5f5;border:1px solid var(--line)}
-.result-main{
-  text-align:center;padding:18px 12px;border-radius:var(--r);
-  background:#020617;border:1px solid var(--line);
-}
-.big{font-size:42px;font-weight:1000;letter-spacing:.5px}
-.badge{display:inline-block;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:900;margin-top:6px}
-.good{background:#052e16;color:#22c55e}
-.mid{background:#3a2503;color:#f59e0b}
-.high{background:#3b0a0a;color:#ef4444}
-.small{font-size:12px;color:var(--muted);margin-top:6px}
-#suggest{line-height:1.6; white-space:normal}
-.kv{display:flex;justify-content:space-between;border-bottom:1px dashed var(--line);padding:10px 0}
-.kv:last-child{border-bottom:0}
-.explain{font-size:13px;color:#cbd5f5;line-height:1.45}
-.mono{font-family:ui-monospace,monospace}
-.toggle{display:flex;gap:8px;margin-top:6px}
-.toggle button{
-  flex:1;padding:10px;border-radius:999px;border:1px solid var(--line);
-  background:#020617;color:#cbd5f5;font-weight:900
-}
-.toggle button.active{
-  background:linear-gradient(135deg,#38bdf8,#0ea5e9);
-  color:#020617;border:0
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #f5f6f7;
+  color: #333;
+  text-align: center;
 }
 
-.subtitle{font-size: 13px;        /* 比主標小 1.5 級 */
-  color: var(--muted);    /* 你原本就有的灰藍色 */
-  font-weight: 400;       /* 不加粗 */
-  margin-top: 4px;        /* 和主標留一點呼吸 */
-  line-height: 1.45;      /* 穩，但不鬆散 */;white-space:normal;overflow:visible;text-overflow:clip;}
-
-
-
-
-/* Details base */
-details{
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:#020617;
-  padding:10px 12px;
-}
-details + details{margin-top:12px;}
-details summary{
-  cursor:pointer;
-  font-weight:900;
-  color:#cbd5f5;
-  list-style:none;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-details summary::-webkit-details-marker{display:none;}
-details summary::after{
-  content:"▸";
-  color:var(--muted);
-  transform: rotate(0deg);
-  transition: transform .15s ease;
-}
-details[open] summary::after{ transform: rotate(90deg); }
-
-.collapseBtn{
-  margin-top:12px;
-  width:100%;
-  padding:10px 12px;
-  border-radius:12px;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.04);
-  color:rgba(255,255,255,.85);
-  cursor:pointer;
-  font-weight:900;
+.container {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 40px 20px;
 }
 
-.footer{
-  font-size:12px;color:#cbd5f5;
-  line-height:1.6;
-  padding:12px 14px;
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:#020617;
-  margin-top:12px;
-}
-.meta{
-  font-size:12px;color:#94a3b8;line-height:1.6;margin-top:8px
-}
-.hintInline{
-  font-size:12px;
-  color:var(--muted);
-  margin-top:6px;
-}
-.hintInline .pill{
-  display:inline-block;
-  padding:2px 8px;
-  border-radius:999px;
-  border:1px solid var(--line);
-  background:#020617;
-  margin-left:6px;
-  color:var(--muted);
+.logo {
+  width: 90px;
+  margin-bottom: 16px;
 }
 
-/* K=1 提醒：在結果卡內預設會置中，這裡改為靠左、更好讀 */
-#kNote{ text-align:left; width:100%; margin-top:12px; padding:0; }
-#kNote .title{ font-weight:900; margin-bottom:6px; color:#cbd5f5; }
-#kNote div{ text-align:left; line-height:1.45; }
-.kCustomWrap{
-  display:none;
-  margin-top:10px;
-}
-.kCustomWrap.show{
-  display:block;
-}
-.kMini{
-  font-size:12px;
-  color:var(--muted);
-  margin-top:6px;
-  line-height:1.5;
+h1 {
+  font-size: 22px;
+  margin-bottom: 10px;
 }
 
-/* --- Details UX polish (v3.16) --- */
-/* 讓所有可展開標題（summary）有一致的「整塊可點」手感 */
-details summary{
-  padding:12px 12px;          /* 提升點擊區域 */
-  border-radius:12px;
-  margin:-10px -12px;         /* 抵消 details 內 padding，讓 summary 撐滿整框 */
-}
-/* summary 用 section class 時，避免多餘的下方間距 */
-details summary.section{ margin:-10px -12px; }
-
-/* hover / active：滑鼠與觸控都有回饋 */
-details summary:hover{
-  background:rgba(255,255,255,.04);
-}
-details summary:active{
-  background:rgba(255,255,255,.07);
+.subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 30px;
 }
 
-/* 展開時的 header 微亮，讓狀態更明確 */
-details[open] summary{
-  background:rgba(56,189,248,.06);
+.btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin: 10px 0;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  background: #2F3A33;
+  color: white;
+  text-decoration: none;
 }
 
-/* 公式區塊內容：內距更沈穩 */
-#formulaDetails .explain{
-  padding:4px 2px 2px 2px;
-  line-height:1.8;
-}
-#formulaDetails .explain .mono{
-  font-size:14px;
-}
-/* 注意事項那行與框保持更舒服的距離 */
-#formulaDetails + .hintInline{
-  margin-top:12px;
+.btn.secondary {
+  background: #ffffff;
+  color: #2F3A33;
+  border: 1px solid #2F3A33;
 }
 
-
-/* --- Formula line comfort (v5.09) --- */
-.mono.formula{
-  white-space:nowrap;
-  display:inline-block;
-  max-width:100%;
-  overflow-x:auto;
-  overflow-y:hidden;
-  -webkit-overflow-scrolling:touch;
-  padding-bottom:2px; /* 給 iOS 一點呼吸，避免字緣貼底 */
-}
-/* 讓公式列在窄螢幕更沈穩：字微小一點、行距更舒適 */
-@media (max-width: 420px){
-  #formulaDetails .explain .mono.formula{ font-size:15px; }
-  #formulaDetails .explain{ line-height:1.45; }
+.note {
+  font-size: 13px;
+  color: #888;
+  margin-top: 20px;
+  line-height: 1.6;
 }
 
-
-/* --- Formula label new-line layout (v5.09) --- */
-#formulaDetails .explain b + br + .mono.formula{
-  margin-top:6px;
+.guide {
+  text-align: left;
+  font-size: 14px;
+  margin-top: 30px;
+  line-height: 1.7;
 }
-
-
-/* --- Formula calm & spacing polish (v3.17 / v5.09) --- */
-#formulaDetails .explain{
-  line-height:1.45;
-}
-
-/* 公式行：稍微內縮，像板書置中，但不真置中 */
-#formulaDetails .mono.formula{
-  display:block;
-  margin:6px 0 2px 0;
-  padding-left:12px;
-  font-size:16px;
-  font-weight:800;
-  letter-spacing:0.2px;
-}
-
-/* 三段公式之間的節奏一致 */
-#formulaDetails .explain b{
-  display:block;
-  margin-top:12px;
-}
-#formulaDetails .explain b:first-child{
-  margin-top:0;
-}
-
-
-/* --- Formula blocks: title / formula / note (v5.09) --- */
-#formulaDetails .formulaBlock{ margin-top:14px; }
-#formulaDetails .formulaBlock:first-child{ margin-top:0; }
-#formulaDetails .fTitle{
-  font-weight:900;
-  color:#cbd5f5;
-}
-#formulaDetails .fNote{
-  color:var(--muted);
-  margin-top:4px;
-}
-
-.hero{
-  position: relative;
-  overflow: hidden;
-}
-
-.infoBox{
-  font-size:13px;
-  color:#cbd5f5;
-  line-height:1.45;
-  padding:12px 14px;
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:#020617;
-}
-.infoBox .title{
-  font-weight:900;
-  color:#cbd5f5;
-  margin-bottom:6px;
-}
-.infoBox .muted{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:6px;
-}
-.infoBox ul{margin:6px 0 0; padding-left:20px; list-style-position:outside;}
-.infoBox li{
-  margin:6px 0;
-}
-
-
-/* ===== Header (Title + Subtitle + Logo) ===== */
-.card.hero{padding:18px 18px 16px}
-.title-wrap{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
-.title-text h1{margin:0;font-size:20px;font-weight:1000;letter-spacing:.2px;white-space:normal;overflow:visible;text-overflow:clip;}
-.title-divider{
-  width:100%;
-  height:1px;
-  margin:10px 0 8px;
-  background:linear-gradient(
-    90deg,
-    transparent,
-    rgba(212,175,55,0.14),
-    rgba(212,175,55,0.28),
-    rgba(212,175,55,0.14),
-    transparent
-  );
-}
-.subtitle{font-size:13px;color:var(--muted);letter-spacing:.2px}
-.title-logo{
-  width:56px;height:56px;
-  align-self:flex-start;
-  background-image:url("sunmoon_logo.png?cb=520");
-  background-size:contain;
-  background-repeat:no-repeat;
-  background-position:center;
-  opacity:0.55;
-  flex-shrink:0;
-  border-radius:14px;
-  filter:
-    drop-shadow(0 0 6px rgba(212,175,55,.10))
-    drop-shadow(0 0 10px rgba(56,189,248,.10));
-}
-
 </style>
 </head>
+
 <body>
 
-<div class="wrap">
-  <div class="card hero">
-    <div class="title-wrap">
-      <div class="title-text">
-        <h1>Capstan 繩索張力放大公式</h1>
-        <div class="title-divider"></div>
-        <div class="subtitle">散木團隊｜教學與判斷輔助工具</div>
-      </div>
-      <img class="title-logo" src="./sunmoon_logo.png" alt="散木團隊 LOGO"/>
-    </div>
+<div class="container">
+
+  <img src="sunmoon_logo.png" class="logo">
+
+  <h1>Capstan 繩索張力放大公式</h1>
+  <div class="subtitle">散木｜繩索教學現場工具</div>
+
+  <a href="/app/" class="btn">👉 進入計算工具</a>
+
+  <div class="note">
+    若主畫面名稱或 icon 尚未更新，請重新加入主畫面
   </div>
 
-<div class="card">
-<details id="formulaDetails">
-  <summary class="section" style="display:flex;justify-content:space-between;align-items:center">
-    <span>計算模型與公式</span></summary>
+  <div class="guide">
+    <strong>📱 iPhone 安裝方式</strong><br>
+    1. 請用 Safari 開啟本頁<br>
+    2. 點擊下方「分享」按鈕<br>
+    3. 選擇「加入主畫面」<br><br>
 
-  <div class="explain" style="margin-top:10px">
-  <div class="formulaBlock">
-    <div class="fTitle">核心公式：</div>
-    <div class="mono formula">T₂=T₁×e^(μ×θ)</div>
-    <div class="fNote">（純理論，用來理解摩擦放大的趨勢）</div>
+    <strong>🤖 Android 安裝方式</strong><br>
+    1. 點開連結（可直接從 LINE 開啟）<br>
+    2. 點選畫面右下角的「⋮」<br>
+    3. 選擇「使用預設瀏覽器開啟」<br>
+    4. 在畫面右上角點選「⋮」<br>
+    5. 往下滑，選擇「加入主畫面」或「安裝 App」<br><br>
+
+    ⚠️ 若直接進入全畫面，請先刪除舊主畫面圖示再重新操作
   </div>
 
-  <div class="formulaBlock">
-    <div class="fTitle">工程修正：</div>
-    <div class="mono formula">θ_eff=k×θ</div>
-    <div class="fNote">（實際操作時，角度不可能全部有效）</div>
-  </div>
-
-  <div class="formulaBlock">
-    <div class="fTitle">實際估算：</div>
-    <div class="mono formula">T₂≈T₁×e^(μ×θ_eff)</div>
-    <div class="fNote">（現場判斷時，看這一行就好）</div>
-  </div>
-</div>
-</details>
-
-<div class="hintInline" style="margin-top:12px">
-<b>注意事項：</b>摩擦倍率越大，不代表越安全，過大的摩擦反而會讓放手與控制變得困難。
 </div>
 
-</div>
-
-<div class="card">
-<div class="section">輸入條件</div>
-
-<label>纏繞圈數 n</label>
-<input id="n" type="number" step="0.01" value="3"/>
-<div class="quick">
-<button type="button" onclick="adj(-0.25)">-0.25</button>
-<button type="button" onclick="adj(-0.5)">-0.5</button>
-<button type="button" onclick="adj(0.25)">+0.25</button>
-<button type="button" onclick="adj(0.5)">+0.5</button>
-</div>
-
-<label>摩擦條件（情境選擇）</label>
-<select id="muPreset">
-  <option value="0.25" selected>繩索 ↔ 繩索（舊繩／毛）</option>
-  <option value="0.18">繩索 ↔ 金屬（偏滑）</option>
-  <option value="0.25">繩索 ↔ 金屬（一般乾燥）</option>
-  <option value="0.35">繩索 ↔ 樹皮（乾）</option>
-  <option value="0.45">繩索 ↔ 樹皮（濕/苔/泥）</option>
-  <option value="0.40">繩索 ↔ 水泥/混凝土（乾）</option>
-  <option value="0.50">繩索 ↔ 水泥/混凝土（濕）</option>
-  <option value="0.22">繩索 ↔ 繩索（新繩）</option>
-<option value="custom">自訂 μ（進階）</option>
-</select>
-
-<label style="margin-top:10px">摩擦係數 μ（可微調）</label>
-<input id="muVal" type="number" step="0.01" value="0.25" inputmode="decimal"/>
-<div class="kMini">建議範圍：0.05～0.80（依材質、濕度、粉塵、表面粗糙度會有明顯差異）</div>
-<div class="kMini">不確定就先用「一般乾燥」或「新繩」，看倍率落在哪一個區間，再回來微調。</div>
-
-
-<label>k 建議情境</label>
-<select id="kSel">
-<option value="0.8">穩定操作（示範 / 靜態｜站定、慢慢做）</option>
-<option value="0.7">一般教學（半動態｜邊講邊做、偶爾移動）</option>
-<option value="0.5">動態操作（快速 / 濕滑｜走動、調整、容易滑）</option>
-<option value="custom" selected>自訂（工程判斷）</option>
-</select>
-
-<div class="kCustomWrap" id="kCustomWrap">
-  <input id="kCustom" type="number" step="0.01" value="0.70" min="0.30" max="1.00" inputmode="decimal"/>
-  <div class="kMini">範圍建議：0.30～1.00（貼合與受力越完整，k 越接近 1.00）</div>
-</div>
-
-<label>已知哪一端？</label>
-<div class="toggle">
-<button type="button" id="btnT1" class="active" onclick="setSide('T1')">已知手端 T1</button>
-<button type="button" id="btnT2" onclick="setSide('T2')">已知負重端 T2</button>
-</div>
-
-<label id="forceLabel">已知拉力（T1，kgf）</label>
-<input id="force" type="number" value="1"/>
-<div class="hintInline">數值：<b>1</b> <span class="pill">預設值</span>（不知道填多少時，先用預設值看「倍率」就好）</div>
-
-<div class="actions">
-<button type="button" class="calc" onclick="calc()">計算</button>
-<button type="button" class="reset" onclick="resetAll()">重設</button>
-</div>
-</div>
-
-<div class="card">
-<div class="section">結果（建議以此判斷）</div>
-<div class="result-main">
-<div class="small">實際建議摩擦倍率（含 k）</div>
-<div class="big" id="Meff">—</div>
-<div class="small">理論倍率 ×<span id="M">—</span> ｜ k = <span id="k">—</span></div>
-<div class="hintInline" id="kNote" style="display:none;margin-top:10px"></div>
-</div>
-<div style="margin-top:14px">
-<div class="kv"><div>T1 手端</div><div id="outT1">—</div></div>
-<div class="kv"><div>T2 負重端</div><div id="outT2">—</div></div>
-</div>
-<div id="tExplain" class="infoBox" style="display:none;margin-top:12px">
-  <div class="title">T1 / T2 代表什麼意思？</div>
-  <ul>
-    <li><b>T1（手端）</b>：代表你在打繩結、操作時所施加的力量。</li>
-    <li><b>T2（負重端）</b>：代表經過纏繞後，所產生並作用在負重端的摩擦力。</li>
-    <li>這個計算是在幫你看：<b>目前的纏繞方式，會把 T1 的操作力量放大成多少的 T2。</b></li>
-  </ul>
-</div>
-</div>
-
-<div class="card">
-
-<details id="infoA">
-<summary>第一次使用？先看這裡</summary>
-<div class="explain" style="margin-top:10px">
-<b>【為什麼要看摩擦力？】</b><br>
-很多人會直覺地認為：<b>繩子繞多一點，就會比較安全。</b><br><br>
-但在實際操作中，<b>摩擦力太大，反而可能讓操作變得困難，甚至增加風險。</b><br><br>
-摩擦力影響的不是「撐不撐得住」，而是：<br>
-• 放手是否順<br>
-• 動作是否可控<br>
-• 繩索是否過熱<br>
-• 操作是否卡滯<br><br>
-<b>好的繩索配置，不是追求摩擦最大，而是讓力量落在「你能控制的範圍內」。</b><br><br>
-
-<b>【這個工具在幫你做什麼？】</b><br>
-這個工具不是用來算對錯，<br>
-而是幫你把「直覺」變成可以被檢視的東西。<br><br>
-當你心中已經有一個繞法時，<br>
-用它來看一眼：<br>
-• 摩擦是不是太大？<br>
-• 操作會不會變得不好放手？<br>
-• 是否還在可控制範圍內？<br><br>
-
-<b>【什麼時候不能只靠這個工具？】</b><br>
-當環境快速變化、載荷不確定，<br>
-或操作經驗不足時，<br>
-<b>請不要只依賴數值判斷。</b><br><br>
-這個工具是教學與判斷的輔助，<br>
-<b>不是替代現場判斷與操作責任。</b><br><br>
-<hr style="border:0;border-top:1px dashed #233056;margin:12px 0;">
-
-<b>① 這個工具是在幫你看什麼？</b><br>
-這個工具不是在幫你算「對不對」，而是在幫你看：<b>現在這樣繞，合不合理、好不好用。</b><br>
-算出來的數字，代表的是「繩索把力量放大了多少倍」。<br>
-<b>數字越大，不一定越安全，反而可能代表操作會變得困難。</b><br><br>
-
-<b>② 為什麼圈數不能一直加？</b><br>
-每多繞一圈，摩擦力不是慢慢增加，而是「變很快地增加」。<br>
-圈數太多，常見的問題有：放手不好控制、繩索容易過熱、動作變得卡、不順。<br>
-所以重點不是鼓勵你多繞，而是幫你找「剛剛好」的圈數。<br><br>
-
-<b>③ 怎麼快速使用（30 秒版）</b><br>
-1. 輸入你實際繞了幾圈（n）<br>
-2. 選擇大概的摩擦情境與 k 建議情境<br>
-<span style="color:#94a3b8">小提醒：不確定摩擦情境時，先選「一般乾燥」；繩索 ↔ 繩索不確定時，先選「新繩」。</span><br>
-3. 看「實際建議摩擦倍率」跟下面的提示文字<br>
-如果看到「偏高」或「高放大」，代表可以停下來想一想：<b>要不要少繞一點，或換一種配置。</b><br><br>
-
-<b>④ T1 / T2 是什麼？怎麼填？</b><br>
-<b>T1 / T2 不是數學題，只是讓你分清楚哪一邊出力、哪一邊承受。</b><br>
-（它是在幫你看力量怎麼走）<br>
-• T1：你手上「出力」的那一邊<br>
-• T2：繩索最後「承受重量」的那一邊<br><br>
-<b>不知道要填多少時，就先用預設值 1 看「倍率」就好。</b>
-
-<button type="button" class="collapseBtn" data-collapse="#infoA">收合</button>
-</div>
-</details>
-
-<details id="infoB" style="margin-top:12px">
-<summary>K 的工程意義與使用說明</summary>
-<div class="explain" style="margin-top:10px">
-k 代表：<b>你繞的角度中，有多少比例真的在工作。</b><br><br>
-理論公式假設每一圈都完全貼合並產生摩擦；但在實際操作中，貼合、受力分佈、動態操作與繩索狀況
-都會使「有效摩擦角度」小於幾何角度。<br><br>
-工程上可表示為：<br>
-<span class="mono">k = θ_eff / θ_total</span>
-
-<button type="button" class="collapseBtn" data-collapse="#infoB">收合</button>
-</div>
-</details>
-
-
-<details id="addToHome" style="margin-top:12px">
-<summary>加入主畫面（選用）</summary>
-<div class="explain" style="margin-top:10px">
-你可以直接點開連結使用，不一定要加入主畫面。<br>
-如果希望之後開啟更方便，可以依照下面步驟，將捷徑加入主畫面。<br><br>
-
-<b>iOS（iPhone）</b><br>
-1. 點開連結（可直接從 LINE 開啟）<br>
-2. 點選下方的「分享」圖示，往下滑<br>
-3. 選擇「加入主畫面」<br>
-4. 點選「加入」，即可將捷徑加到主畫面<br><br>
-
-<b>Android（Samsung、其他 Android 手機）</b><br>
-1. 點開連結（可直接從 LINE 開啟）<br>
-2. 點選畫面右下角的「⋮」<br>
-3. 選擇「使用預設瀏覽器開啟」<br>
-4. 在畫面右上角點選「⋮」<br>
-5. 往下滑，選擇「加到主畫面」<br>
-6. 點選「新增」，即可將捷徑加到主畫面
-
-<button type="button" class="collapseBtn" data-collapse="#addToHome">收合</button>
-</div>
-</details>
-
-<details id="infoC" style="margin-top:12px">
-<summary>開發與版本資訊</summary>
-<div class="meta">
-本工具由 <b>散木團隊</b> 開發製作<br>
-教學架構與工程判斷／徐世豐<br>
-工具設計與互動介面／吳佩芳（朵朵）<br>
-AI 協作輔助／ChatGPT<br><br>
-<b>本工具之摩擦力模型與情境設定，源自「子惠繩」與子惠結在實務操作中的纏繞摩擦需求。<br><br>
-版本 v5.08｜2026
-</div>
-</details>
-
-</div>
-
-<div class="footer">
-【教學使用聲明】本工具為教學與風險判斷輔助使用，
-所有結果皆為估算值，不得取代現場判斷、標準作業程序（SOP）與安全保護措施。
-</div>
-
-</div>
-
-<script>
-let knownSide="T1";
-
-const n = document.getElementById("n");
-const muPreset = document.getElementById("muPreset");
-const muVal = document.getElementById("muVal");
-const kSel = document.getElementById("kSel");
-const kCustomWrap = document.getElementById("kCustomWrap");
-const kCustom = document.getElementById("kCustom");
-const btnT1 = document.getElementById("btnT1");
-const btnT2 = document.getElementById("btnT2");
-const forceLabel = document.getElementById("forceLabel");
-const force = document.getElementById("force");
-const M = document.getElementById("M");
-const k = document.getElementById("k");
-const Meff = document.getElementById("Meff");
-const outT1 = document.getElementById("outT1");
-const outT2 = document.getElementById("outT2");
-const suggest = document.getElementById("suggest");
-const badge = document.getElementById("badge");
-
-
-function setSide(s){
-  knownSide=s;
-  btnT1.classList.toggle("active",s==="T1");
-  btnT2.classList.toggle("active",s==="T2");
-  forceLabel.textContent=s==="T1"?"已知拉力（T1，kgf）":"已知拉力（T2，kgf）";
-}
-
-function adj(d){ n.value=(Math.max(0,(+n.value||0)+d)).toFixed(2) }
-
-function clamp(num, min, max){
-  if(Number.isNaN(num)) return min;
-  return Math.min(max, Math.max(min, num));
-}
-
-function refreshKUI(){
-  const isCustom = kSel.value === "custom";
-  kCustomWrap.classList.toggle("show", isCustom);
-  if(isCustom){
-    const cur = parseFloat(kCustom.value);
-    if(Number.isNaN(cur)) kCustom.value = "0.70";
-  }
-}
-
-function refreshMuUI(){
-  const isCustom = muPreset.value === "custom";
-  // 選到預設情境：直接帶入對應 μ，並允許微調
-  if(!isCustom){
-    const v = parseFloat(muPreset.value);
-    if(!Number.isNaN(v)) muVal.value = v.toFixed(2);
-  }
-}
-
-function getMuValue(){
-  let v = parseFloat(muVal.value);
-  if(Number.isNaN(v)) v = 0.25;
-  // 合理夾限，避免輸入太離譜導致爆表
-  v = clamp(v, 0.01, 1.20);
-  muVal.value = v.toFixed(2);
-  return v;
-}
-
-function getKValue(){
-  if(kSel.value === "custom"){
-    const v = clamp(parseFloat(kCustom.value), 0.30, 1.00);
-    kCustom.value = v.toFixed(2);
-    return v;
-  }
-  return parseFloat(kSel.value);
-}
-
-function resetAll(){
-  n.value="3";
-  muPreset.value="0.25";
-  muVal.value="0.25";
-  kSel.value="custom";
-  kCustom.value="1.00";
-  refreshKUI();
-  refreshMuUI();
-  setSide("T1");
-  force.value="1";
-  // clear outputs
-  M.textContent="—"; k.textContent="—"; Meff.textContent="—";
-  outT1.textContent="—"; outT2.textContent="—";
-  kNote.style.display="none";
-  kNote.innerHTML="";
-  tExplain.style.display="none";
-}
-
-function calc(){
-  const nn=+n.value, muv=getMuValue(), f=+force.value;
-  const kVal=getKValue();
-  const theta=nn*2*Math.PI;
-  const Mv=Math.exp(muv*theta);
-  const Me=Mv*kVal;
-  let T1,T2;
-  if(knownSide==="T1"){ T1=f; T2=f*Me } else { T2=f; T1=f/Me }
-  M.textContent=Mv.toFixed(2);
-  k.textContent=kVal.toFixed(2);
-  Meff.textContent="× "+Me.toFixed(2);
-  outT1.textContent=T1.toFixed(2)+" kgf";
-  outT2.textContent=T2.toFixed(2)+" kgf";
-  // 額外提示：K=1 的工程提醒（僅在 K=1 時顯示）
-  if (Math.abs(kVal - 1.0) < 1e-9) {
-    kNote.style.display = "block";
-    kNote.innerHTML = `<div class="title">提醒</div><div>K＝1 代表「完全貼合、全角度都在工作」的理想假設；現場動態、鬆緊與接觸狀態不同時，實際有效摩擦通常會小於這個估算。</div>`;
-  } else {
-    kNote.style.display = "none";
-    kNote.innerHTML = "";
-  }
-  // T1/T2 說明（算完才顯示）
-  tExplain.style.display = "block";
-}
-
-/* 底部「收合」按鈕：一按就收合 */
-document.addEventListener("click", function(e){
-  const btn = e.target.closest("[data-collapse]");
-  if(!btn) return;
-  const selector = btn.getAttribute("data-collapse");
-  const block = document.querySelector(selector);
-  if(!block) return;
-  block.removeAttribute("open");
-  block.querySelector("summary")?.scrollIntoView({behavior:"smooth", block:"start"});
-});
-
-// UI hooks
-kSel.addEventListener("change", refreshKUI);
-muPreset.addEventListener("change", ()=>{ refreshMuUI(); });
-muVal.addEventListener("blur", ()=>{ /* normalize */ getMuValue(); });
-
-resetAll(); // initialize defaults cleanly
-</script>
-
-<script>
-const formulaDetails = document.getElementById('formulaDetails');
-const formulaHeader = formulaDetails?.previousElementSibling;
-const arrow = formulaHeader?.querySelector('span:last-child');
-
-if(formulaDetails && arrow){
-  const syncArrow = ()=>{
-    arrow.textContent = formulaDetails.hasAttribute('open') ? "▾" : "▸";
-  };
-  formulaHeader.addEventListener('click', syncArrow);
-  syncArrow();
-}
-</script>
-
-
-</div>
-
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js?v=5.09.1").catch(() => {});
-  });
-}
-</script>
 </body>
-
-
 </html>
