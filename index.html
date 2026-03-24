@@ -47,13 +47,13 @@ body{
 /* ===== Header (修正標題過長與 Logo 擠壓問題) ===== */
 .card.hero{padding:18px 18px 16px}
 .title-wrap{display:flex;align-items:center;justify-content:space-between;gap:14px}
-.title-text{flex:1; min-width: 0;} /* min-width 0 確保 flex 子元素可以正確縮放 */
+.title-text{flex:1; min-width: 0;} 
 .title-text h1{
   margin:0;
-  font-size:18px; /* 稍微縮小字體 */
+  font-size:18px; 
   font-weight:1000;
   letter-spacing:.2px;
-  white-space: normal; /* 允許換行，不再擠壓 Logo */
+  white-space: normal; 
   line-height:1.3;
   color: #fff;
 }
@@ -74,7 +74,7 @@ body{
 .title-logo{
   width:56px;height:56px;
   object-fit: contain;
-  opacity:0.65; /* 稍微提升亮度讓圖標清楚點 */
+  opacity:0.65; 
   flex-shrink:0;
   border-radius:14px;
   filter:
@@ -174,7 +174,6 @@ details[open] summary::after{ transform: rotate(90deg); }
         <div class="title-divider"></div>
         <div class="subtitle">散木團隊｜教學與判斷輔助工具</div>
       </div>
-      <!-- 修改這裡：確保 Logo 在標題換行時也能對齊 -->
       <img class="title-logo" src="./sunmoon_logo.png" alt="散木團隊 LOGO"/>
     </div>
   </div>
@@ -189,6 +188,9 @@ details[open] summary::after{ transform: rotate(90deg); }
         <b style="display:block;margin-top:10px">工程修正：</b>
         <span class="mono">θ_eff=k×θ</span><br>
         <div class="hintInline">（實際操作時，角度不可能全部有效）</div>
+        <b style="display:block;margin-top:10px">實際估算：</b>
+        <span class="mono">T₂≈T₁×e^(μ×θ_eff)</span><br>
+        <div class="hintInline">（現場判斷時，看這一行就好）</div>
       </div>
     </details>
     <div class="hintInline" style="margin-top:12px">
@@ -219,6 +221,7 @@ details[open] summary::after{ transform: rotate(90deg); }
 
     <label style="margin-top:10px">摩擦係數 μ（可微調）</label>
     <input id="muVal" type="number" step="0.01" value="0.25" inputmode="decimal"/>
+    <div class="kMini">建議範圍：0.05～0.80（依材質、濕度、表面粗糙度而定）</div>
 
     <label>k 建議情境</label>
     <select id="kSel" onchange="refreshKUI()">
@@ -230,6 +233,7 @@ details[open] summary::after{ transform: rotate(90deg); }
 
     <div class="kCustomWrap" id="kCustomWrap">
       <input id="kCustom" type="number" step="0.01" value="0.70" min="0.30" max="1.00" inputmode="decimal"/>
+      <div class="kMini">範圍建議：0.30～1.00（受力越完整，k 越接近 1.00）</div>
     </div>
 
     <label>已知哪一端？</label>
@@ -240,6 +244,7 @@ details[open] summary::after{ transform: rotate(90deg); }
 
     <label id="forceLabel">已知拉力（T1，kgf）</label>
     <input id="force" type="number" value="1"/>
+    <div class="hintInline">數值：<b>1</b> <span class="pill">預設值</span>（可用預設值看倍率）</div>
 
     <div class="actions">
       <button type="button" class="calc" onclick="calc()">計算</button>
@@ -262,18 +267,59 @@ details[open] summary::after{ transform: rotate(90deg); }
       <div class="title">T1 / T2 代表什麼意思？</div>
       <ul>
         <li><b>T1（手端）</b>：代表你在打繩結、操作時所施加的力量。</li>
-        <li><b>T2（負重端）</b>：代表經過纏繞後，所產生的摩擦力效果。</li>
+        <li><b>T2（負重端）</b>：代表經過纏繞後，所產生的摩擦力放大效果。</li>
+        <li>目前的纏繞方式，會把 T1 的操作力量放大成多少的 T2。</li>
       </ul>
     </div>
   </div>
 
   <div class="card">
-    <details id="infoC">
+    <details id="infoA">
+      <summary>第一次使用？先看這裡</summary>
+      <div class="explain" style="margin-top:10px">
+        <b>【為什麼要看摩擦力？】</b><br>
+        很多人會直覺認為繞多一點就安全，但在實際操作中，摩擦力太大反而可能讓控制變得困難。<br><br>
+        <b>【這個工具在幫你做什麼？】</b><br>
+        幫你把「直覺」變成數值。當你心中有一個繞法時，看一眼摩擦是否太大、是否還在可控範圍內。<br><br>
+        <b>【怎麼快速使用】</b><br>
+        1. 輸入繞了幾圈 (n)<br>
+        2. 選擇摩擦情境與 k 情境<br>
+        3. 看「建議摩擦倍率」，若看到「偏高」代表可以考慮少繞一點。
+        <button type="button" class="collapseBtn" data-collapse="#infoA">收合</button>
+      </div>
+    </details>
+
+    <details id="infoB" style="margin-top:12px">
+      <summary>K 的工程意義與使用說明</summary>
+      <div class="explain" style="margin-top:10px">
+        k 代表：<b>你繞的角度中，有多少比例真的在工作。</b><br><br>
+        理論公式假設每一圈都完全貼合；但實務上因受力不均，有效摩擦角度會小於幾何角度。<br>
+        <span class="mono">k = θ_eff / θ_total</span>
+        <button type="button" class="collapseBtn" data-collapse="#infoB">收合</button>
+      </div>
+    </details>
+
+    <details id="addToHome" style="margin-top:12px">
+      <summary>加入主畫面（選用）</summary>
+      <div class="explain" style="margin-top:10px">
+        <button type="button" class="shareInlineBtn" onclick="shareToLine()">分享 / 複製連結</button>
+        <div id="androidInstallWrap" style="margin-top:10px; display:none;">
+          <button type="button" class="shareInlineBtn" id="installBtn">安裝（加入主畫面）</button>
+        </div>
+        <p><b>iOS：</b>點擊「分享」圖示並選擇「加入主畫面」。</p>
+        <p><b>Android：</b>點擊「⋮」選擇「加到主畫面」。</p>
+        <button type="button" class="collapseBtn" data-collapse="#addToHome">收合</button>
+      </div>
+    </details>
+
+    <details id="infoC" style="margin-top:12px">
       <summary>開發與版本資訊</summary>
       <div class="meta">
         本工具由 <b>散木團隊</b> 開發製作<br>
         教學架構與工程判斷／徐世豐<br>
-        工具設計與互動介面／吳佩芳（朵朵）<br><br>
+        哲學分析顧問／林秀珍教授<br>
+        工具設計與互動介面／吳佩芳（朵朵）<br>
+        AI 協作輔助／ChatGPT<br><br>
         <b>版本 v5.09｜2026</b>
       </div>
     </details>
@@ -350,13 +396,41 @@ function calc(){
   document.getElementById('resultCard').scrollIntoView({ behavior: 'smooth' });
 }
 
+/* Toast 與 分享功能 */
+function showToast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"), 2000);
+}
+
+async function shareToLine(){
+  const text = `${document.title}\n${location.href}`;
+  if(navigator.share){
+    try { await navigator.share({title: document.title, url: location.href}); } catch(e) {}
+  } else {
+    const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta);
+    ta.select(); document.execCommand("copy"); document.body.removeChild(ta);
+    showToast("已複製連結");
+  }
+}
+
+/* 收合邏輯 */
 document.addEventListener("click", function(e){
   const btn = e.target.closest("[data-collapse]");
   if(!btn) return;
   document.querySelector(btn.getAttribute("data-collapse")).removeAttribute("open");
 });
 
-// PWA Service Worker
+// PWA Service Worker 與 安裝
+let deferredInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault(); deferredInstallPrompt = e;
+  document.getElementById('androidInstallWrap').style.display = 'block';
+});
+document.getElementById('installBtn')?.addEventListener('click', () => {
+  deferredInstallPrompt?.prompt();
+});
+
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js').catch(()=>{});
