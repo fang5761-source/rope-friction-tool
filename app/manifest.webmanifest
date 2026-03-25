@@ -1,6 +1,6 @@
 {
   "name": "Capstan 繩索張力放大公式",
-  "short_name": "Capstan張力",
+  "short_name": "Capstan 張力",
   "start_url": "./index.html?v=5.09.2",
   "scope": "./",
   "display": "standalone",
