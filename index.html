@@ -8,9 +8,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Capstan公式"/>
-<link rel="manifest" href="./manifest.webmanifest?v=5.09.1"/>
-<link rel="icon" href="./sunmoon_logo.png?v=5.09.1"/>
-<link rel="apple-touch-icon" href="./sunmoon_logo.png?v=5.09.1"/>
+<link rel="manifest" href="./manifest.json?v=5.10.0"/>
+<link rel="icon" href="./friction_icon-512.png?v=5.10.0"/>
+<link rel="apple-touch-icon" href="./apple-touch-icon.png?v=5.10.0"/>
 <style>
 :root{
   --bg:#0b1220;--panel:#121a2f;--panel2:#0f172a;--line:#233056;
@@ -312,7 +312,6 @@ details[open] summary{
 .title-logo{
   width:56px;height:56px;
   align-self:flex-start;
-  background-image:url("sunmoon_logo.png?cb=520");
   background-size:contain;
   background-repeat:no-repeat;
   background-position:center;
@@ -336,7 +335,7 @@ details[open] summary{
         <div class="title-divider"></div>
         <div class="subtitle">散木團隊｜教學與判斷輔助工具</div>
       </div>
-      <img class="title-logo" src="./sunmoon_logo.png" alt="散木團隊 LOGO"/>
+      <img class="title-logo" src="./sunmoon_logo.png?v=5.10.0" alt="散木團隊 LOGO"/>
     </div>
   </div>
 
@@ -560,7 +559,7 @@ k 代表：<b>你繞的角度中，有多少比例真的在工作。</b><br><br>
 工具設計與互動介面／吳佩芳（朵朵）<br>
 AI 協作輔助／ChatGPT<br><br>
 <b>本工具之摩擦力模型與情境設定，源自「子惠繩」與子惠結在實務操作中的纏繞摩擦需求。<br><br>
-版本 v5.08｜2026
+版本 v5.10｜2026
 </div>
 </details>
 
@@ -727,7 +726,7 @@ if(formulaDetails && arrow){
 <script>
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js?v=5.09.1").catch(() => {});
+    navigator.serviceWorker.register("./sw.js?v=5.10.0").catch(() => {});
   });
 }
 </script>
