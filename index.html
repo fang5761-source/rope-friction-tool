@@ -18,6 +18,22 @@
   --good:#22c55e;--warn:#f59e0b;--danger:#ef4444;--r:18px;
 }
 *{box-sizing:border-box;}
+
+ /* 🛡️ 防禦裝甲：禁止整個網頁的文字被反白與選取 */
+  body {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+  }
+  /* 但允許輸入框可以正常輸入與選取 */
+  input, textarea {
+    -webkit-user-select: auto;
+    user-select: auto;
+  }
+
+
+
 body{
   margin:0;
   background:radial-gradient(1200px 600px at 10% -20%, #1e293b 0%, transparent 50%),var(--bg);
@@ -323,6 +339,47 @@ details[open] summary{
 </style>
 </head>
 <body>
+<script>
+// 🛡️ 散木團隊專屬雙重防護裝甲 (V1.1)
+(function protectOurApp() {
+  // 【防護 1】防嵌套綁架 (禁止被放入其他網站的 iframe 中)
+  if (window.self !== window.top) {
+    window.top.location = window.self.location;
+  }
+
+  // 【防護 2】封鎖滑鼠右鍵
+  document.addEventListener('contextmenu', event => event.preventDefault());
+
+  // 【防護 3】封鎖開發者工具與檢視原始碼快捷鍵
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'F12' || 
+       (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) || 
+       (e.ctrlKey && (e.key === 'U' || e.key === 'u')) || 
+       (e.metaKey && e.altKey && (e.key === 'I' || e.key === 'i')) || 
+       (e.metaKey && e.altKey && (e.key === 'U' || e.key === 'u'))) {
+      e.preventDefault();
+    }
+  });
+
+  // 【防護 4】網域綁定自毀機制
+  const myDomain = "fang5761-source.github.io"; 
+  const currentDomain = window.location.hostname;
+  
+  if (currentDomain !== "" && currentDomain !== "localhost" && currentDomain !== "127.0.0.1") {
+    if (!currentDomain.includes(myDomain)) {
+      alert("⚠️ 系統安全警告：偵測到非官方網域！\n\n本工具為【散木團隊】專屬研發，未經授權禁止盜用。\n系統防護機制啟動，即將強制鎖定。");
+      document.addEventListener("DOMContentLoaded", () => {
+          // 💡 大樂貼心微調：這裡的背景色 #0b1220 是專門配合 Capstan 的深色主題！
+          document.body.innerHTML = "<div style='display:flex; flex-direction:column; height:100vh; width:100vw; background:#0b1220; color:#ef4444; justify-content:center; align-items:center; font-size:24px; font-weight:bold; text-align:center; padding:20px;'><span style='font-size:60px; margin-bottom:20px;'>💀</span><br>未經授權的盜用版本<br>系統已鎖定</div>";
+      });
+      throw new Error("Security Breach: Unauthorized Domain. System Terminated.");
+    }
+  }
+})();
+</script>
+
+
+
 
 <div class="wrap">
   <div class="card hero">
@@ -579,7 +636,18 @@ k 代表：<b>你繞的角度中，有多少比例真的在工作。</b><br><br>
 
     <button type="button" class="collapseBtn" data-collapse="#coffee" style="margin-top:16px; background-color:#334155; color:#e2e8f0; border:none;">收合</button>
   </div>
+
 </details>
+
+<!-- 💬 想跟朵朵說些什麼？ (表單回饋區塊) -->
+<div style="margin-top: 15px; margin-bottom: 20px; padding: 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: var(--text); font-weight: bold; font-size: 15px; transition: background 0.2s;" onclick="window.open('https://forms.gle/Vf2ndSyhCTSThBvT7', '_blank')" onmousedown="this.style.background='var(--panel2)'" onmouseup="this.style.background='var(--panel)'">
+  <div style="display: flex; align-items: center; gap: 12px;">
+    <span style="font-size: 18px; color: #ef4444; text-shadow: 0 0 5px rgba(239, 68, 68, 0.4);">💬</span>想跟朵朵說些什麼？
+  </div>
+  <span style="color: var(--muted); font-size: 12px; font-weight: bold;">❯</span>
+</div>
+
+
 <details id="infoC" style="margin-top:12px">
 <summary>開發與版本資訊</summary>
 <div class="meta">
