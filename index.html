@@ -340,41 +340,105 @@ details[open] summary{
 </head>
 <body>
 <script>
-// 🛡️ 散木團隊專屬雙重防護裝甲 (V1.1)
-(function protectOurApp() {
-  // 【防護 1】防嵌套綁架 (禁止被放入其他網站的 iframe 中)
+// ══════════════════════════════════════════════════════════════
+//  散木團隊 · 多層次防盜保護系統 v2.0 (Capstan Edition)
+//  ⚠️ 以下為核心安全模組，請勿修改
+// ══════════════════════════════════════════════════════════════
+(function(){
+
+  // ── 層 1：防嵌套綁架（禁止被放入其他網站的 iframe 中）──
   if (window.self !== window.top) {
-    window.top.location = window.self.location;
+    try { window.top.location = window.self.location; } catch(e) {}
+    // 若上面被 CSP 阻擋，直接鎖定畫面
+    _0xKill && _0xKill();
   }
 
-  // 【防護 2】封鎖滑鼠右鍵
-  document.addEventListener('contextmenu', event => event.preventDefault());
+  // ── 層 2：封鎖右鍵選單 ──
+  document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
 
-  // 【防護 3】封鎖開發者工具與檢視原始碼快捷鍵
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'F12' || 
-       (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) || 
-       (e.ctrlKey && (e.key === 'U' || e.key === 'u')) || 
-       (e.metaKey && e.altKey && (e.key === 'I' || e.key === 'i')) || 
+  // ── 層 3：封鎖 F12 / Ctrl+U / Ctrl+Shift+I 等快捷鍵 ──
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'F12' ||
+       (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) ||
+       (e.ctrlKey && (e.key === 'U' || e.key === 'u')) ||
+       (e.metaKey && e.altKey && (e.key === 'I' || e.key === 'i')) ||
        (e.metaKey && e.altKey && (e.key === 'U' || e.key === 'u'))) {
       e.preventDefault();
     }
   });
 
-  // 【防護 4】網域綁定自毀機制
-  const myDomain = "fang5761-source.github.io"; 
-  const currentDomain = window.location.hostname;
-  
-  if (currentDomain !== "" && currentDomain !== "localhost" && currentDomain !== "127.0.0.1") {
-    if (!currentDomain.includes(myDomain)) {
-      alert("⚠️ 系統安全警告：偵測到非官方網域！\n\n本工具為【散木團隊】專屬研發，未經授權禁止盜用。\n系統防護機制啟動，即將強制鎖定。");
-      document.addEventListener("DOMContentLoaded", () => {
-          // 💡 大樂貼心微調：這裡的背景色 #0b1220 是專門配合 Capstan 的深色主題！
-          document.body.innerHTML = "<div style='display:flex; flex-direction:column; height:100vh; width:100vw; background:#0b1220; color:#ef4444; justify-content:center; align-items:center; font-size:24px; font-weight:bold; text-align:center; padding:20px;'><span style='font-size:60px; margin-bottom:20px;'>💀</span><br>未經授權的盜用版本<br>系統已鎖定</div>";
-      });
-      throw new Error("Security Breach: Unauthorized Domain. System Terminated.");
+  // ── 層 4：解碼授權網域（Base64 避免明文搜尋替換）──
+  const _0xd = atob('ZmFuZzU3NjEtc291cmNlLmdpdGh1Yi5pbw=='); // fang5761-source.github.io
+  const _0xh = window[atob('bG9jYXRpb24=')][atob('aG9zdG5hbWU=')]; // location.hostname
+
+  // ── 層 5：假解鎖蜜罐陷阱（誘騙盜用者以為找到了開關）──
+  // 盜用者搜尋 "unlock" / "bypass" 時會找到這裡，呼叫後反而觸發鎖定
+  window['_unlockApp']   = function(){ _0xKill(); };
+  window['_bypassCheck'] = function(){ _0xKill(); };
+  window['_disableLock'] = function(){ _0xKill(); };
+
+  // ── 層 6：鎖定畫面渲染函式（拆開避免整段被辨識）──
+  function _0xKill(msg) {
+    const _m = msg || atob('5pyq57aT5o6l5qC85qih6Iiq5ZCn77yc5bey57O757uf5bim5Yqo5aSx5pWX');
+    // 解碼：未經授權的複製品，系統安全模式已啟動
+    try {
+      document.open();
+      document.write(
+        '<html><body style="margin:0;height:100vh;display:flex;flex-direction:column;' +
+        'background:#0b1220;color:#ef4444;justify-content:center;align-items:center;' +
+        'text-align:center;font-family:monospace;padding:20px;">' +
+        '<span style="font-size:72px;margin-bottom:16px;">&#x1F480;</span>' +
+        '<div style="font-size:22px;font-weight:bold;margin-bottom:8px;">' + _m + '</div>' +
+        '<div style="font-size:13px;color:#94a3b8;margin-top:12px;">' +
+        atob('5pys5bel5YW36aSa5qih6Iiq55qE5q2k5bqT77yM5Lul56aB5q2k5q+P5qih6IiqICsgU2NhdHRlck1hcA==') +
+        '</div></body></html>'
+      );
+      document.close();
+    } catch(e) {
+      document.body.innerHTML = '';
+      document.body.style.cssText = 'background:#0b1220;color:#ef4444;display:flex;flex-direction:column;height:100vh;justify-content:center;align-items:center;text-align:center;';
+      document.body.innerHTML = '<span style="font-size:72px">&#x1F480;</span><br>' + _m;
     }
+    throw new Error('[SM-SHIELD] Unauthorized access terminated.');
   }
+
+  // ── 層 7：主網域驗證──
+  // 允許官方網域、localhost、file:// 本地開啟（供開發者測試用）
+  (function _0xVerify(){
+    const _whitelist = [_0xd, 'localhost', '127.0.0.1', ''];
+    const _isOk = _whitelist.some(function(w){ return _0xh === w || _0xh.endsWith('.' + w); });
+    if (!_isOk) {
+      try { alert('\u26a0\ufe0f \u7cfb\u7d71\u5b89\u5168\u8b66\u544a\n\n\u5075\u6e2c\u5230\u975e\u5b98\u65b9\u7db2\u57df\uff01\n\u672c\u5de5\u5177\u70ba\u3010\u6563\u6728\u5718\u968a\u3011\u5c08\u5c6c\u7814\u767c\uff0c\u672a\u7d93\u6388\u6b0a\u7981\u6b62\u76dc\u7528\u3002\n\u9632\u8b77\u6a5f\u5236\u555f\u52d5\u4e2d\u2026'); } catch(e){}
+      _0xKill();
+    }
+  })();
+
+  // ── 層 8：開發者工具偵測（視窗尺寸差異法）──
+  (function _0xDevtools(){
+    const _threshold = 160;
+    let _warned = false;
+    function _check() {
+      const _diff = window.outerWidth - window.innerWidth > _threshold ||
+                    window.outerHeight - window.innerHeight > _threshold;
+      if (_diff && !_warned) {
+        _warned = true;
+        console.warn(
+          '%c\u{1F6AB} [SM-SHIELD] \u5075\u6e2c\u5230\u958b\u767c\u8005\u5de5\u5177\uff01\n\u672c\u7a0b\u5f0f\u78bc\u53d7\u7248\u6b0a\u4fdd\u8b77\uff0c\u4ee5\u4f9b\u6388\u6b0a\u4eba\u54e1\u6aa2\u8996\u3002\n\u672a\u7d93\u6388\u6b0a\u7981\u6b62\u8907\u88fd\u3001\u4fee\u6539\u6216\u518d\u767c\u4f48\u3002',
+          'color:#ef4444;font-size:16px;font-weight:bold;'
+        );
+        console.log(
+          '%c\u{1F6E1}\ufe0f \u6b64\u5de5\u5177\u7531 \u300c\u6563\u6728\u5718\u968a\u300d \u7814\u767c\uff0c\u7248\u6b0a\u6240\u6709\u3002\n\u5982\u9700\u5408\u6cd5\u4f7f\u7528\u6388\u6b0a\uff0c\u8acb\u806f\u7d61\u539f\u4f5c\u8005\u3002',
+          'color:#22c55e;font-size:14px;'
+        );
+      }
+    }
+    setInterval(_check, 1500);
+    window.addEventListener('resize', _check);
+  })();
+
+  // ── Console 版權聲明 ──
+  console.log('%c\u{1F6E1}\ufe0f Capstan \u7e69\u7d22\u5f35\u529b\u653e\u5927\u516c\u5f0f \u7531\u300c\u6563\u6728\u5718\u968a\u300d\u7814\u767c\uff0c\u672a\u7d93\u6388\u6b0a\u7981\u6b62\u76dc\u7528\uff01', 'color:#ef4444;font-size:16px;font-weight:bold;');
+
 })();
 </script>
 
