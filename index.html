@@ -347,13 +347,11 @@ details[open] summary{
 (function(){
 
   // ── 層 1：防嵌套綁架（禁止被放入其他網站的 iframe 中）──
-  /* 為了在此預覽環境中順利運行，暫時將 iframe 鎖定機制註解
   if (window.self !== window.top) {
     try { window.top.location = window.self.location; } catch(e) {}
     // 若上面被 CSP 阻擋，直接鎖定畫面
     _0xKill && _0xKill();
   }
-  */
 
   // ── 層 2：封鎖右鍵選單 ──
   document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
@@ -405,14 +403,13 @@ details[open] summary{
   }
 
   // ── 層 7：主網域驗證──
-  // 允許官方網域、localhost、file:// 本地開啟（供開發者測試用），加入開發預覽白名單防錯
+  // 允許官方網域、localhost、file:// 本地開啟（供開發者測試用）
   (function _0xVerify(){
-    const _whitelist = [_0xd, 'localhost', '127.0.0.1', '', 'scf.usercontent.goog'];
+    const _whitelist = [_0xd, 'localhost', '127.0.0.1', ''];
     const _isOk = _whitelist.some(function(w){ return _0xh === w || _0xh.endsWith('.' + w); });
     if (!_isOk) {
-      // 在預覽環境中暫時註解網域白名單的封鎖機制
-      // try { alert('\u26a0\ufe0f \u7cfb\u7d71\u5b89\u5168\u8b66\u544a\n\n\u5075\u6e2c\u5230\u975e\u5b98\u65b9\u7db2\u57df\uff01\n\u672c\u5de5\u5177\u70ba\u3010\u6563\u6728\u5718\u968a\u3011\u5c08\u5c6c\u7814\u767c\uff0c\u672a\u7d93\u6388\u6b0a\u7981\u6b62\u76dc\u7528\u3002\n\u9632\u8b77\u6a5f\u5236\u555f\u52d5\u4e2d\u2026'); } catch(e){}
-      // _0xKill();
+      try { alert('\u26a0\ufe0f \u7cfb\u7d71\u5b89\u5168\u8b66\u544a\n\n\u5075\u6e2c\u5230\u975e\u5b98\u65b9\u7db2\u57df\uff01\n\u672c\u5de5\u5177\u70ba\u3010\u6563\u6728\u5718\u968a\u3011\u5c08\u5c6c\u7814\u767c\uff0c\u672a\u7d93\u6388\u6b0a\u7981\u6b62\u76dc\u7528\u3002\n\u9632\u8b77\u6a5f\u5236\u555f\u52d5\u4e2d\u2026'); } catch(e){}
+      _0xKill();
     }
   })();
 
