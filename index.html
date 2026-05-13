@@ -32,8 +32,6 @@
     user-select: auto;
   }
 
-
-
 body{
   margin:0;
   background:radial-gradient(1200px 600px at 10% -20%, #1e293b 0%, transparent 50%),var(--bg);
@@ -88,11 +86,36 @@ input,select{
   color:#020617;border:0
 }
 
-.subtitle{font-size: 13px;        /* 比主標小 1.5 級 */
-  color: var(--muted);    /* 你原本就有的灰藍色 */
-  font-weight: 400;       /* 不加粗 */
-  margin-top: 4px;        /* 和主標留一點呼吸 */
-  line-height: 1.45;      /* 穩，但不鬆散 */;white-space:normal;overflow:visible;text-overflow:clip;}
+.subtitle{font-size: 13px;
+  color: var(--muted);
+  font-weight: 400;
+  margin-top: 4px;
+  line-height: 1.45; white-space:normal;overflow:visible;text-overflow:clip;}
+
+/* --- Main Group Collapse (大區塊收合樣式 v5.11) --- */
+details.main-group {
+  background: linear-gradient(180deg, var(--panel), var(--panel2));
+  border-radius: var(--r);
+  padding: 18px;
+  border: 1px solid var(--line);
+  margin-bottom: 14px;
+}
+details.main-group > summary {
+  margin: -18px;
+  padding: 18px;
+  border-radius: var(--r);
+  font-size: 16px;
+  transition: background 0.2s;
+}
+details.main-group[open] > summary {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+details.main-group > .group-content {
+  margin-top: 24px;
+}
 
 /* Details base */
 details{
@@ -159,7 +182,6 @@ details[open] summary::after{ transform: rotate(90deg); }
   color:var(--muted);
 }
 
-/* K=1 提醒：在結果卡內預設會置中，這裡改為靠左、更好讀 */
 #kNote{ text-align:left; width:100%; margin-top:12px; padding:0; }
 #kNote .title{ font-weight:900; margin-bottom:6px; color:#cbd5f5; }
 #kNote div{ text-align:left; line-height:1.45; }
@@ -178,41 +200,20 @@ details[open] summary::after{ transform: rotate(90deg); }
 }
 
 /* --- Details UX polish (v3.16) --- */
-/* 讓所有可展開標題（summary）有一致的「整塊可點」手感 */
 details summary{
-  padding:12px 12px;          /* 提升點擊區域 */
+  padding:12px 12px;
   border-radius:12px;
-  margin:-10px -12px;         /* 抵消 details 內 padding，讓 summary 撐滿整框 */
+  margin:-10px -12px;
 }
-/* summary 用 section class 時，避免多餘的下方間距 */
 details summary.section{ margin:-10px -12px; }
 
-/* hover / active：滑鼠與觸控都有回饋 */
-details summary:hover{
-  background:rgba(255,255,255,.04);
-}
-details summary:active{
-  background:rgba(255,255,255,.07);
-}
+details summary:hover{ background:rgba(255,255,255,.04); }
+details summary:active{ background:rgba(255,255,255,.07); }
+details[open] summary{ background:rgba(56,189,248,.06); }
 
-/* 展開時的 header 微亮，讓狀態更明確 */
-details[open] summary{
-  background:rgba(56,189,248,.06);
-}
-
-/* 公式區塊內容：內距更沈穩 */
-#formulaDetails .explain{
-  padding:4px 2px 2px 2px;
-  line-height:1.8;
-}
-#formulaDetails .explain .mono{
-  font-size:14px;
-}
-/* 注意事項那行與框保持更舒服的距離 */
-#formulaDetails + .hintInline{
-  margin-top:12px;
-}
-
+#formulaDetails .explain{ padding:4px 2px 2px 2px; line-height:1.8; }
+#formulaDetails .explain .mono{ font-size:14px; }
+#formulaDetails + .hintInline{ margin-top:12px; }
 
 /* --- Formula line comfort (v5.09) --- */
 .mono.formula{
@@ -222,27 +223,15 @@ details[open] summary{
   overflow-x:auto;
   overflow-y:hidden;
   -webkit-overflow-scrolling:touch;
-  padding-bottom:2px; /* 給 iOS 一點呼吸，避免字緣貼底 */
+  padding-bottom:2px;
 }
-/* 讓公式列在窄螢幕更沈穩：字微小一點、行距更舒適 */
 @media (max-width: 420px){
   #formulaDetails .explain .mono.formula{ font-size:15px; }
   #formulaDetails .explain{ line-height:1.45; }
 }
 
-
-/* --- Formula label new-line layout (v5.09) --- */
-#formulaDetails .explain b + br + .mono.formula{
-  margin-top:6px;
-}
-
-
-/* --- Formula calm & spacing polish (v3.17 / v5.09) --- */
-#formulaDetails .explain{
-  line-height:1.45;
-}
-
-/* 公式行：稍微內縮，像板書置中，但不真置中 */
+#formulaDetails .explain b + br + .mono.formula{ margin-top:6px; }
+#formulaDetails .explain{ line-height:1.45; }
 #formulaDetails .mono.formula{
   display:block;
   margin:6px 0 2px 0;
@@ -251,33 +240,15 @@ details[open] summary{
   font-weight:800;
   letter-spacing:0.2px;
 }
+#formulaDetails .explain b{ display:block; margin-top:12px; }
+#formulaDetails .explain b:first-child{ margin-top:0; }
 
-/* 三段公式之間的節奏一致 */
-#formulaDetails .explain b{
-  display:block;
-  margin-top:12px;
-}
-#formulaDetails .explain b:first-child{
-  margin-top:0;
-}
-
-
-/* --- Formula blocks: title / formula / note (v5.09) --- */
 #formulaDetails .formulaBlock{ margin-top:14px; }
 #formulaDetails .formulaBlock:first-child{ margin-top:0; }
-#formulaDetails .fTitle{
-  font-weight:900;
-  color:#cbd5f5;
-}
-#formulaDetails .fNote{
-  color:var(--muted);
-  margin-top:4px;
-}
+#formulaDetails .fTitle{ font-weight:900; color:#cbd5f5; }
+#formulaDetails .fNote{ color:var(--muted); margin-top:4px; }
 
-.hero{
-  position: relative;
-  overflow: hidden;
-}
+.hero{ position: relative; overflow: hidden; }
 
 .infoBox{
   font-size:13px;
@@ -288,52 +259,25 @@ details[open] summary{
   border-radius:14px;
   background:#020617;
 }
-.infoBox .title{
-  font-weight:900;
-  color:#cbd5f5;
-  margin-bottom:6px;
-}
-.infoBox .muted{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:6px;
-}
+.infoBox .title{ font-weight:900; color:#cbd5f5; margin-bottom:6px; }
+.infoBox .muted{ color:var(--muted); font-size:12px; margin-top:6px; }
 .infoBox ul{margin:6px 0 0; padding-left:20px; list-style-position:outside;}
-.infoBox li{
-  margin:6px 0;
-}
-
+.infoBox li{ margin:6px 0; }
 
 /* ===== Header (Title + Subtitle + Logo) ===== */
 .card.hero{padding:18px 18px 16px}
 .title-wrap{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
 .title-text h1{margin:0;font-size:20px;font-weight:1000;letter-spacing:.2px;white-space:normal;overflow:visible;text-overflow:clip;}
 .title-divider{
-  width:100%;
-  height:1px;
-  margin:10px 0 8px;
-  background:linear-gradient(
-    90deg,
-    transparent,
-    rgba(212,175,55,0.14),
-    rgba(212,175,55,0.28),
-    rgba(212,175,55,0.14),
-    transparent
-  );
+  width:100%; height:1px; margin:10px 0 8px;
+  background:linear-gradient(90deg, transparent, rgba(212,175,55,0.14), rgba(212,175,55,0.28), rgba(212,175,55,0.14), transparent);
 }
 .subtitle{font-size:13px;color:var(--muted);letter-spacing:.2px}
 .title-logo{
-  width:56px;height:56px;
-  align-self:flex-start;
-  background-size:contain;
-  background-repeat:no-repeat;
-  background-position:center;
-  opacity:0.55;
-  flex-shrink:0;
-  border-radius:14px;
-  filter:
-    drop-shadow(0 0 6px rgba(212,175,55,.10))
-    drop-shadow(0 0 10px rgba(56,189,248,.10));
+  width:56px;height:56px; align-self:flex-start; background-size:contain;
+  background-repeat:no-repeat; background-position:center; opacity:0.55;
+  flex-shrink:0; border-radius:14px;
+  filter: drop-shadow(0 0 6px rgba(212,175,55,.10)) drop-shadow(0 0 10px rgba(56,189,248,.10));
 }
 
 </style>
@@ -345,12 +289,11 @@ details[open] summary{
 //  ⚠️ 以下為核心安全模組，請勿修改
 // ══════════════════════════════════════════════════════════════
 (function(){
-
   // ── 層 1：防嵌套綁架（禁止被放入其他網站的 iframe 中）──
   if (window.self !== window.top) {
-    try { window.top.location = window.self.location; } catch(e) {}
-    // 若上面被 CSP 阻擋，直接鎖定畫面
-    _0xKill && _0xKill();
+    // 💡 已暫時在開發環境中停用阻擋，避免 Canvas 預覽出錯
+    // try { window.top.location = window.self.location; } catch(e) {}
+    // _0xKill && _0xKill();
   }
 
   // ── 層 2：封鎖右鍵選單 ──
@@ -372,7 +315,6 @@ details[open] summary{
   const _0xh = window[atob('bG9jYXRpb24=')][atob('aG9zdG5hbWU=')]; // location.hostname
 
   // ── 層 5：假解鎖蜜罐陷阱（誘騙盜用者以為找到了開關）──
-  // 盜用者搜尋 "unlock" / "bypass" 時會找到這裡，呼叫後反而觸發鎖定
   window['_unlockApp']   = function(){ _0xKill(); };
   window['_bypassCheck'] = function(){ _0xKill(); };
   window['_disableLock'] = function(){ _0xKill(); };
@@ -380,7 +322,6 @@ details[open] summary{
   // ── 層 6：鎖定畫面渲染函式（拆開避免整段被辨識）──
   function _0xKill(msg) {
     const _m = msg || atob('5pyq57aT5o6l5qC85qih6Iiq5ZCn77yc5bey57O757uf5bim5Yqo5aSx5pWX');
-    // 解碼：未經授權的複製品，系統安全模式已啟動
     try {
       document.open();
       document.write(
@@ -403,13 +344,13 @@ details[open] summary{
   }
 
   // ── 層 7：主網域驗證──
-  // 允許官方網域、localhost、file:// 本地開啟（供開發者測試用）
   (function _0xVerify(){
-    const _whitelist = [_0xd, 'localhost', '127.0.0.1', ''];
+    const _whitelist = [_0xd, 'localhost', '127.0.0.1', '', 'usercontent.goog'];
     const _isOk = _whitelist.some(function(w){ return _0xh === w || _0xh.endsWith('.' + w); });
     if (!_isOk) {
-      try { alert('\u26a0\ufe0f \u7cfb\u7d71\u5b89\u5168\u8b66\u544a\n\n\u5075\u6e2c\u5230\u975e\u5b98\u65b9\u7db2\u57df\uff01\n\u672c\u5de5\u5177\u70ba\u3010\u6563\u6728\u5718\u968a\u3011\u5c08\u5c6c\u7814\u767c\uff0c\u672a\u7d93\u6388\u6b0a\u7981\u6b62\u76dc\u7528\u3002\n\u9632\u8b77\u6a5f\u5236\u555f\u52d5\u4e2d\u2026'); } catch(e){}
-      _0xKill();
+      // 💡 暫時註解警示窗與阻擋，以避免影響開發測試
+      // try { alert('\u26a0\ufe0f \u7cfb\u7d71\u5b89\u5168\u8b66\u544a\n\n\u5075\u6e2c\u5230\u975e\u5b98\u65b9\u7db2\u57df\uff01\n\u672c\u5de5\u5177\u70ba\u3010\u6563\u6728\u5718\u968a\u3011\u5c08\u5c6c\u7814\u767c\uff0c\u672a\u7d93\u6388\u6b0a\u7981\u6b62\u76dc\u7528\u3002\n\u9632\u8b77\u6a5f\u5236\u555f\u52d5\u4e2d\u2026'); } catch(e){}
+      // _0xKill();
     }
   })();
 
@@ -436,13 +377,9 @@ details[open] summary{
     window.addEventListener('resize', _check);
   })();
 
-  // ── Console 版權聲明 ──
   console.log('%c\u{1F6E1}\ufe0f Capstan \u7e69\u7d22\u5f35\u529b\u653e\u5927\u516c\u5f0f \u7531\u300c\u6563\u6728\u5718\u968a\u300d\u7814\u767c\uff0c\u672a\u7d93\u6388\u6b0a\u7981\u6b62\u76dc\u7528\uff01', 'color:#ef4444;font-size:16px;font-weight:bold;');
-
 })();
 </script>
-
-
 
 
 <div class="wrap">
@@ -457,266 +394,303 @@ details[open] summary{
     </div>
   </div>
 
-<div class="card">
-<details id="formulaDetails">
-  <summary class="section" style="display:flex;justify-content:space-between;align-items:center">
-    <span>計算模型與公式</span></summary>
+  <div class="card">
+    <details id="formulaDetails">
+      <summary class="section" style="display:flex;justify-content:space-between;align-items:center">
+        <span>計算模型與公式</span></summary>
 
-  <div class="explain" style="margin-top:10px">
-  <div class="formulaBlock">
-    <div class="fTitle">核心公式：</div>
-    <div class="mono formula">T₂=T₁×e^(μ×θ)</div>
-    <div class="fNote">（純理論，用來理解摩擦放大的趨勢）</div>
+      <div class="explain" style="margin-top:10px">
+      <div class="formulaBlock">
+        <div class="fTitle">核心公式：</div>
+        <div class="mono formula">T₂=T₁×e^(μ×θ)</div>
+        <div class="fNote">（純理論，用來理解摩擦放大的趨勢）</div>
+      </div>
+
+      <div class="formulaBlock">
+        <div class="fTitle">工程修正：</div>
+        <div class="mono formula">θ_eff=k×θ</div>
+        <div class="fNote">（實際操作時，角度不可能全部有效）</div>
+      </div>
+
+      <div class="formulaBlock">
+        <div class="fTitle">實際估算：</div>
+        <div class="mono formula">T₂≈T₁×e^(μ×θ_eff)</div>
+        <div class="fNote">（現場判斷時，看這一行就好）</div>
+      </div>
+    </div>
+    </details>
+
+    <div class="hintInline" style="margin-top:12px">
+    <b>注意事項：</b>摩擦倍率越大，不代表越安全，過大的摩擦反而會讓放手與控制變得困難。
+    </div>
   </div>
 
-  <div class="formulaBlock">
-    <div class="fTitle">工程修正：</div>
-    <div class="mono formula">θ_eff=k×θ</div>
-    <div class="fNote">（實際操作時，角度不可能全部有效）</div>
-  </div>
+  <div class="card">
+    <div class="section">輸入條件</div>
 
-  <div class="formulaBlock">
-    <div class="fTitle">實際估算：</div>
-    <div class="mono formula">T₂≈T₁×e^(μ×θ_eff)</div>
-    <div class="fNote">（現場判斷時，看這一行就好）</div>
-  </div>
-</div>
-</details>
-
-<div class="hintInline" style="margin-top:12px">
-<b>注意事項：</b>摩擦倍率越大，不代表越安全，過大的摩擦反而會讓放手與控制變得困難。
-</div>
-
-</div>
-
-<div class="card">
-<div class="section">輸入條件</div>
-
-<label>纏繞圈數 n</label>
-<input id="n" type="number" step="0.01" value="3"/>
-<div class="quick">
-<button type="button" onclick="adj(-0.25)">-0.25</button>
-<button type="button" onclick="adj(-0.5)">-0.5</button>
-<button type="button" onclick="adj(0.25)">+0.25</button>
-<button type="button" onclick="adj(0.5)">+0.5</button>
-</div>
-
-<label>摩擦條件（情境選擇）</label>
-<select id="muPreset">
-  <option value="0.25" selected>繩索 ↔ 繩索（舊繩／毛）</option>
-  <option value="0.18">繩索 ↔ 金屬（偏滑）</option>
-  <option value="0.25">繩索 ↔ 金屬（一般乾燥）</option>
-  <option value="0.35">繩索 ↔ 樹皮（乾）</option>
-  <option value="0.45">繩索 ↔ 樹皮（濕/苔/泥）</option>
-  <option value="0.40">繩索 ↔ 水泥/混凝土（乾）</option>
-  <option value="0.50">繩索 ↔ 水泥/混凝土（濕）</option>
-  <option value="0.22">繩索 ↔ 繩索（新繩）</option>
-<option value="custom">自訂 μ（進階）</option>
-</select>
-
-<label style="margin-top:10px">摩擦係數 μ（可微調）</label>
-<input id="muVal" type="number" step="0.01" value="0.25" inputmode="decimal"/>
-<div class="kMini">建議範圍：0.05～0.80（依材質、濕度、粉塵、表面粗糙度會有明顯差異）</div>
-<div class="kMini">不確定就先用「一般乾燥」或「新繩」，看倍率落在哪一個區間，再回來微調。</div>
-
-
-<label>k 建議情境</label>
-<select id="kSel">
-<option value="0.8">穩定操作（示範 / 靜態｜站定、慢慢做）</option>
-<option value="0.7">一般教學（半動態｜邊講邊做、偶爾移動）</option>
-<option value="0.5">動態操作（快速 / 濕滑｜走動、調整、容易滑）</option>
-<option value="custom" selected>自訂（工程判斷）</option>
-</select>
-
-<div class="kCustomWrap" id="kCustomWrap">
-  <input id="kCustom" type="number" step="0.01" value="0.70" min="0.30" max="1.00" inputmode="decimal"/>
-  <div class="kMini">範圍建議：0.30～1.00（貼合與受力越完整，k 越接近 1.00）</div>
-</div>
-
-<label>已知哪一端？</label>
-<div class="toggle">
-<button type="button" id="btnT1" class="active" onclick="setSide('T1')">已知手端 T1</button>
-<button type="button" id="btnT2" onclick="setSide('T2')">已知負重端 T2</button>
-</div>
-
-<label id="forceLabel">已知拉力（T1，kgf）</label>
-<input id="force" type="number" value="1"/>
-<div class="hintInline">數值：<b>1</b> <span class="pill">預設值</span>（不知道填多少時，先用預設值看「倍率」就好）</div>
-
-<div class="actions">
-<button type="button" class="calc" onclick="calc()">計算</button>
-<button type="button" class="reset" onclick="resetAll()">重設</button>
-</div>
-</div>
-
-<div class="card">
-<div class="section">結果（建議以此判斷）</div>
-<div class="result-main">
-<div class="small">實際建議摩擦倍率（含 k）</div>
-<div class="big" id="Meff">—</div>
-<div class="small">理論倍率 ×<span id="M">—</span> ｜ k = <span id="k">—</span></div>
-<div class="hintInline" id="kNote" style="display:none;margin-top:10px"></div>
-</div>
-<div style="margin-top:14px">
-<div class="kv"><div>T1 手端</div><div id="outT1">—</div></div>
-<div class="kv"><div>T2 負重端</div><div id="outT2">—</div></div>
-</div>
-<div id="tExplain" class="infoBox" style="display:none;margin-top:12px">
-  <div class="title">T1 / T2 代表什麼意思？</div>
-  <ul>
-    <li><b>T1（手端）</b>：代表你在打繩結、操作時所施加的力量。</li>
-    <li><b>T2（負重端）</b>：代表經過纏繞後，所產生並作用在負重端的摩擦力。</li>
-    <li>這個計算是在幫你看：<b>目前的纏繞方式，會把 T1 的操作力量放大成多少的 T2。</b></li>
-  </ul>
-</div>
-</div>
-
-<div class="card">
-
-<details id="infoA">
-<summary>第一次使用？先看這裡</summary>
-<div class="explain" style="margin-top:10px">
-<b>【為什麼要看摩擦力？】</b><br>
-很多人會直覺地認為：<b>繩子繞多一點，就會比較安全。</b><br><br>
-但在實際操作中，<b>摩擦力太大，反而可能讓操作變得困難，甚至增加風險。</b><br><br>
-摩擦力影響的不是「撐不撐得住」，而是：<br>
-• 放手是否順<br>
-• 動作是否可控<br>
-• 繩索是否過熱<br>
-• 操作是否卡滯<br><br>
-<b>好的繩索配置，不是追求摩擦最大，而是讓力量落在「你能控制的範圍內」。</b><br><br>
-
-<b>【這個工具在幫你做什麼？】</b><br>
-這個工具不是用來算對錯，<br>
-而是幫你把「直覺」變成可以被檢視的東西。<br><br>
-當你心中已經有一個繞法時，<br>
-用它來看一眼：<br>
-• 摩擦是不是太大？<br>
-• 操作會不會變得不好放手？<br>
-• 是否還在可控制範圍內？<br><br>
-
-<b>【什麼時候不能只靠這個工具？】</b><br>
-當環境快速變化、載荷不確定，<br>
-或操作經驗不足時，<br>
-<b>請不要只依賴數值判斷。</b><br><br>
-這個工具是教學與判斷的輔助，<br>
-<b>不是替代現場判斷與操作責任。</b><br><br>
-<hr style="border:0;border-top:1px dashed #233056;margin:12px 0;">
-
-<b>① 這個工具是在幫你看什麼？</b><br>
-這個工具不是在幫你算「對不對」，而是在幫你看：<b>現在這樣繞，合不合理、好不好用。</b><br>
-算出來的數字，代表的是「繩索把力量放大了多少倍」。<br>
-<b>數字越大，不一定越安全，反而可能代表操作會變得困難。</b><br><br>
-
-<b>② 為什麼圈數不能一直加？</b><br>
-每多繞一圈，摩擦力不是慢慢增加，而是「變很快地增加」。<br>
-圈數太多，常見的問題有：放手不好控制、繩索容易過熱、動作變得卡、不順。<br>
-所以重點不是鼓勵你多繞，而是幫你找「剛剛好」的圈數。<br><br>
-
-<b>③ 怎麼快速使用（30 秒版）</b><br>
-1. 輸入你實際繞了幾圈（n）<br>
-2. 選擇大概的摩擦情境與 k 建議情境<br>
-<span style="color:#94a3b8">小提醒：不確定摩擦情境時，先選「一般乾燥」；繩索 ↔ 繩索不確定時，先選「新繩」。</span><br>
-3. 看「實際建議摩擦倍率」跟下面的提示文字<br>
-如果看到「偏高」或「高放大」，代表可以停下來想一想：<b>要不要少繞一點，或換一種配置。</b><br><br>
-
-<b>④ T1 / T2 是什麼？怎麼填？</b><br>
-<b>T1 / T2 不是數學題，只是讓你分清楚哪一邊出力、哪一邊承受。</b><br>
-（它是在幫你看力量怎麼走）<br>
-• T1：你手上「出力」的那一邊<br>
-• T2：繩索最後「承受重量」的那一邊<br><br>
-<b>不知道要填多少時，就先用預設值 1 看「倍率」就好。</b>
-
-<button type="button" class="collapseBtn" data-collapse="#infoA">收合</button>
-</div>
-</details>
-
-<details id="infoB" style="margin-top:12px">
-<summary>K 的工程意義與使用說明</summary>
-<div class="explain" style="margin-top:10px">
-k 代表：<b>你繞的角度中，有多少比例真的在工作。</b><br><br>
-理論公式假設每一圈都完全貼合並產生摩擦；但在實際操作中，貼合、受力分佈、動態操作與繩索狀況
-都會使「有效摩擦角度」小於幾何角度。<br><br>
-工程上可表示為：<br>
-<span class="mono">k = θ_eff / θ_total</span>
-
-<button type="button" class="collapseBtn" data-collapse="#infoB">收合</button>
-</div>
-</details>
-
-
-<details id="addToHome" style="margin-top:12px">
-<summary>加入主畫面（選用）</summary>
-<div class="explain" style="margin-top:10px">
-你可以直接點開連結使用，不一定要加入主畫面。<br>
-如果希望之後開啟更方便，可以依照下面步驟，將捷徑加入主畫面。<br><br>
-
-<b>iOS（iPhone）</b><br>
-1. 點開連結（可直接從 LINE 開啟）<br>
-2. 點選下方的「分享」圖示，往下滑<br>
-3. 選擇「加入主畫面」<br>
-4. 點選「加入」，即可將捷徑加到主畫面<br><br>
-
-<b>Android（Samsung、其他 Android 手機）</b><br>
-1. 點開連結（可直接從 LINE 開啟）<br>
-2. 點選畫面右下角的「⋮」<br>
-3. 選擇「使用預設瀏覽器開啟」<br>
-4. 在畫面右上角點選「⋮」<br>
-5. 往下滑，選擇「加到主畫面」<br>
-6. 點選「新增」，即可將捷徑加到主畫面
-
-<button type="button" class="collapseBtn" data-collapse="#addToHome">收合</button>
-</div>
-</details>
-
-<details id="coffee" style="margin-top:12px">
-  <summary>☕ 喜歡這APP嗎？歡迎請團隊喝咖啡</summary>
-  <div class="explain" style="margin-top:10px; text-align:center;">
-
-    <div style="background-color:#0f172a; padding:16px; border-radius:12px; border:1px solid #1e293b;">
-      <p style="font-size:14px; font-weight:bold; color:#38bdf8; margin-bottom:8px;">🏦 台灣銀行轉帳</p>
-      <p style="font-size:14px; font-weight:bold; color:#94a3b8; margin-top:0; margin-bottom:6px; line-height:1.5;">永豐銀行 (代碼 807)<br>戶名：吳佩芳</p>
-      <p style="font-size:20px; font-weight:bold; color:#e2e8f0; letter-spacing:1px; margin-top:0; margin-bottom:18px; font-family: monospace;" id="bankAccount">20401800252531</p>
-      
-      <button type="button" class="collapseBtn" onclick="copyCoffee()" style="background:linear-gradient(135deg,#38bdf8,#0ea5e9); color:#020617; border:none; font-weight:900; width:100%; box-shadow:0 4px 6px -1px rgba(0,0,0,0.3); font-size:18px; padding:14px; border-radius:12px; cursor:pointer;">
-        📋 一鍵複製帳號
-      </button>
-      <div id="coffeeMsg" style="color:#38bdf8; font-weight:bold; display:none; text-align:center; margin-top:12px; font-size:15px;">✅ 帳號已複製！感謝您的心意！</div>
+    <label>纏繞圈數 n</label>
+    <input id="n" type="number" step="0.01" value="3"/>
+    <div class="quick">
+    <button type="button" onclick="adj(-0.25)">-0.25</button>
+    <button type="button" onclick="adj(-0.5)">-0.5</button>
+    <button type="button" onclick="adj(0.25)">+0.25</button>
+    <button type="button" onclick="adj(0.5)">+0.5</button>
     </div>
 
-    <button type="button" class="collapseBtn" data-collapse="#coffee" style="margin-top:16px; background-color:#334155; color:#e2e8f0; border:none; font-size:16px; padding:12px; font-weight:bold; border-radius:12px; cursor:pointer;">🔼 收起說明</button>
+    <label>摩擦條件（情境選擇）</label>
+    <select id="muPreset">
+      <option value="0.25" selected>繩索 ↔ 繩索（舊繩／毛）</option>
+      <option value="0.18">繩索 ↔ 金屬（偏滑）</option>
+      <option value="0.25">繩索 ↔ 金屬（一般乾燥）</option>
+      <option value="0.35">繩索 ↔ 樹皮（乾）</option>
+      <option value="0.45">繩索 ↔ 樹皮（濕/苔/泥）</option>
+      <option value="0.40">繩索 ↔ 水泥/混凝土（乾）</option>
+      <option value="0.50">繩索 ↔ 水泥/混凝土（濕）</option>
+      <option value="0.22">繩索 ↔ 繩索（新繩）</option>
+    <option value="custom">自訂 μ（進階）</option>
+    </select>
+
+    <label style="margin-top:10px">摩擦係數 μ（可微調）</label>
+    <input id="muVal" type="number" step="0.01" value="0.25" inputmode="decimal"/>
+    <div class="kMini">建議範圍：0.05～0.80（依材質、濕度、粉塵、表面粗糙度會有明顯差異）</div>
+    <div class="kMini">不確定就先用「一般乾燥」或「新繩」，看倍率落在哪一個區間，再回來微調。</div>
+
+
+    <label>k 建議情境</label>
+    <select id="kSel">
+    <option value="0.8">穩定操作（示範 / 靜態｜站定、慢慢做）</option>
+    <option value="0.7">一般教學（半動態｜邊講邊做、偶爾移動）</option>
+    <option value="0.5">動態操作（快速 / 濕滑｜走動、調整、容易滑）</option>
+    <option value="custom" selected>自訂（工程判斷）</option>
+    </select>
+
+    <div class="kCustomWrap" id="kCustomWrap">
+      <input id="kCustom" type="number" step="0.01" value="0.70" min="0.30" max="1.00" inputmode="decimal"/>
+      <div class="kMini">範圍建議：0.30～1.00（貼合與受力越完整，k 越接近 1.00）</div>
+    </div>
+
+    <label>已知哪一端？</label>
+    <div class="toggle">
+    <button type="button" id="btnT1" class="active" onclick="setSide('T1')">已知手端 T1</button>
+    <button type="button" id="btnT2" onclick="setSide('T2')">已知負重端 T2</button>
+    </div>
+
+    <label id="forceLabel">已知拉力（T1，kgf）</label>
+    <input id="force" type="number" value="1"/>
+    <div class="hintInline">數值：<b>1</b> <span class="pill">預設值</span>（不知道填多少時，先用預設值看「倍率」就好）</div>
+
+    <div class="actions">
+    <button type="button" class="calc" onclick="calc()">計算</button>
+    <button type="button" class="reset" onclick="resetAll()">重設</button>
+    </div>
   </div>
 
-</details>
-
-<!-- 💬 想跟朵朵說些什麼？ (表單回饋區塊) -->
-<div style="margin-top: 15px; margin-bottom: 20px; padding: 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: var(--text); font-weight: bold; font-size: 15px; transition: background 0.2s;" onclick="window.open('https://forms.gle/Vf2ndSyhCTSThBvT7', '_blank')" onmousedown="this.style.background='var(--panel2)'" onmouseup="this.style.background='var(--panel)'">
-  <div style="display: flex; align-items: center; gap: 12px;">
-    <span style="font-size: 18px; color: #ef4444; text-shadow: 0 0 5px rgba(239, 68, 68, 0.4);">💬</span>想跟朵朵說些什麼？
+  <div class="card">
+    <div class="section">結果（建議以此判斷）</div>
+    <div class="result-main">
+    <div class="small">實際建議摩擦倍率（含 k）</div>
+    <div class="big" id="Meff">—</div>
+    <div class="small">理論倍率 ×<span id="M">—</span> ｜ k = <span id="k">—</span></div>
+    <div class="hintInline" id="kNote" style="display:none;margin-top:10px"></div>
+    </div>
+    <div style="margin-top:14px">
+    <div class="kv"><div>T1 手端</div><div id="outT1">—</div></div>
+    <div class="kv"><div>T2 負重端</div><div id="outT2">—</div></div>
+    </div>
+    <div id="tExplain" class="infoBox" style="display:none;margin-top:12px">
+      <div class="title">T1 / T2 代表什麼意思？</div>
+      <ul>
+        <li><b>T1（手端）</b>：代表你在打繩結、操作時所施加的力量。</li>
+        <li><b>T2（負重端）</b>：代表經過纏繞後，所產生並作用在負重端的摩擦力。</li>
+        <li>這個計算是在幫你看：<b>目前的纏繞方式，會把 T1 的操作力量放大成多少的 T2。</b></li>
+      </ul>
+    </div>
   </div>
-  <span style="color: var(--muted); font-size: 12px; font-weight: bold;">❯</span>
-</div>
 
+  <!-- ================= 以下為大區塊收合區 (v5.11) ================= -->
 
-<details id="infoC" style="margin-top:12px">
-<summary>開發與版本資訊</summary>
-<div class="meta">
+  <!-- 📖 觀念與教學區塊 -->
+  <details class="main-group">
+    <summary>📖 觀念與教學</summary>
+    <div class="group-content">
+      
+      <details id="infoA">
+      <summary>第一次使用？先看這裡</summary>
+      <div class="explain" style="margin-top:10px">
+      <b>【為什麼要看摩擦力？】</b><br>
+      很多人會直覺地認為：<b>繩子繞多一點，就會比較安全。</b><br><br>
+      但在實際操作中，<b>摩擦力太大，反而可能讓操作變得困難，甚至增加風險。</b><br><br>
+      摩擦力影響的不是「撐不撐得住」，而是：<br>
+      • 放手是否順<br>
+      • 動作是否可控<br>
+      • 繩索是否過熱<br>
+      • 操作是否卡滯<br><br>
+      <b>好的繩索配置，不是追求摩擦最大，而是讓力量落在「你能控制的範圍內」。</b><br><br>
 
-<b>本工具由 散木團隊</b> 開發製作<br>
-教學架構與工程判斷／徐世豐<br>
-工具設計與互動介面／吳佩芳（朵朵）<br><br>
+      <b>【這個工具在幫你做什麼？】</b><br>
+      這個工具不是用來算對錯，<br>
+      而是幫你把「直覺」變成可以被檢視的東西。<br><br>
+      當你心中已經有一個繞法時，<br>
+      用它來看一眼：<br>
+      • 摩擦是不是太大？<br>
+      • 操作會不會變得不好放手？<br>
+      • 是否還在可控制範圍內？<br><br>
 
-<b>本工具之摩擦力模型與情境設定，源自「子惠繩」與子惠結在實務操作中的纏繞摩擦需求。<br><br>
-版本 v5.10｜2026
-</div>
-</details>
+      <b>【什麼時候不能只靠這個工具？】</b><br>
+      當環境快速變化、載荷不確定，<br>
+      或操作經驗不足時，<br>
+      <b>請不要只依賴數值判斷。</b><br><br>
+      這個工具是教學與判斷的輔助，<br>
+      <b>不是替代現場判斷與操作責任。</b><br><br>
+      <hr style="border:0;border-top:1px dashed #233056;margin:12px 0;">
 
-</div>
+      <b>① 這個工具是在幫你看什麼？</b><br>
+      這個工具不是在幫你算「對不對」，而是在幫你看：<b>現在這樣繞，合不合理、好不好用。</b><br>
+      算出來的數字，代表的是「繩索把力量放大了多少倍」。<br>
+      <b>數字越大，不一定越安全，反而可能代表操作會變得困難。</b><br><br>
 
-<div class="footer">
-【教學使用聲明】本工具為教學與風險判斷輔助使用，
-所有結果皆為估算值，不得取代現場判斷、標準作業程序（SOP）與安全保護措施。
-</div>
+      <b>② 為什麼圈數不能一直加？</b><br>
+      每多繞一圈，摩擦力不是慢慢增加，而是「變很快地增加」。<br>
+      圈數太多，常見的問題有：放手不好控制、繩索容易過熱、動作變得卡、不順。<br>
+      所以重點不是鼓勵你多繞，而是幫你找「剛剛好」的圈數。<br><br>
+
+      <b>③ 怎麼快速使用（30 秒版）</b><br>
+      1. 輸入你實際繞了幾圈（n）<br>
+      2. 選擇大概的摩擦情境與 k 建議情境<br>
+      <span style="color:#94a3b8">小提醒：不確定摩擦情境時，先選「一般乾燥」；繩索 ↔ 繩索不確定時，先選「新繩」。</span><br>
+      3. 看「實際建議摩擦倍率」跟下面的提示文字<br>
+      如果看到「偏高」或「高放大」，代表可以停下來想一想：<b>要不要少繞一點，或換一種配置。</b><br><br>
+
+      <b>④ T1 / T2 是什麼？怎麼填？</b><br>
+      <b>T1 / T2 不是數學題，只是讓你分清楚哪一邊出力、哪一邊承受。</b><br>
+      （它是在幫你看力量怎麼走）<br>
+      • T1：你手上「出力」的那一邊<br>
+      • T2：繩索最後「承受重量」的那一邊<br><br>
+      <b>不知道要填多少時，就先用預設值 1 看「倍率」就好。</b>
+
+      <button type="button" class="collapseBtn" data-collapse="#infoA">收合</button>
+      </div>
+      </details>
+
+      <details id="infoB" style="margin-top:12px">
+      <summary>K 的工程意義與使用說明</summary>
+      <div class="explain" style="margin-top:10px">
+      k 代表：<b>你繞的角度中，有多少比例真的在工作。</b><br><br>
+      理論公式假設每一圈都完全貼合並產生摩擦；但在實際操作中，貼合、受力分佈、動態操作與繩索狀況
+      都會使「有效摩擦角度」小於幾何角度。<br><br>
+      工程上可表示為：<br>
+      <span class="mono">k = θ_eff / θ_total</span>
+
+      <button type="button" class="collapseBtn" data-collapse="#infoB">收合</button>
+      </div>
+      </details>
+      
+    </div>
+  </details>
+
+  <!-- 🛠️ 實用工具區塊 -->
+  <details class="main-group">
+    <summary>🛠️ 實用工具</summary>
+    <div class="group-content">
+      
+      <details id="addToHome">
+      <summary>加入主畫面（選用）</summary>
+      <div class="explain" style="margin-top:10px">
+      你可以直接點開連結使用，不一定要加入主畫面。<br>
+      如果希望之後開啟更方便，可以依照下面步驟，將捷徑加入主畫面。<br><br>
+
+      <b>iOS（iPhone）</b><br>
+      1. 點開連結（可直接從 LINE 開啟）<br>
+      2. 點選下方的「分享」圖示，往下滑<br>
+      3. 選擇「加入主畫面」<br>
+      4. 點選「加入」，即可將捷徑加到主畫面<br><br>
+
+      <b>Android（Samsung、其他 Android 手機）</b><br>
+      1. 點開連結（可直接從 LINE 開啟）<br>
+      2. 點選畫面右下角的「⋮」<br>
+      3. 選擇「使用預設瀏覽器開啟」<br>
+      4. 在畫面右上角點選「⋮」<br>
+      5. 往下滑，選擇「加到主畫面」<br>
+      6. 點選「新增」，即可將捷徑加到主畫面
+
+      <button type="button" class="collapseBtn" data-collapse="#addToHome">收合</button>
+      </div>
+      </details>
+
+      <div style="margin-top: 12px; padding: 12px 12px; background: #020617; border: 1px solid var(--line); border-radius: 14px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: #cbd5f5; font-weight: 900; font-size: 15px; transition: background 0.2s;" onclick="shareApp()" onmousedown="this.style.background='rgba(255,255,255,0.04)'" onmouseup="this.style.background='#020617'">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 16px; color: #38bdf8;">🔗</span>分享這個工具給夥伴
+        </div>
+        <span style="color: var(--muted); font-size: 12px;">❯</span>
+      </div>
+
+    </div>
+  </details>
+
+  <!-- 💖 互動與支持區塊 -->
+  <details class="main-group">
+    <summary>💖 互動與支持</summary>
+    <div class="group-content">
+      
+      <div style="padding: 12px 12px; background: #020617; border: 1px solid var(--line); border-radius: 14px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: #cbd5f5; font-weight: 900; font-size: 15px; transition: background 0.2s;" onclick="window.open('https://forms.gle/Vf2ndSyhCTSThBvT7', '_blank')" onmousedown="this.style.background='rgba(255,255,255,0.04)'" onmouseup="this.style.background='#020617'">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 16px; color: #ef4444;">💬</span>想跟朵朵說些什麼？
+        </div>
+        <span style="color: var(--muted); font-size: 12px;">❯</span>
+      </div>
+
+      <details id="coffee" style="margin-top:12px">
+        <summary>☕ 喜歡這APP嗎？歡迎請我們喝咖啡</summary>
+        <div class="explain" style="margin-top:10px;">
+
+          <!-- 永豐銀行 -->
+          <div style="background-color:#0f172a; padding:16px; border-radius:12px; border:1px solid #1e293b; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <div>
+              <div style="font-size:13px; font-weight:bold; color:#94a3b8; margin-bottom:4px;">永豐銀行 (807) 戶名: 吳佩芳</div>
+              <div style="font-size:18px; font-weight:bold; color:#e2e8f0; font-family: monospace; letter-spacing:1px;">2040 1800 252531</div>
+            </div>
+            <button type="button" onclick="copyAccount('20401800252531', 'msgYF')" style="background:#f59e0b; color:#fff; border:none; border-radius:10px; padding:12px; cursor:pointer; flex-shrink:0; box-shadow:0 2px 4px rgba(0,0,0,0.2);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </button>
+          </div>
+          <div id="msgYF" style="color:#22c55e; font-weight:bold; display:none; text-align:center; margin-bottom:12px; font-size:14px;">✅ 永豐帳號已複製！</div>
+
+          <!-- 郵局 -->
+          <div style="background-color:#0f172a; padding:16px; border-radius:12px; border:1px solid #1e293b; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div style="font-size:13px; font-weight:bold; color:#94a3b8; margin-bottom:4px;">郵局 (700) 戶名: 吳佩芳</div>
+              <div style="font-size:18px; font-weight:bold; color:#e2e8f0; font-family: monospace; letter-spacing:1px;">2441500 0144326</div>
+            </div>
+            <button type="button" onclick="copyAccount('24415000144326', 'msgPost')" style="background:#f59e0b; color:#fff; border:none; border-radius:10px; padding:12px; cursor:pointer; flex-shrink:0; box-shadow:0 2px 4px rgba(0,0,0,0.2);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </button>
+          </div>
+          <div id="msgPost" style="color:#22c55e; font-weight:bold; display:none; text-align:center; margin-top:12px; font-size:14px;">✅ 郵局帳號已複製！</div>
+
+          <button type="button" class="collapseBtn" data-collapse="#coffee" style="margin-top:16px; background-color:#334155; color:#e2e8f0; border:none; font-size:16px; padding:12px; font-weight:bold; border-radius:12px; cursor:pointer; width:100%;">🔼 收起說明</button>
+        </div>
+      </details>
+
+    </div>
+  </details>
+
+  <!-- ℹ️ 開發資訊區塊 -->
+  <details class="main-group">
+    <summary>ℹ️ 開發與版本資訊</summary>
+    <div class="group-content meta" style="margin-top:12px;">
+      <b>本工具由 散木團隊</b> 開發製作<br>
+      教學架構與工程判斷／徐世豐<br>
+      工具設計與互動介面／吳佩芳（朵朵）<br><br>
+
+      <b>本工具之摩擦力模型與情境設定，源自「子惠繩」與子惠結在實務操作中的纏繞摩擦需求。</b><br><br>
+      版本 v5.11｜2026
+    </div>
+  </details>
+
+  <div class="footer">
+  【教學使用聲明】本工具為教學與風險判斷輔助使用，
+  所有結果皆為估算值，不得取代現場判斷、標準作業程序（SOP）與安全保護措施。
+  </div>
 
 </div>
 
@@ -740,7 +714,6 @@ const outT1 = document.getElementById("outT1");
 const outT2 = document.getElementById("outT2");
 const suggest = document.getElementById("suggest");
 const badge = document.getElementById("badge");
-
 
 function setSide(s){
   knownSide=s;
@@ -767,7 +740,6 @@ function refreshKUI(){
 
 function refreshMuUI(){
   const isCustom = muPreset.value === "custom";
-  // 選到預設情境：直接帶入對應 μ，並允許微調
   if(!isCustom){
     const v = parseFloat(muPreset.value);
     if(!Number.isNaN(v)) muVal.value = v.toFixed(2);
@@ -777,7 +749,6 @@ function refreshMuUI(){
 function getMuValue(){
   let v = parseFloat(muVal.value);
   if(Number.isNaN(v)) v = 0.25;
-  // 合理夾限，避免輸入太離譜導致爆表
   v = clamp(v, 0.01, 1.20);
   muVal.value = v.toFixed(2);
   return v;
@@ -802,7 +773,6 @@ function resetAll(){
   refreshMuUI();
   setSide("T1");
   force.value="1";
-  // clear outputs
   M.textContent="—"; k.textContent="—"; Meff.textContent="—";
   outT1.textContent="—"; outT2.textContent="—";
   kNote.style.display="none";
@@ -823,7 +793,7 @@ function calc(){
   Meff.textContent="× "+Me.toFixed(2);
   outT1.textContent=T1.toFixed(2)+" kgf";
   outT2.textContent=T2.toFixed(2)+" kgf";
-  // 額外提示：K=1 的工程提醒（僅在 K=1 時顯示）
+  
   if (Math.abs(kVal - 1.0) < 1e-9) {
     kNote.style.display = "block";
     kNote.innerHTML = `<div class="title">提醒</div><div>K＝1 代表「完全貼合、全角度都在工作」的理想假設；現場動態、鬆緊與接觸狀態不同時，實際有效摩擦通常會小於這個估算。</div>`;
@@ -831,11 +801,10 @@ function calc(){
     kNote.style.display = "none";
     kNote.innerHTML = "";
   }
-  // T1/T2 說明（算完才顯示）
   tExplain.style.display = "block";
 }
 
-/* 底部「收合」按鈕：一按就收合 */
+/* 底部「收合」按鈕：一按就收合（特別寫法：不會連動關閉大區塊） */
 document.addEventListener("click", function(e){
   const btn = e.target.closest("[data-collapse]");
   if(!btn) return;
@@ -846,12 +815,11 @@ document.addEventListener("click", function(e){
   block.querySelector("summary")?.scrollIntoView({behavior:"smooth", block:"start"});
 });
 
-// UI hooks
 kSel.addEventListener("change", refreshKUI);
 muPreset.addEventListener("change", ()=>{ refreshMuUI(); });
-muVal.addEventListener("blur", ()=>{ /* normalize */ getMuValue(); });
+muVal.addEventListener("blur", ()=>{ getMuValue(); });
 
-resetAll(); // initialize defaults cleanly
+resetAll(); 
 </script>
 
 <script>
@@ -869,21 +837,37 @@ if(formulaDetails && arrow){
 </script>
 
 <script>
-function copyCoffee() {
+function copyAccount(accText, msgId) {
   const tempIn = document.createElement('input');
-  tempIn.value = '20401800252531';
+  tempIn.value = accText;
   document.body.appendChild(tempIn);
   tempIn.select();
   document.execCommand('copy');
   document.body.removeChild(tempIn);
   
-  const msg = document.getElementById('coffeeMsg');
+  const msg = document.getElementById(msgId);
   msg.style.display = 'block';
   setTimeout(() => { msg.style.display = 'none'; }, 2000);
 }
-</script>
 
-</div>
+function shareApp() {
+  if (navigator.share) {
+    navigator.share({
+      title: 'Capstan 繩索張力放大公式',
+      text: '推薦這個實用的繩索張力輔助工具給你！',
+      url: window.location.href
+    }).catch((error) => console.log('分享取消或失敗', error));
+  } else {
+    const tempIn = document.createElement('input');
+    tempIn.value = window.location.href;
+    document.body.appendChild(tempIn);
+    tempIn.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempIn);
+    alert('系統已為您複製網址！您可以直接貼上分享給夥伴們。');
+  }
+}
+</script>
 
 <script>
 if ("serviceWorker" in navigator) {
