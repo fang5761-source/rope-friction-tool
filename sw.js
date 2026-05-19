@@ -1,3 +1,6 @@
+// 透過更新這裡的版本號，來通知手機端有新版本需要下載
+const VERSION = "5.11.1";
+
 self.addEventListener("install", (event) => {
   self.skipWaiting();
 });
