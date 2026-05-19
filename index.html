@@ -639,37 +639,20 @@ details[open] summary{ background:rgba(56,189,248,.06); }
         <span style="color: var(--muted); font-size: 12px;">❯</span>
       </div>
 
-      <details id="coffee" style="margin-top:12px">
-        <summary>☕ 喜歡這APP嗎？歡迎請我們喝咖啡</summary>
-        <div class="explain" style="margin-top:10px;">
 
-          <!-- 永豐銀行 -->
-          <div style="background-color:#0f172a; padding:16px; border-radius:12px; border:1px solid #1e293b; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-            <div>
-              <div style="font-size:13px; font-weight:bold; color:#94a3b8; margin-bottom:4px;">永豐銀行 (807) 戶名: 吳佩芳</div>
-              <div style="font-size:18px; font-weight:bold; color:#e2e8f0; font-family: monospace; letter-spacing:1px;">2040 1800 252531</div>
-            </div>
-            <button type="button" onclick="copyAccount('20401800252531', 'msgYF')" style="background:#f59e0b; color:#fff; border:none; border-radius:10px; padding:12px; cursor:pointer; flex-shrink:0; box-shadow:0 2px 4px rgba(0,0,0,0.2);">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-            </button>
-          </div>
-          <div id="msgYF" style="color:#22c55e; font-weight:bold; display:none; text-align:center; margin-bottom:12px; font-size:14px;">✅ 永豐帳號已複製！</div>
 
-          <!-- 郵局 -->
-          <div style="background-color:#0f172a; padding:16px; border-radius:12px; border:1px solid #1e293b; display:flex; justify-content:space-between; align-items:center;">
-            <div>
-              <div style="font-size:13px; font-weight:bold; color:#94a3b8; margin-bottom:4px;">郵局 (700) 戶名: 吳佩芳</div>
-              <div style="font-size:18px; font-weight:bold; color:#e2e8f0; font-family: monospace; letter-spacing:1px;">2441500 0144326</div>
-            </div>
-            <button type="button" onclick="copyAccount('24415000144326', 'msgPost')" style="background:#f59e0b; color:#fff; border:none; border-radius:10px; padding:12px; cursor:pointer; flex-shrink:0; box-shadow:0 2px 4px rgba(0,0,0,0.2);">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-            </button>
-          </div>
-          <div id="msgPost" style="color:#22c55e; font-weight:bold; display:none; text-align:center; margin-top:12px; font-size:14px;">✅ 郵局帳號已複製！</div>
+      <div style="margin-top:12px; padding:20px; background:#020617; border:1px solid var(--line); border-radius:14px; text-align:center;">
+        <div style="color:#f59e0b; font-size:32px; margin-bottom:8px;">☕</div>
+        <div style="font-size:16px; font-weight:900; color:#e2e8f0; margin-bottom:8px; font-serif-tc">喜歡這款 APP 嗎？歡迎請我喝杯咖啡</div>
+        <p style="font-size:13px; color:var(--muted); line-height:1.5; margin:0 0 16px; font-weight:normal;">
+          為了保障隱私與資訊安全，本系統全面升級透過官方高安全性金流進行隨喜。歡迎點擊下方按鈕，前往我們的無人咖啡廳給予支持。
+        </p>
+        <button type="button" onclick="window.open('https://portaly.cc/wpf610', '_blank')" style="background:linear-gradient(135deg, #b45309, #d97706); color:#fff; border:none; border-radius:12px; padding:12px 24px; font-size:15px; font-weight:900; cursor:pointer; width:100%; box-shadow:0 4px 12px rgba(217,119,6,0.15); transition:all 0.2s;" onmousedown="this.style.transform='scale(0.98)'" onmouseup="this.style.transform='scale(1)'">
+          前往無人咖啡廳隨喜 ❤️
+        </button>
+      </div>
 
-          <button type="button" class="collapseBtn" data-collapse="#coffee" style="margin-top:16px; background-color:#334155; color:#e2e8f0; border:none; font-size:16px; padding:12px; font-weight:bold; border-radius:12px; cursor:pointer; width:100%;">🔼 收起說明</button>
-        </div>
-      </details>
+
 
     </div>
   </details>
