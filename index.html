@@ -641,16 +641,24 @@ details[open] summary{ background:rgba(56,189,248,.06); }
 
 
 
-      <div style="margin-top:12px; padding:20px; background:#020617; border:1px solid var(--line); border-radius:14px; text-align:center;">
-        <div style="color:#f59e0b; font-size:32px; margin-bottom:8px;">☕</div>
-        <div style="font-size:16px; font-weight:900; color:#e2e8f0; margin-bottom:8px; font-serif-tc">喜歡這款 APP 嗎？歡迎請我喝杯咖啡</div>
-        <p style="font-size:13px; color:var(--muted); line-height:1.5; margin:0 0 16px; font-weight:normal;">
-          為了保障隱私與資訊安全，本系統全面升級透過官方高安全性金流進行隨喜。歡迎點擊下方按鈕，前往我們的無人咖啡廳給予支持。
-        </p>
-        <button type="button" onclick="window.open('https://portaly.cc/wpf610', '_blank')" style="background:linear-gradient(135deg, #b45309, #d97706); color:#fff; border:none; border-radius:12px; padding:12px 24px; font-size:15px; font-weight:900; cursor:pointer; width:100%; box-shadow:0 4px 12px rgba(217,119,6,0.15); transition:all 0.2s;" onmousedown="this.style.transform='scale(0.98)'" onmouseup="this.style.transform='scale(1)'">
-          前往無人咖啡廳隨喜 ❤️
-        </button>
-      </div>
+      <details class="main-accordion" style="margin-top: 10px;">
+        <summary><div style="display:flex; align-items:center; gap:8px;"><span class="menu-icon">☕</span> <span style="color: var(--warn);">請團隊喝咖啡 / 隨喜支持</span></div></summary>
+        <div class="menu-group" style="padding: 15px;">
+          
+          <div style="background: #1c1917; border: 2px solid #b45309; border-radius: 12px; padding: 16px; margin-bottom: 14px; text-align: center; box-shadow: inset 0 0 12px rgba(180,83,9,0.15);">
+            <div style="color: #f59e0b; font-size: 28px; margin-bottom: 4px;">☕</div>
+            <div style="font-size: 15px; font-weight: 900; color: #f2f6f3; margin-bottom: 12px; letter-spacing: 1px;">隨喜支持研發團隊</div>
+            <div style="font-size: 13.5px; color: #d6d3d1; line-height: 1.7; margin: 0 0 16px; font-weight: normal; text-align: justify;">
+              為了保障隱私與資訊安全，本系統全面升級透過官方高安全性金流進行隨喜。<br><br>歡迎點擊下方按鈕，前往我們的無人咖啡廳給予支持。這將是我們開發下一套救援系統的最大動力！
+            </div>
+            <button type="button" onclick="window.open('https://portaly.cc/wpf610', '_blank')" style="background: linear-gradient(135deg, #b45309, #d97706); color: #fff; border: none; border-radius: 10px; padding: 12px 20px; font-size: 15px; font-weight: bold; width: 100%; cursor: pointer; box-shadow: 0 4px 12px rgba(217,119,6,0.25); transition: all 0.2s;" onmousedown="this.style.transform='scale(0.97)'" onmouseup="this.style.transform='scale(1)'">
+              前往無人咖啡廳（隨喜支持） ❤️
+            </button>
+          </div>
+          
+          <button type="button" class="btn-collapse-inner" onclick="const p = this.closest('details'); if(p) p.removeAttribute('open');">🔼 收起說明</button>
+        </div>
+      </details>
 
 
 
