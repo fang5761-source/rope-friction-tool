@@ -386,9 +386,9 @@ details[open] summary{ background:rgba(56,189,248,.06); }
   <div class="card hero">
     <div class="title-wrap">
       <div class="title-text">
-        <h1>Capstan 繩索張力放大公式</h1>
+        <h1 id="txtMainTitle">Capstan 繩索張力放大公式</h1>
         <div class="title-divider"></div>
-        <div class="subtitle">散木團隊｜教學與判斷輔助工具</div>
+        <div class="subtitle" id="txtSubtitle">散木團隊｜教學與判斷輔助工具</div>
       </div>
       <img class="title-logo" src="./sunmoon_logo.png?v=5.11.1" alt="散木團隊 LOGO"/>
     </div>
@@ -397,38 +397,38 @@ details[open] summary{ background:rgba(56,189,248,.06); }
   <div class="card">
     <details id="formulaDetails">
       <summary class="section" style="display:flex;justify-content:space-between;align-items:center">
-        <span>計算模型與公式</span></summary>
+        <span id="txtModelTitle">計算模型與公式</span></summary>
 
       <div class="explain" style="margin-top:10px">
       <div class="formulaBlock">
-        <div class="fTitle">核心公式：</div>
+        <div class="fTitle" id="txtF1Title">核心公式：</div>
         <div class="mono formula">T₂=T₁×e^(μ×θ)</div>
-        <div class="fNote">（純理論，用來理解摩擦放大的趨勢）</div>
+        <div class="fNote" id="txtF1Note">（純理論，用來理解摩擦放大的趨勢）</div>
       </div>
 
       <div class="formulaBlock">
-        <div class="fTitle">工程修正：</div>
+        <div class="fTitle" id="txtF2Title">工程修正：</div>
         <div class="mono formula">θ_eff=k×θ</div>
-        <div class="fNote">（實際操作時，角度不可能全部有效）</div>
+        <div class="fNote" id="txtF2Note">（實際操作時，角度不可能全部有效）</div>
       </div>
 
       <div class="formulaBlock">
-        <div class="fTitle">實際估算：</div>
+        <div class="fTitle" id="txtF3Title">實際估算：</div>
         <div class="mono formula">T₂≈T₁×e^(μ×θ_eff)</div>
-        <div class="fNote">（現場判斷時，看這一行就好）</div>
+        <div class="fNote" id="txtF3Note">（現場判斷時，看這一行就好）</div>
       </div>
     </div>
     </details>
 
-    <div class="hintInline" style="margin-top:12px">
+    <div class="hintInline" id="txtFDetailsNote" style="margin-top:12px">
     <b>注意事項：</b>摩擦倍率越大，不代表越安全，過大的摩擦反而會讓放手與控制變得困難。
     </div>
   </div>
 
   <div class="card">
-    <div class="section">輸入條件</div>
+    <div class="section" id="txtInputSection">輸入條件</div>
 
-    <label>纏繞圈數 n</label>
+    <label id="lblN">纏繞圈數 n</label>
     <input id="n" type="number" step="0.01" value="3"/>
     <div class="quick">
     <button type="button" onclick="adj(-0.25)">-0.25</button>
@@ -437,7 +437,7 @@ details[open] summary{ background:rgba(56,189,248,.06); }
     <button type="button" onclick="adj(0.5)">+0.5</button>
     </div>
 
-    <label>摩擦條件（情境選擇）</label>
+    <label id="lblMuPreset">摩擦條件（情境選擇）</label>
     <select id="muPreset">
       <option value="0.25" selected>繩索 ↔ 繩索（舊繩／毛）</option>
       <option value="0.18">繩索 ↔ 金屬（偏滑）</option>
@@ -450,13 +450,13 @@ details[open] summary{ background:rgba(56,189,248,.06); }
     <option value="custom">自訂 μ（進階）</option>
     </select>
 
-    <label style="margin-top:10px">摩擦係數 μ（可微調）</label>
+    <label style="margin-top:10px" id="lblMuVal">摩擦係數 μ（可微調）</label>
     <input id="muVal" type="number" step="0.01" value="0.25" inputmode="decimal"/>
-    <div class="kMini">建議範圍：0.05～0.80（依材質、濕度、粉塵、表面粗糙度會有明顯差異）</div>
-    <div class="kMini">不確定就先用「一般乾燥」或「新繩」，看倍率落在哪一個區間，再回來微調。</div>
+    <div class="kMini" id="txtMuHint1">建議範圍：0.05～0.80（依材質、濕度、粉塵、表面粗糙度會有明顯差異）</div>
+    <div class="kMini" id="txtMuHint2">不確定就先用「一般乾燥」或「新繩」，看倍率落在哪一個區間，再回來微調。</div>
 
 
-    <label>k 建議情境</label>
+    <label id="lblKSel">k 建議情境</label>
     <select id="kSel">
     <option value="0.8">穩定操作（示範 / 靜態｜站定、慢慢做）</option>
     <option value="0.7">一般教學（半動態｜邊講邊做、偶爾移動）</option>
@@ -466,10 +466,10 @@ details[open] summary{ background:rgba(56,189,248,.06); }
 
     <div class="kCustomWrap" id="kCustomWrap">
       <input id="kCustom" type="number" step="0.01" value="0.70" min="0.30" max="1.00" inputmode="decimal"/>
-      <div class="kMini">範圍建議：0.30～1.00（貼合與受力越完整，k 越接近 1.00）</div>
+      <div class="kMini" id="txtKHint">範圍建議：0.30～1.00（貼合與受力越完整，k 越接近 1.00）</div>
     </div>
 
-    <label>已知哪一端？</label>
+    <label id="lblKnownSide">已知哪一端？</label>
     <div class="toggle">
     <button type="button" id="btnT1" class="active" onclick="setSide('T1')">已知手端 T1</button>
     <button type="button" id="btnT2" onclick="setSide('T2')">已知負重端 T2</button>
@@ -477,29 +477,29 @@ details[open] summary{ background:rgba(56,189,248,.06); }
 
     <label id="forceLabel">已知拉力（T1，kgf）</label>
     <input id="force" type="number" value="1"/>
-    <div class="hintInline">數值：<b>1</b> <span class="pill">預設值</span>（不知道填多少時，先用預設值看「倍率」就好）</div>
+    <div class="hintInline" id="txtForceHint">數值：<b>1</b> <span class="pill">預設值</span>（不知道填多少時，先用預設值看「倍率」就好）</div>
 
     <div class="actions">
-    <button type="button" class="calc" onclick="calc()">計算</button>
-    <button type="button" class="reset" onclick="resetAll()">重設</button>
+    <button type="button" class="calc" id="btnCalc" onclick="calc()">計算</button>
+    <button type="button" class="reset" id="btnReset" onclick="resetAll()">重設</button>
     </div>
   </div>
 
   <div class="card">
-    <div class="section">結果（建議以此判斷）</div>
+    <div class="section" id="txtResultSection">結果（建議以此判斷）</div>
     <div class="result-main">
-    <div class="small">實際建議摩擦倍率（含 k）</div>
+    <div class="small" id="txtMeffSmall">實際建議摩擦倍率（含 k）</div>
     <div class="big" id="Meff">—</div>
-    <div class="small">理論倍率 ×<span id="M">—</span> ｜ k = <span id="k">—</span></div>
+    <div class="small"><span id="txtMTheorySmall">理論倍率</span> ×<span id="M">—</span> ｜ k = <span id="k">—</span></div>
     <div class="hintInline" id="kNote" style="display:none;margin-top:10px"></div>
     </div>
     <div style="margin-top:14px">
-    <div class="kv"><div>T1 手端</div><div id="outT1">—</div></div>
-    <div class="kv"><div>T2 負重端</div><div id="outT2">—</div></div>
+    <div class="kv"><div id="txtResT1">T1 手端</div><div id="outT1">—</div></div>
+    <div class="kv"><div id="txtResT2">T2 負重端</div><div id="outT2">—</div></div>
     </div>
     <div id="tExplain" class="infoBox" style="display:none;margin-top:12px">
-      <div class="title">T1 / T2 代表什麼意思？</div>
-      <ul>
+      <div class="title" id="txtExpTitle">T1 / T2 代表什麼意思？</div>
+      <ul id="txtExpList">
         <li><b>T1（手端）</b>：代表你在打繩結、操作時所施加的力量。</li>
         <li><b>T2（負重端）</b>：代表經過纏繞後，所產生並作用在負重端的摩擦力。</li>
         <li>這個計算是在幫你看：<b>目前的纏繞方式，會把 T1 的操作力量放大成多少的 T2。</b></li>
@@ -510,13 +510,13 @@ details[open] summary{ background:rgba(56,189,248,.06); }
   <!-- ================= 以下為大區塊收合區 (v5.11) ================= -->
 
   <!-- 📖 觀念與教學區塊 -->
-  <details class="main-group">
-    <summary>📖 觀念與教學</summary>
+  <details class="main-group" id="grpEdu">
+    <summary id="txtGrpEdu">📖 觀念與教學</summary>
     <div class="group-content">
       
       <details id="infoA">
-      <summary>第一次使用？先看這裡</summary>
-      <div class="explain" style="margin-top:10px">
+      <summary id="txtInfoATitle">第一次使用？先看這裡</summary>
+      <div class="explain" style="margin-top:10px" id="txtInfoAContent">
       <b>【為什麼要看摩擦力？】</b><br>
       很多人會直覺地認為：<b>繩子繞多一點，就會比較安全。</b><br><br>
       但在實際操作中，<b>摩擦力太大，反而可能讓操作變得困難，甚至增加風險。</b><br><br>
@@ -529,7 +529,7 @@ details[open] summary{ background:rgba(56,189,248,.06); }
 
       <b>【這個工具在幫你做什麼？】</b><br>
       這個工具不是用來算對錯，<br>
-      而是幫你把「直覺」變成可以被檢視的東西。<br><br>
+      慢是幫你把「直覺」變成可以被檢視的東西。<br><br>
       當你心中已經有一個繞法時，<br>
       用它來看一眼：<br>
       • 摩擦是不是太大？<br>
@@ -541,7 +541,7 @@ details[open] summary{ background:rgba(56,189,248,.06); }
       或操作經驗不足時，<br>
       <b>請不要只依賴數值判斷。</b><br><br>
       這個工具是教學與判斷的輔助，<br>
-      <b>不是替代現場判斷與操作責任。</b><br><br>
+      <b>不是替代現場判斷與操作責任。</b><br>
       <hr style="border:0;border-top:1px dashed #233056;margin:12px 0;">
 
       <b>① 這個工具是在幫你看什麼？</b><br>
@@ -568,20 +568,20 @@ details[open] summary{ background:rgba(56,189,248,.06); }
       • T2：繩索最後「承受重量」的那一邊<br><br>
       <b>不知道要填多少時，就先用預設值 1 看「倍率」就好。</b>
 
-      <button type="button" class="collapseBtn" data-collapse="#infoA">收合</button>
+      <button type="button" class="collapseBtn" data-collapse="#infoA" id="btnCollapseA">收合</button>
       </div>
       </details>
 
       <details id="infoB" style="margin-top:12px">
-      <summary>K 的工程意義與使用說明</summary>
-      <div class="explain" style="margin-top:10px">
+      <summary id="txtInfoBTitle">K 的工程意義與使用說明</summary>
+      <div class="explain" style="margin-top:10px" id="txtInfoBContent">
       k 代表：<b>你繞的角度中，有多少比例真的在工作。</b><br><br>
       理論公式假設每一圈都完全貼合並產生摩擦；但在實際操作中，貼合、受力分佈、動態操作與繩索狀況
       都會使「有效摩擦角度」小於幾何角度。<br><br>
       工程上可表示為：<br>
       <span class="mono">k = θ_eff / θ_total</span>
 
-      <button type="button" class="collapseBtn" data-collapse="#infoB">收合</button>
+      <button type="button" class="collapseBtn" data-collapse="#infoB" id="btnCollapseB">收合</button>
       </div>
       </details>
       
@@ -589,13 +589,28 @@ details[open] summary{ background:rgba(56,189,248,.06); }
   </details>
 
   <!-- 🛠️ 實用工具區塊 -->
-  <details class="main-group">
-    <summary>🛠️ 實用工具</summary>
+  <details class="main-group" id="grpTools">
+    <summary id="txtGrpTools">🛠️ 實用工具</summary>
     <div class="group-content">
+
+      <!-- 🌐 多國語言切換選單 -->
+      <div style="margin-bottom: 14px; padding: 12px 14px; background: #020617; border: 1px solid var(--line); border-radius: 14px;">
+        <label for="langSel" id="lblLangSel" style="display:block; margin: 0 0 8px 0; font-size: 13px; color: #cbd5f5; font-weight: 700;">🌐 語言設定 / Language</label>
+        <select id="langSel" style="width:100%; padding:12px; border-radius:14px; border:1px solid var(--line); background:#020617; color:var(--text); font-size:15px;">
+          <option value="zh">正體中文</option>
+          <option value="en">English</option>
+          <option value="ja">日本語</option>
+          <option value="ko">한국어</option>
+          <option value="de">Deutsch</option>
+          <option value="fr">Français</option>
+          <option value="es">Español</option>
+          <option value="pt">Português</option>
+        </select>
+      </div>
       
       <details id="addToHome">
-      <summary>加入主畫面（選用）</summary>
-      <div class="explain" style="margin-top:10px">
+      <summary id="txtAddToHomeTitle">加入主畫面（選用）</summary>
+      <div class="explain" style="margin-top:10px" id="txtAddToHomeContent">
       你可以直接點開連結使用，不一定要加入主畫面。<br>
       如果希望之後開啟更方便，可以依照下面步驟，將捷徑加入主畫面。<br><br>
 
@@ -613,12 +628,12 @@ details[open] summary{ background:rgba(56,189,248,.06); }
       5. 往下滑，選擇「加到主畫面」<br>
       6. 點選「新增」，即可將捷徑加到主畫面
 
-      <button type="button" class="collapseBtn" data-collapse="#addToHome">收合</button>
+      <button type="button" class="collapseBtn" data-collapse="#addToHome" id="btnCollapseHome">收合</button>
       </div>
       </details>
 
       <div style="margin-top: 12px; padding: 12px 12px; background: #020617; border: 1px solid var(--line); border-radius: 14px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: #cbd5f5; font-weight: 900; font-size: 15px; transition: background 0.2s;" onclick="shareApp()" onmousedown="this.style.background='rgba(255,255,255,0.04)'" onmouseup="this.style.background='#020617'">
-        <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 12px;" id="txtShareBtn">
           <span style="font-size: 16px; color: #38bdf8;">🔗</span>分享這個工具給夥伴
         </div>
         <span style="color: var(--muted); font-size: 12px;">❯</span>
@@ -628,12 +643,12 @@ details[open] summary{ background:rgba(56,189,248,.06); }
   </details>
 
   <!-- 💖 互動與支持區塊 -->
-  <details class="main-group">
-    <summary>💖 互動與支持</summary>
+  <details class="main-group" id="grpSupport">
+    <summary id="txtGrpSupport">💖 互動與支持</summary>
     <div class="group-content">
       
       <div style="padding: 12px 12px; background: #020617; border: 1px solid var(--line); border-radius: 14px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: #cbd5f5; font-weight: 900; font-size: 15px; transition: background 0.2s;" onclick="window.open('https://forms.gle/Vf2ndSyhCTSThBvT7', '_blank')" onmousedown="this.style.background='rgba(255,255,255,0.04)'" onmouseup="this.style.background='#020617'">
-        <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 12px;" id="txtTalkBtn">
           <span style="font-size: 16px; color: #ef4444;">💬</span>想跟朵朵說些什麼？
         </div>
         <span style="color: var(--muted); font-size: 12px;">❯</span>
@@ -641,22 +656,22 @@ details[open] summary{ background:rgba(56,189,248,.06); }
 
 
 
-      <details class="main-accordion" style="margin-top: 10px;">
-        <summary><div style="display:flex; align-items:center; gap:8px;"><span class="menu-icon">☕</span> <span style="color: var(--warn);">請團隊喝咖啡 / 隨喜支持</span></div></summary>
+      <details class="main-accordion" style="margin-top: 10px;" id="detailsCoffee">
+        <summary><div style="display:flex; align-items:center; gap:8px;" id="txtCoffeeSummary"><span class="menu-icon">☕</span> <span style="color: var(--warn);">請團隊喝咖啡 / 隨喜支持</span></div></summary>
         <div class="menu-group" style="padding: 15px;">
           
-          <div style="background: #1c1917; border: 2px solid #b45309; border-radius: 12px; padding: 16px; margin-bottom: 14px; text-align: center; box-shadow: inset 0 0 12px rgba(180,83,9,0.15);">
+          <div style="background: #1c1917; border: 2px solid #b45309; border-radius: 12px; padding: 16px; margin-bottom: 14px; text-align: center; box-shadow: inset 0 0 12px rgba(180,83,9,0.15);" id="txtCoffeeBox">
             <div style="color: #f59e0b; font-size: 28px; margin-bottom: 4px;">☕</div>
             <div style="font-size: 15px; font-weight: 900; color: #f2f6f3; margin-bottom: 12px; letter-spacing: 1px;">隨喜支持研發團隊</div>
             <div style="font-size: 13.5px; color: #d6d3d1; line-height: 1.7; margin: 0 0 16px; font-weight: normal; text-align: justify;">
               為了保障隱私與資訊安全，本系統全面升級透過官方高安全性金流進行隨喜。<br><br>歡迎點擊下方按鈕，前往我們的無人咖啡廳給予支持。這將是我們開發下一套救援系統的最大動力！
             </div>
-            <button type="button" onclick="window.open('https://portaly.cc/wpf610', '_blank')" style="background: linear-gradient(135deg, #b45309, #d97706); color: #fff; border: none; border-radius: 10px; padding: 12px 20px; font-size: 15px; font-weight: bold; width: 100%; cursor: pointer; box-shadow: 0 4px 12px rgba(217,119,6,0.25); transition: all 0.2s;" onmousedown="this.style.transform='scale(0.97)'" onmouseup="this.style.transform='scale(1)'">
+            <button type="button" onclick="window.open('https://portaly.cc/wpf610', '_blank')" style="background: linear-gradient(135deg, #b45309, #d97706); color: #fff; border: none; border-radius: 10px; padding: 12px 20px; font-size: 15px; font-weight: bold; width: 100%; cursor: pointer; box-shadow: 0 4px 12px rgba(217,119,6,0.25); transition: all 0.2s;">
               前往無人咖啡廳（隨喜支持） ❤️
             </button>
           </div>
           
-          <button type="button" class="btn-collapse-inner" onclick="const p = this.closest('details'); if(p) p.removeAttribute('open');">🔼 收起說明</button>
+          <button type="button" class="btn-collapse-inner" id="btnCollapseCoffee" onclick="const p = this.closest('details'); if(p) p.removeAttribute('open');">🔼 收起說明</button>
         </div>
       </details>
 
@@ -666,9 +681,9 @@ details[open] summary{ background:rgba(56,189,248,.06); }
   </details>
 
   <!-- ℹ️ 開發資訊區塊 -->
-  <details class="main-group">
-    <summary>ℹ️ 開發與版本資訊</summary>
-    <div class="group-content meta" style="margin-top:12px;">
+  <details class="main-group" id="grpMeta">
+    <summary id="txtGrpMeta">ℹ️ 開發與版本資訊</summary>
+    <div class="group-content meta" style="margin-top:12px;" id="txtMetaContent">
       <b>本工具由 散木團隊</b> 開發製作<br>
       教學架構與工程判斷／徐世豐<br>
       工具設計與互動介面／吳佩芳（朵朵）<br><br>
@@ -678,7 +693,7 @@ details[open] summary{ background:rgba(56,189,248,.06); }
     </div>
   </details>
 
-  <div class="footer">
+  <div class="footer" id="txtFooter">
   【教學使用聲明】本工具為教學與風險判斷輔助使用，
   所有結果皆為估算值，不得取代現場判斷、標準作業程序（SOP）與安全保護措施。
   </div>
@@ -710,7 +725,13 @@ function setSide(s){
   knownSide=s;
   btnT1.classList.toggle("active",s==="T1");
   btnT2.classList.toggle("active",s==="T2");
-  forceLabel.textContent=s==="T1"?"已知拉力（T1，kgf）":"已知拉力（T2，kgf）";
+  
+  // 讓已知拉力的標籤跟隨目前選擇的語系更新
+  if(window.currentLangDict) {
+     forceLabel.textContent = (s === "T1") ? window.currentLangDict.forceT1 : window.currentLangDict.forceT2;
+  } else {
+     forceLabel.textContent = (s === "T1") ? "已知拉力（T1，kgf）" : "已知拉力（T2，kgf）";
+  }
 }
 
 function adj(d){ n.value=(Math.max(0,(+n.value||0)+d)).toFixed(2) }
@@ -790,9 +811,10 @@ function calc(){
   outT1.textContent=T1.toFixed(2)+" kgf";
   outT2.textContent=T2.toFixed(2)+" kgf";
   
+  const dict = window.currentLangDict;
   if (Math.abs(kVal - 1.0) < 1e-9) {
     kNote.style.display = "block";
-    kNote.innerHTML = `<div class="title">提醒</div><div>K＝1 代表「完全貼合、全角度都在工作」的理想假設；現場動態、鬆緊與接觸狀態不同時，實際有效摩擦通常會小於這個估算。</div>`;
+    kNote.innerHTML = `<div class="title">${dict ? dict.kNoteTitle : "提醒"}</div><div>${dict ? dict.kNoteText : "K＝1 代表「完全貼合、全角度都在工作」的理想假設；現場動態、鬆緊與接觸狀態不同時，實際有效摩擦通常會小於這個估算。"}</div>`;
   } else {
     kNote.style.display = "none";
     kNote.innerHTML = "";
@@ -871,6 +893,419 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("./sw.js?v=5.11.1").catch(() => {});
   });
 }
+</script>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- 🌐 散木團隊 · 獨立多國語言翻譯擴充模組 v2.0 ── 記憶與自動偵測 -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<script>
+(function(){
+  const langSel = document.getElementById("langSel");
+  if(!langSel) return;
+
+  const dict = {
+    zh: {
+      txtMainTitle: "Capstan 繩索張力放大公式", txtSubtitle: "散木團隊｜教學與判斷輔助工具", txtModelTitle: "計算模型與公式",
+      txtF1Title: "核心公式：", txtF1Note: "（純理論，用來理解摩擦放大的趨勢）",
+      txtF2Title: "工程修正：", txtF2Note: "（實際操作時，角度不可能全部有效）",
+      txtF3Title: "實際估算：", txtF3Note: "（現場判斷時，看這一行就好）",
+      txtFDetailsNote: "<b>注意事項：</b>摩擦倍率越大，不代表越安全，過大的摩擦反而會讓放手與控制變得困難。",
+      txtInputSection: "輸入條件", lblN: "纏繞圈數 n", lblMuPreset: "摩擦條件（情境選擇）", lblMuVal: "摩擦係數 μ（可微調）",
+      txtMuHint1: "建議範圍：0.05～0.80（依材質、濕度、粉塵、表面粗糙度會有明顯差異）",
+      txtMuHint2: "不確定就先用「一般乾燥」或「新繩」，看倍率落在哪一個區間，再回來微調。",
+      lblKSel: "k 建議情境", txtKHint: "範圍建議：0.30～1.00（貼合與受力越完整，k 越接近 1.00）",
+      lblKnownSide: "已知哪一端？", btnT1: "已知手端 T1", btnT2: "已知負重端 T2",
+      forceT1: "已知拉力（T1，kgf）", forceT2: "已知拉力（T2，kgf）",
+      txtForceHint: "數值：<b>1</b> <span class='pill'>預設值</span>（不知道填多少時，先用預設值看「倍率」就好）",
+      btnCalc: "計算", btnReset: "重設", txtResultSection: "結果（建議以此判斷）",
+      txtMeffSmall: "實際建議摩擦倍率（含 k）", txtMTheorySmall: "理論倍率",
+      txtResT1: "T1 手端", txtResT2: "T2 負重端",
+      txtExpTitle: "T1 / T2 代表什麼意思？",
+      txtExpList: "<li><b>T1（手端）</b>：代表你在打繩結、操作時所施加的力量。</li><li><b>T2（負重端）</b>：代表經過纏繞後，所產生並作用在負重端的摩擦力。</li><li>這個計算是在幫你看：<b>目前的纏繞方式，會把 T1 的操作力量放大成多少的 T2。</b></li>",
+      txtGrpEdu: "📖 觀念與教學", txtInfoATitle: "第一次使用？先看這裡",
+      txtInfoAContent: "<b>【為什麼要看摩擦力？】</b><br>很多人會直覺地認為：<b>繩子繞多一點，就會比較安全。</b><br><br>但在實際操作中，<b>摩擦力太大，反而可能讓操作變得困難，甚至增加風險。</b><br><br>摩擦力影響的不是「撐不撐得住」，而是：<br>• 放手是否順<br>• 動作是否可控<br>• 繩索是否過熱<br>• 操作是否卡滯<br><br><b>好的繩索配置，不是追求摩擦最大，而是讓力量落在「你能控制的範圍內」。</b><br><br><b>【這個工具在幫你做什麼？】</b><br>這個工具不是用來算對錯，而是幫你把「直覺」變成可以被檢視的東西。<br><br>當你心中已經有一個繞法時，用它來看一眼：<br>• 摩擦是不是太大？<br>• 操作會不會變得不好放手？<br>• 是否還在可控制範圍內？<br><br><b>【什麼時候不能只靠這個工具？】</b><br>當環境快速變化、載荷不確定，或操作經驗不足時，<b>請不要只依賴數值判斷。</b><br><br>這個工具是教學與判斷的輔助，<b>不是替代現場判斷與操作責任。</b><hr style='border:0;border-top:1px dashed #233056;margin:12px 0;'><b>① 這個工具是在幫你看什麼？</b><br>這個工具不是在幫你算「對不對」，而是在幫你看：<b>現在這樣繞，合不合理、好不好用。</b><br>算出來的數字，代表的是「繩索把力量放大了多少倍」。<br><b>數字越大，不一定越安全，反而可能代表操作會變得困難。</b><br><br><b>② 為什麼圈數不能一直加？</b><br>每多繞一圈，摩擦力不是慢慢增加，而是「變很快地增加」。<br>圈數太多，常見的問題有：放手不好控制、繩索容易過熱、動作變得卡、不順。<br>所以重點不是鼓勵你多繞，而是幫你找「剛剛好」的圈數。<br><br><b>③ 怎麼快速使用（30 秒版）</b><br>1. 輸入你實際繞了幾圈（n）<br>2. 選擇大概的摩擦情境與 k 建議情境<br><span style='color:#94a3b8'>小提醒：不確定摩擦情境時，先選「一般乾燥」；繩索 ↔ 繩索不確定時，先選「新繩」。</span><br>3. 看「實際建議摩擦倍率」跟下面的提示文字<br>如果看到「偏高」或「高放大」，代表可以停下來想一想：<b>要不要少繞一點，或換一種配置。</b><br><br><b>④ T1 / T2 是什麼？怎麼填？</b><br><b>T1 / T2 不是數學題，只是讓你分清楚哪一邊出力、哪一邊承受。</b><br>（它是在幫你看力量怎麼走）<br>• T1：你手上「出力」的那一邊<br>• T2：繩索最後「承受重量」的那一邊<br><br><b>不知道要填多少時，就先用預設值 1 看「倍率」就好。</b>",
+      txtInfoBTitle: "K 的工程意義與使用說明",
+      txtInfoBContent: "k 代表：<b>你繞的角度中，有多少比例真的在工作。</b><br><br>理論公式假設每一圈都完全貼合並產生摩擦；但在實際操作中，貼合、受力分佈、動態操作與繩索狀況都會使「有效摩擦角度」小於幾何角度。<br><br>工程上可表示為：<br><span class='mono'>k = θ_eff / θ_total</span>",
+      btnCollapseA: "收合", btnCollapseB: "收合",
+      txtGrpTools: "🛠️ 實用工具", lblLangSel: "🌐 語言設定 / Language", txtAddToHomeTitle: "加入主畫面（選用）",
+      txtAddToHomeContent: "你可以直接點開連結使用，不一定要加入主畫面。<br>如果希望之後開啟更方便，可以依照下面步驟，將捷徑加入主畫面。<br><br><b>iOS（iPhone）</b><br>1. 點開連結（可直接從 LINE 開啟）<br>2. 點選下方的「分享」圖示，往下滑<br>3. 選擇「加入主畫面」<br>4. 點選「加入」，即可將捷徑加到主畫面<br><br><b>Android（Samsung、其他 Android 手機）</b><br>1. 點開連結（可直接從 LINE 開啟）<br>2. 點選畫面右下角的「⋮」<br>3. 選擇「使用預設瀏覽器開啟」<br>4. 在畫面右上角點選「⋮」<br>5. 往下滑，選擇「加到主畫面」<br>6. 點選「新增」，即可將捷徑加到主畫面",
+      btnCollapseHome: "收合", txtShareBtn: "<span style='font-size:16px;color:#38bdf8;'>🔗</span>分享這個工具給夥伴",
+      txtGrpSupport: "💖 互動與支持", txtTalkBtn: "<span style='font-size:16px;color:#ef4444;'>💬</span>想跟朵朵說些什麼？",
+      txtCoffeeSummary: "<span class='menu-icon'>☕</span> <span style='color: var(--warn);'>請團隊喝咖啡 / 隨喜支持</span>",
+      txtCoffeeBox: "<div style='color:#f59e0b;font-size:28px;margin-bottom:4px;'>☕</div><div style='font-size:15px;font-weight:900;color:#f2f6f3;margin-bottom:12px;letter-spacing:1px;'>隨喜支持研發團隊</div><div style='font-size:13.5px;color:#d6d3d1;line-height:1.7;margin:0 0 16px;font-weight:normal;text-align:justify;'>為了保障隱私與資訊安全，本系統全面升級透過官方高安全性金流進行隨喜。<br><br>歡迎點擊下方按鈕，前往我們的無人咖啡廳給予支持。這將是我們開發下一套救援系統的最大動力！</div><button type='button' onclick=\"window.open('https://portaly.cc/wpf610', '_blank')\" style='background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:15px;font-weight:bold;width:100%;cursor:pointer;box-shadow:0 4px 12px rgba(217,119,6,0.25);'>前往無人咖啡廳（隨喜支持） ❤️</button>",
+      btnCollapseCoffee: "🔼 收起說明", txtGrpMeta: "ℹ️ 開發與版本資訊",
+      txtMetaContent: "<b>本工具由 散木團隊</b> 開發製作<br>教學架構與工程判斷／徐世豐<br>工具設計與互動介面／吳佩芳（朵朵）<br><br><b>本工具之摩擦力模型與情境設定，源自「子惠繩」與子惠結在實務操作中的纏繞摩擦需求。</b><br><br>版本 v5.11.1｜2026",
+      txtFooter: "【教學使用聲明】本工具為教學與風險判斷輔助使用，所有結果皆為估算值，不得取代現場判斷、標準作業程序（SOP）與安全保護措施。",
+      kNoteTitle: "提醒", kNoteText: "K＝1 代表「完全貼合、全角度都在工作」的理想假設；現場動態、鬆緊與接觸狀態不同時，實際有效摩擦通常會小於這個估算。",
+      muPresets: ["繩索 ↔ 繩索（舊繩／毛）", "繩索 ↔ 金屬（偏滑）", "繩索 ↔ 金屬（一般乾燥）", "繩索 ↔ 樹皮（乾）", "繩索 ↔ 樹皮（濕/苔/泥）", "繩索 ↔ 水泥/混凝土（乾）", "繩索 ↔ 水泥/混凝土（濕）", "繩索 ↔ 繩索（新繩）", "自訂 μ（進階）"],
+      kPresets: ["穩定操作（示範 / 靜態｜站定、慢慢做）", "一般教學（半動態｜邊講邊做、偶爾移動）", "動態操作（快速 / 濕滑｜走動、調整、容易滑）", "自訂（工程判斷）"]
+    },
+    en: {
+      txtMainTitle: "Capstan Rope Tension Multiplier Formula", txtSubtitle: "Sanmu Team | Educational & Judgment Assist Tool", txtModelTitle: "Calculation Model & Formula",
+      txtF1Title: "Core Formula:", txtF1Note: "(Pure theory, used to understand friction amplification trends)",
+      txtF2Title: "Engineering Correction:", txtF2Note: "(In practice, the entire angle cannot be fully effective)",
+      txtF3Title: "Actual Estimation:", txtF3Note: "(For on-site judgment, just look at this row)",
+      txtFDetailsNote: "<b>Note:</b> Larger friction multiplier does not mean safer; excessive friction makes letting go and control difficult.",
+      txtInputSection: "Input Conditions", lblN: "Number of Wraps n", lblMuPreset: "Friction Condition (Scenario)", lblMuVal: "Friction Coefficient μ (Fine-tune)",
+      txtMuHint1: "Recommended range: 0.05 to 0.80 (Varies significantly with material, moisture, dust, roughness)",
+      txtMuHint2: "If unsure, choose 'General Dry' or 'New Rope', check the multiplier zone, then fine-tune.",
+      lblKSel: "k Recommended Scenario", txtKHint: "Recommended range: 0.30 to 1.00 (Closer to 1.00 means full contact & loading)",
+      lblKnownSide: "Which side is known?", btnT1: "Known Hand End T1", btnT2: "Known Load End T2",
+      forceT1: "Known Tension (T1, kgf)", forceT2: "Known Tension (T2, kgf)",
+      txtForceHint: "Value: <b>1</b> <span class='pill'>Default</span> (If unsure, use default 1 to check the 'multiplier' trend)",
+      btnCalc: "Calculate", btnReset: "Reset", txtResultSection: "Result (Recommended for judgment)",
+      txtMeffSmall: "Recommended Friction Multiplier (with k)", txtMTheorySmall: "Theoretical Multiplier",
+      txtResT1: "T1 Hand End", txtResT2: "T2 Load End",
+      txtExpTitle: "What do T1 and T2 mean?",
+      txtExpList: "<li><b>T1 (Hand End)</b>: The force you apply when holding or operating the rope.</li><li><b>T2 (Load End)</b>: The holding force generated after wrapping, acting on the load side.</li><li>This calculation shows: <b>How much your hand force T1 is multiplied into the load force T2.</b></li>",
+      txtGrpEdu: "📖 Concepts & Education", txtInfoATitle: "First time here? Read this first",
+      txtInfoAContent: "<b>[Why check friction?]</b><br>Many intuitively think: <b>More wraps mean more safety.</b><br><br>In reality, <b>excessive friction can make control hard and increase risks.</b><br><br>Friction affects usability, not just capacity:<br>• Smoothness of release<br>• Controllability of motion<br>• Prevention of rope overheating<br>• Prevention of jamming<br><br><b>Good configuration aims for a controllable range, not maximum friction.</b><br><br><b>[What does this tool do?]</b><br>It doesn't tell right from wrong; it turns your intuition into verifiable metrics.<br><br>When you have a wrap setup in mind, use this to verify:<br>• Is the friction too high?<br>• Will it be too hard to let go?<br>• Is it within a safe control zone?<br><br><b>[When not to rely solely on this tool?]</b><br>When conditions change rapidly, loads are uncertain, or experience is lacking, <b>never rely on values alone.</b><br><br>This is an educational aid, <b>not a substitute for professional field judgment and responsibility.</b><hr style='border:0;border-top:1px dashed #233056;margin:12px 0;'><b>① What is this tool showing?</b><br>It shows whether your wrap count is practical and controllable based on tension amplification scale.<br><b>Higher numbers do not equal safety; they often mean operational difficulty.</b><br><br><b>② Why not just add unlimited wraps?</b><br>Friction grows exponentially with each wrap. Too many wraps cause heavy friction, overheating, and jerky control.<br><br><b>③ Quick Guide (30-Sec Version)</b><br>1. Input your wrap count (n).<br>2. Choose a friction preset and k-factor preset.<br>3. Check the multiplier. If flagged high, consider reducing wraps.<br><br><b>④ What are T1 / T2?</b><br>They trace how force travels. T1 is your input hand force; T2 is the resulting load force. Use the default value 1 if unsure.",
+      txtInfoBTitle: "Engineering Meaning of K & Usage",
+      txtInfoBContent: "k represents: <b>The effective ratio of your geometric wrap angle.</b><br><br>Theoretical models assume perfect contact. In practice, motion, tension distribution, and rope conditions keep the effective friction angle smaller than total geometric angles.<br><br><span class='mono'>k = θ_eff / θ_total</span>",
+      btnCollapseA: "Collapse", btnCollapseB: "Collapse",
+      txtGrpTools: "🛠️ Practical Tools", lblLangSel: "🌐 Language Settings", txtAddToHomeTitle: "Add to Home Screen (Optional)",
+      txtAddToHomeContent: "You can use this app directly via link. To add a shortcut for convenience:<br><br><b>iOS (iPhone)</b><br>1. Open link in Safari.<br>2. Tap Share icon, scroll down.<br>3. Select 'Add to Home Screen' and confirm.<br><br><b>Android</b><br>1. Open link in default browser.<br>2. Tap menu (3 dots).<br>3. Select 'Add to Home Screen' and confirm.",
+      btnCollapseHome: "Collapse", txtShareBtn: "<span style='font-size:16px;color:#38bdf8;'>🔗</span>Share this tool with partners",
+      txtGrpSupport: "💖 Interaction & Support", txtTalkBtn: "<span style='font-size:16px;color:#ef4444;'>💬</span>Want to say something to Dodo?",
+      txtCoffeeSummary: "<span class='menu-icon'>☕</span> <span style='color: var(--warn);'>Buy Team a Coffee / Support</span>",
+      txtCoffeeBox: "<div style='color:#f59e0b;font-size:28px;margin-bottom:4px;'>☕</div><div style='font-size:15px;font-weight:900;color:#f2f6f3;margin-bottom:12px;letter-spacing:1px;'>Support the R&D Team</div><div style='font-size:13.5px;color:#d6d3d1;line-height:1.7;margin:0 0 16px;font-weight:normal;text-align:justify;'>To protect privacy and secure data, we utilize secure official channels for donations.<br><br>Click below to support our digital and physical rescue tools research. Thank you!</div><button type='button' onclick=\"window.open('https://portaly.cc/wpf610', '_blank')\" style='background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:15px;font-weight:bold;width:100%;cursor:pointer;box-shadow:0 4px 12px rgba(217,119,6,0.25);'>Go to Support Page ❤️</button>",
+      btnCollapseCoffee: "Collapse", txtGrpMeta: "ℹ️ Development & Version",
+      txtMetaContent: "<b>Developed by Sanmu Team</b><br>Educational Architecture & Engineering / Shi-Feng Xu<br>UI Design & Interface / Pei-Fang Wu (Dodo)<br><br>Model derived from practical requirements of 'Zihui Rope' configurations.<br><br>Version v5.11.1 | 2026",
+      txtFooter: "[Educational Use Only] All outputs are estimations. They do not replace field judgment, standard operating procedures (SOP), and official safety measures.",
+      kNoteTitle: "Notice", kNoteText: "K=1 represents an ideal assumption where all angles are in perfect contact. In dynamic operations, the actual effective friction will be smaller than this estimation.",
+      muPresets: ["Rope ↔ Rope (Old/Fuzzy)", "Rope ↔ Metal (Slippery)", "Rope ↔ Metal (Dry/General)", "Rope ↔ Bark (Dry)", "Rope ↔ Bark (Wet/Mud)", "Rope ↔ Concrete (Dry)", "Rope ↔ Concrete (Wet)", "Rope ↔ Rope (New)", "Custom μ (Advanced)"],
+      kPresets: ["Stable Operation (Static/Demo)", "General Teaching (Semi-Dynamic)", "Dynamic Operation (Fast/Slippery)", "Custom (Engineering Judgment)"]
+    },
+    ja: {
+      txtMainTitle: "Capstan ロープ張力倍率公式", txtSubtitle: "散木チーム｜教育・判断補助ツール", txtModelTitle: "計算モデルと公式",
+      txtF1Title: "基本公式：", txtF1Note: "（純粋な理論値、摩擦増幅の傾向を理解するため）",
+      txtF2Title: "工学的修正：", txtF2Note: "（実際の操作では、角度全体が有効になるとは限りません）",
+      txtF3Title: "実測見積もり：", txtF3Note: "（現場での判断は、この行を確認してください）",
+      txtFDetailsNote: "<b>注意事項：</b>摩擦倍率が大きいほど安全というわけではありません。摩擦が大きすぎると、ロープの制御やリリースが困難になります。",
+      txtInputSection: "入力条件", lblN: "巻き数 n", lblMuPreset: "摩擦条件（環境選択）", lblMuVal: "摩擦係数 μ（微調整）",
+      txtMuHint1: "推奨範囲：0.05～0.80（材質、湿度、粉塵、表面の粗さにより大きく異なります）",
+      txtMuHint2: "不明な場合は「一般乾燥」か「新ロープ」を選び、倍率の傾向を見てから微調整してください。",
+      lblKSel: "k 推奨環境", txtKHint: "推奨範囲：0.30～1.00（密着度と受力状態が良いほど、kは1.00に近づきます）",
+      lblKnownSide: "既知のデータはどちらですか？", btnT1: "手元側 T1 既知", btnT2: "負荷側 T2 既知",
+      forceT1: "既知の張力（T1、kgf）", forceT2: "既知の張力（T2、kgf）",
+      txtForceHint: "数値：<b>1</b> <span class='pill'>デフォルト値</span>（不明な場合は、まず1を入力して倍率を確認してください）",
+      btnCalc: "計算する", btnReset: "リセット", txtResultSection: "計算結果（判断の目安）",
+      txtMeffSmall: "実際の推奨摩擦倍率（kを含む）", txtMTheorySmall: "理論上の倍率",
+      txtResT1: "T1 手元側", txtResT2: "T2 負荷側",
+      txtExpTitle: "T1 / T2 とは何ですか？",
+      txtExpList: "<li><b>T1（手元側）</b>：ロープを操作するときに手が加える力。</li><li><b>T2（負荷側）</b>：巻き付けによって発生し、荷重側に作用する力。</li><li>この計算は：<b>現在の巻き方で、手元の操作力 T1 が何倍の負荷 T2 に増幅されるかを示します。</b></li>",
+      txtGrpEdu: "📖 概念と教育", txtInfoATitle: "初めての方へ：まずここを読んでください",
+      txtInfoAContent: "<b>【なぜ摩擦力を確認するのか？】</b><br>多くの人は直感的に「たくさん巻けば安全だ」と考えがちです。<br><br>しかし、実際の操作において<b>摩擦が大きすぎると、リリース制御が難しくなり、かえって危険が高まります。</b><br><br>摩擦は耐荷重だけでなく、以下の要素に影響します：<br>• リリースのスムーズさ<br>• 動作のコントロール性<br>• ロープの過熱防止<br>• 詰まりや引っかかりの防止<br><br><b>優れたロープ構成とは、摩擦を最大にすることではなく、制御可能な範囲に収めることです。</b>",
+      txtInfoBTitle: "Kの工学的意味と使用説明",
+      txtInfoBContent: "kは：<b>幾何学的な巻き角度のうち、実際に機能している割合を示します。</b><br><br>理論式は全周が完全に密着していると仮定しますが、実際の現場では動的な動きや張力分布により、有効摩擦角度は幾何学的角度より小さくなります。<br><br><span class='mono'>k = θ_eff / θ_total</span>",
+      btnCollapseA: "閉じる", btnCollapseB: "閉じる",
+      txtGrpTools: "🛠️ 実用ツール", lblLangSel: "🌐 言語設定 / Language", txtAddToHomeTitle: "ホーム画面に追加（オプション）",
+      txtAddToHomeContent: "ブラウザから直接利用可能ですが、ホーム画面にショートカットを追加すると便利です。<br><br><b>iOS (iPhone)</b><br>1. Safariでリンクを開きます。<br>2. 共有アイコンをタップし、「ホーム画面に追加」を選択します。<br><br><b>Android</b><br>1. 標準ブラウザで開き、メニューから「ホーム画面に追加」を選択します。",
+      btnCollapseHome: "閉じる", txtShareBtn: "<span style='font-size:16px;color:#38bdf8;'>🔗</span>このツールを仲間に共有する",
+      txtGrpSupport: "💖 コミュニティとサポート", txtTalkBtn: "<span style='font-size:16px;color:#ef4444;'>💬</span>Dodoにメッセージを送る",
+      txtCoffeeSummary: "<span class='menu-icon'>☕</span> <span style='color: var(--warn);'>チームを応援する / コーヒーを奢る</span>",
+      txtCoffeeBox: "<div style='color:#f59e0b;font-size:28px;margin-bottom:4px;'>☕</div><div style='font-size:15px;font-weight:900;color:#f2f6f3;margin-bottom:12px;letter-spacing:1px;'>開発チームを支援する</div><div style='font-size:13.5px;color:#d6d3d1;line-height:1.7;margin:0 0 16px;font-weight:normal;text-align:justify;'>安全な決済システムを通じてサポートを受け付けています。今後のシステム開発の励みになります。</div><button type='button' onclick=\"window.open('https://portaly.cc/wpf610', '_blank')\" style='background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:15px;font-weight:bold;width:100%;cursor:pointer;'>支援ページへ行く ❤️</button>",
+      btnCollapseCoffee: "閉じる", txtGrpMeta: "ℹ️ 開発情報・バージョン",
+      txtMetaContent: "<b>散木チーム開発</b><br>教育設計・工学判断／徐世豊<br>UIデザイン・インターフェース／吳佩芳（Dodo）<br><br>バージョン v5.11.1｜2026",
+      txtFooter: "【教育用免責事項】本ツールは教育およびリスク判断の補助用です。すべての結果は見積もり値であり、現場での実際の判断や安全保護措置に代わるものではありません。",
+      kNoteTitle: "注意", kNoteText: "K=1はすべての角度が完全に接触している理想的な仮定です。動的な操作では、実際の有効摩擦はこの見積もりより小さくなります。",
+      muPresets: ["ロープ ↔ ロープ（古い/毛羽立ち）", "ロープ ↔ 金属（滑りやすい）", "ロープ ↔ 金属（一般乾燥）", "ロープ ↔ 樹皮（乾燥）", "ロープ ↔ 樹皮（湿気/泥）", "ロープ ↔ コンクリート（乾燥）", "ロープ ↔ コンクリート（湿気）", "ロープ ↔ ロープ（新品）", "カスタム μ（上級）"],
+      kPresets: ["安定操作（静的/デモ）", "一般講習（準動的）", "動的操作（迅速/滑りやすい）", "カスタム（工学的判断）"]
+    },
+    ko: {
+      txtMainTitle: "Capstan 로프 장력 증폭 공식", txtSubtitle: "산무 팀 | 교육 및 판단 보조 도구", txtModelTitle: "계산 모델 및 공식",
+      txtF1Title: "핵심 공식:", txtF1Note: "(순수 이론값, 마찰 증폭 경향 이해용)",
+      txtF2Title: "공학적 수정:", txtF2Note: "(실제 조작 시 모든 각도가 유효할 수는 없음)",
+      txtF3Title: "실제 추정:", txtF3Note: "(현장 판단 시 이 행을 확인하십시오)",
+      txtFDetailsNote: "<b>주의사항:</b> 마찰 배율이 크다고 해서 무조건 안전한 것은 아닙니다. 과도한 마찰은 로프 조작 및 제어를 어렵게 만듭니다.",
+      txtInputSection: "입력 조건", lblN: "감은 횟수 n", lblMuPreset: "마찰 조건 (시나리오 선택)", lblMuVal: "마찰 계수 μ (미세 조정)",
+      txtMuHint1: "권장 범위: 0.05 ~ 0.80 (재질, 습도, 거칠기에 따라 차이가 큼)",
+      txtMuHint2: "확실하지 않다면 '일반 건조' 또는 '새 로프'를 선택해 배율을 확인한 후 조정하십시오.",
+      lblKSel: "k 권장 시나리오", txtKHint: "권장 범위: 0.30 ~ 1.00 (접촉이 완벽할수록 1.00에 가까워짐)",
+      lblKnownSide: "어느 쪽 값을 알고 계십니까?", btnT1: "손쪽 T1 인지", btnT2: "하중쪽 T2 인지",
+      forceT1: "알려진 장력 (T1, kgf)", forceT2: "알려진 장력 (T2, kgf)",
+      txtForceHint: "수치: <b>1</b> <span class='pill'>기본값</span> (모를 때는 기본값 1로 배율만 확인하십시오)",
+      btnCalc: "계산하기", btnReset: "초기화", txtResultSection: "결과 (판단 기준으로 권장)",
+      txtMeffSmall: "실제 권장 마찰 배율 (k 포함)", txtMTheorySmall: "이론적 배율",
+      txtResT1: "T1 손쪽", txtResT2: "T2 하중쪽",
+      txtExpTitle: "T1 / T2는 무엇을 의미합니까?",
+      txtExpList: "<li><b>T1 (손쪽)</b>: 로프를 제어할 때 조작자가 가하는 힘.</li><li><b>T2 (하중쪽)</b>: 감김을 통해 발생하여 하중 측에 작용하는 힘.</li><li>이 계산은: <b>현재 방식이 T1 제어력을 몇 배의 T2 하중으로 증폭하는지 보여줍니다.</b></li>",
+      txtGrpEdu: "📖 개념 및 교육", txtInfoATitle: "처음이신가요? 먼저 읽어보세요",
+      txtInfoAContent: "<b>[왜 마찰력을 확인할까요?]</b><br>많은 사람들이 '로프를 많이 감을수록 안전하다'고 직관적으로 생각합니다.<br><br>하지만 실제 조작에서 <b>마찰이 너무 크면 로프를 놓거나 제어하기 어려워져 오히려 위험해집니다.</b>",
+      txtInfoBTitle: "K의 공학적 의미와 사용 설명",
+      txtInfoBContent: "k는: <b>기하학적으로 감은 각도 중 실제로 기능하는 비율을 뜻합니다.</b><br><br><span class='mono'>k = θ_eff / θ_total</span>",
+      btnCollapseA: "접기", btnCollapseB: "접기",
+      txtGrpTools: "🛠️ 실용 도구", lblLangSel: "🌐 언어 설정", txtAddToHomeTitle: "홈 화면에 추가 (선택 사항)",
+      txtAddToHomeContent: "링크로 바로 사용할 수 있습니다. 편의를 위해 바로가기를 홈 화면에 추가하려면 브라우저 메뉴에서 '홈 화면에 추가'를 선택하십시오.",
+      btnCollapseHome: "접기", txtShareBtn: "<span style='font-size:16px;color:#38bdf8;'>🔗</span>동료에게 이 도구 공유하기",
+      txtGrpSupport: "💖 소통과 후원", txtTalkBtn: "<span style='font-size:16px;color:#ef4444;'>💬</span>도도에게 하고 싶은 말",
+      txtCoffeeSummary: "<span class='menu-icon'>☕</span> <span style='color: var(--warn);'>팀에게 커피 한 잔 후원하기</span>",
+      txtCoffeeBox: "<div style='color:#f59e0b;font-size:28px;margin-bottom:4px;'>☕</div><div style='font-size:15px;font-weight:900;color:#f2f6f3;margin-bottom:12px;letter-spacing:1px;'>연구개발 팀 후원</div><button type='button' onclick=\"window.open('https://portaly.cc/wpf610', '_blank')\" style='background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:15px;font-weight:bold;width:100%;cursor:pointer;'>후원 페이지로 이동 ❤️</button>",
+      btnCollapseCoffee: "접기", txtGrpMeta: "ℹ️ 개발 및 버전 정보",
+      txtMetaContent: "<b>산무 팀 개발</b><br>교육 아키텍처 및 공학 판단 / 서세풍<br>UI 디자인 및 인터페이스 / 오패방 (도도)<br><br>버전 v5.11.1 | 2026",
+      txtFooter: "[교육용 안내] 본 도구는 교육 및 위험 판단 보조용입니다. 모든 결과는 추정치이며 현장 판단이나 정식 안전 조치를 대체할 수 없습니다.",
+      kNoteTitle: "안내", kNoteText: "K=1은 모든 각도가 완전히 접촉된 이상적인 가정입니다. 동적 조작 시 실제 유효 마찰은 이 추정치보다 작아집니다.",
+      muPresets: ["로프 ↔ 로프 (낡은/보풀)", "로프 ↔ 금속 (미끄러움)", "로프 ↔ 금속 (일반 건조)", "로프 ↔ 나무껍질 (건조)", "로프 ↔ 나무껍질 (습함/진흙)", "로프 ↔ 콘크리트 (건조)", "로프 ↔ 콘크리트 (습함)", "로프 ↔ 로프 (새 로프)", "사용자 정의 μ (고급)"],
+      kPresets: ["안정된 조작 (정적/시연)", "일반 교육 (반동적)", "동적 조작 (신속/미끄러움)", "사용자 정의 (공학적 판단)"]
+    },
+    de: {
+      txtMainTitle: "Capstan Seilreibungsgleichung", txtSubtitle: "Sanmu Team | Ausbildung & Entscheidungshilfe", txtModelTitle: "Berechnungsmodell & Formel",
+      txtF1Title: "Kernformel:", txtF1Note: "(Reine Theorie zum Verständnis des Reibungsverstärkungstrends)",
+      txtF2Title: "Technische Korrektur:", txtF2Note: "(In der Praxis ist der Winkel nie vollständig wirksam)",
+      txtF3Title: "Praktische Schätzung:", txtF3Note: "(Für die Beurteilung vor Ort reicht diese Zeile)",
+      txtFDetailsNote: "<b>Hinweis:</b> Höhere Reibung bedeutet nicht mehr Sicherheit; zu viel Reibung erschwert das Lösen und Kontrollieren.",
+      txtInputSection: "Eingabebedingungen", lblN: "Anzahl der Wicklungen n", lblMuPreset: "Reibungsbedingung (Szenario)", lblMuVal: "Reibungskoeffizient μ",
+      txtMuHint1: "Bereich: 0,05–0,80 (Variiert stark nach Material, Feuchtigkeit, Staub, Rauheit)",
+      txtMuHint2: "Im Zweifel 'Trocken/Allgemein' wählen, Trend prüfen und anpassen.",
+      lblKSel: "k Empfohlenes Szenario", txtKHint: "Bereich: 0,30–1,00 (Je besser der Kontakt, desto näher bei 1,00)",
+      lblKnownSide: "Welche Seite ist bekannt?", btnT1: "Handseite T1 bekannt", btnT2: "Lastseite T2 bekannt",
+      forceT1: "Bekannte Kraft (T1, kgf)", forceT2: "Bekannte Kraft (T2, kgf)",
+      txtForceHint: "Wert: <b>1</b> <span class='pill'>Standard</span> (Im Zweifel 1 nutzen, um Multiplikator zu sehen)",
+      btnCalc: "Berechnen", btnReset: "Zurücksetzen", txtResultSection: "Ergebnis (Zur Beurteilung empfohlen)",
+      txtMeffSmall: "Empfohlener Reibungsmultiplikator (inkl. k)", txtMTheorySmall: "Theoretischer Multiplikator",
+      txtResT1: "T1 Handseite", txtResT2: "T2 Lastseite",
+      txtExpTitle: "Was bedeuten T1 und T2?",
+      txtExpList: "<li><b>T1 (Handseite)</b>: Die Kraft, die Sie beim Halten des Seils ausüben.</li><li><b>T2 (Lastseite)</b>: Die verstärkte Haltekraft, die auf die Last wirkt.</li><li>Diese Berechnung zeigt: <b>Wie stark Ihre Handkraft T1 in die Lastkraft T2 übersetzt wird.</b></li>",
+      txtGrpEdu: "📖 Konzepte & Ausbildung", txtInfoATitle: "Neu hier? Bitte zuerst lesen",
+      txtInfoAContent: "<b>[Warum Reibung prüfen?]</b><br>Viele denken intuitiv: <b>Mehr Wicklungen bedeuten mehr Sicherheit.</b><br><br>In der Realität macht <b>zu viel Reibung das Lösen schwerer und erhöht Risiken.</b>",
+      txtInfoBTitle: "Technische Bedeutung von K",
+      txtInfoBContent: "k steht für: <b>Den tatsächlich wirksamen Anteil des geometrischen Wicklungswinkels.</b><br><br><span class='mono'>k = θ_eff / θ_total</span>",
+      btnCollapseA: "Schließen", btnCollapseB: "Schließen",
+      txtGrpTools: "🛠️ Werkzeuge", lblLangSel: "🌐 Spracheinstellungen", txtAddToHomeTitle: "Zum Startbildschirm hinzufügen",
+      txtAddToHomeContent: "Sie können die App direkt über den Link nutzen. Für schnellen Zugriff im Browser 'Zum Startbildschirm hinzufügen' wählen.",
+      btnCollapseHome: "Schließen", txtShareBtn: "<span style='font-size:16px;color:#38bdf8;'>🔗</span>Werkzeug mit Partnern teilen",
+      txtGrpSupport: "💖 Interaktion & Support", txtTalkBtn: "<span style='font-size:16px;color:#ef4444;'>💬</span>Nachricht an Dodo senden",
+      txtCoffeeSummary: "<span class='menu-icon'>☕</span> <span style='color: var(--warn);'>Dem Team einen Kaffee ausgeben</span>",
+      txtCoffeeBox: "<div style='color:#f59e0b;font-size:28px;margin-bottom:4px;'>☕</div><div style='font-size:15px;font-weight:900;color:#f2f6f3;margin-bottom:12px;letter-spacing:1px;'>F&E-Team unterstützen</div><button type='button' onclick=\"window.open('https://portaly.cc/wpf610', '_blank')\" style='background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:15px;font-weight:bold;width:100%;cursor:pointer;'>Zur Support-Seite ❤️</button>",
+      btnCollapseCoffee: "Schließen", txtGrpMeta: "ℹ️ Entwicklung & Version",
+      txtMetaContent: "<b>Entwickelt vom Sanmu-Team</b><br>Ausbildung & Technik / Shi-Feng Xu<br>UI-Design / Pei-Fang Wu (Dodo)<br><br>Version v5.11.1 | 2026",
+      txtFooter: "[Nur für Ausbildungszwecke] Alle Ergebnisse sind Schätzungen. Sie ersetzen keine professionelle Beurteilung vor Ort, Standardarbeitsanweisungen (SOP) oder offizielle Sicherheitsmaßnahmen.",
+      kNoteTitle: "Hinweis", kNoteText: "K=1 ist eine ideale Annahme. Im dynamischen Betrieb ist die tatsächliche Reibung geringer als diese Schätzung.",
+      muPresets: ["Seil ↔ Seil (Alt/Fasrig)", "Seil ↔ Metall (Glatt)", "Seil ↔ Metall (Trocken/Normal)", "Seil ↔ Rinde (Trocken)", "Seil ↔ Rinde (Nass/Schlamm)", "Seil ↔ Beton (Trocken)", "Seil ↔ Beton (Nass)", "Seil ↔ Seil (Neu)", "Benutzerdefiniert μ (Erweitert)"],
+      kPresets: ["Stabiler Betrieb (Statisch/Demo)", "Allgemeine Lehre (Semi-Dynamisch)", "Dynamischer Betrieb (Schnell/Glatt)", "Benutzerdefiniert (Technisches Urteil)"]
+    },
+    fr: {
+      txtMainTitle: "Formule de Frottement Cabestan", txtSubtitle: "Équipe Sanmu | Outil Pédagogique d'Aide à la Décision", txtModelTitle: "Modèle de Calcul & Formule",
+      txtF1Title: "Formule Fondamentale :", txtF1Note: "(Théorie pure, pour comprendre la tendance à l'amplification)",
+      txtF2Title: "Correction Technique :", txtF2Note: "(En pratique, l'angle n'est jamais efficace à 100%)",
+      txtF3Title: "Estimation Réelle :", txtF3Note: "(Pour l'analyse sur le terrain, fiez-vous à cette ligne)",
+      txtFDetailsNote: "<b>Note :</b> Un frottement élevé ne garantit pas la sécurité ; un excès de friction rend le contrôle et le relâchement difficiles.",
+      txtInputSection: "Conditions d'Entrée", lblN: "Nombre de tours n", lblMuPreset: "Condition de Friction (Scénario)", lblMuVal: "Coefficient de friction μ",
+      txtMuHint1: "Plage recommandée : 0,05 à 0,80 (Varie selon le matériau, l'humidité, la rugosité)",
+      txtMuHint2: "En cas de doute, choisissez 'Seco/Général', vérifiez la tendance, puis affinez.",
+      lblKSel: "Scénario recommandé pour k", txtKHint: "Plage : 0,30 à 1,00 (Plus le contact est parfait, plus k approche 1,00)",
+      lblKnownSide: "Quel côté est connu ?", btnT1: "Côté main T1 connu", btnT2: "Côté charge T2 connu",
+      forceT1: "Tension connue (T1, kgf)", forceT2: "Tension connue (T2, kgf)",
+      txtForceHint: "Valeur : <b>1</b> <span class='pill'>Par défaut</span> (Utilisez 1 pour observer le facteur d'amplification)",
+      btnCalc: "Calculer", btnReset: "Réinitialiser", txtResultSection: "Résultat (Recommandé pour décision)",
+      txtMeffSmall: "Multiplicateur de Friction Réel (avec k)", txtMTheorySmall: "Multiplicateur Théorique",
+      txtResT1: "T1 Côté Main", txtResT2: "T2 Côté Charge",
+      txtExpTitle: "Que signifient T1 and T2 ?",
+      txtExpList: "<li><b>T1 (Côté Main)</b> : La force que vous appliquez manuellement pour tenir la corde.</li><li><b>T2 (Côté Charge)</b> : La force de rétention amplifiée agissant sur la charge.</li><li>Ce calcul montre : <b>Comment votre force manuelle T1 est multipliée pour retenir la charge T2.</b></li>",
+      txtGrpEdu: "📖 Concepts & Pédagogie", txtInfoATitle: "Première visite ? Lisez ceci en premier",
+      txtInfoAContent: "<b>[Pourquoi vérifier la friction ?]</b><br>L'intuition pousse à croire que <b>plus on fait de tours, plus c'est sûr.</b><br><br>En réalité, <b>un frottement excessif bloque le contrôle et augmente les risques.</b>",
+      txtInfoBTitle: "Signification technique du facteur K",
+      txtInfoBContent: "k représente : <b>La proportion réellement efficace de l'angle géométrique d'enroulement.</b><br><br><span class='mono'>k = θ_eff / θ_total</span>",
+      btnCollapseA: "Réduire", btnCollapseB: "Réduire",
+      txtGrpTools: "🛠️ Outils Pratiques", lblLangSel: "🌐 Paramètres de Langue", txtAddToHomeTitle: "Ajouter à l'écran d'accueil",
+      txtAddToHomeContent: "L'application fonctionne directement via lien. Pour l'ajouter en raccourci, sélectionnez 'Ajouter à l'écran d'accueil' dans les options de votre navigateur.",
+      btnCollapseHome: "Réduire", txtShareBtn: "<span style='font-size:16px;color:#38bdf8;'>🔗</span>Partager cet outil avec vos équipiers",
+      txtGrpSupport: "💖 Interaction & Soutien", txtTalkBtn: "<span style='font-size:16px;color:#ef4444;'>💬</span>Envoyer un message à Dodo",
+      txtCoffeeSummary: "<span class='menu-icon'>☕</span> <span style='color: var(--warn);'>Offrir un café à l'équipe / Soutenir</span>",
+      txtCoffeeBox: "<div style='color:#f59e0b;font-size:28px;margin-bottom:4px;'>☕</div><div style='font-size:15px;font-weight:900;color:#f2f6f3;margin-bottom:12px;letter-spacing:1px;'>Soutenir l'équipe R&D</div><button type='button' onclick=\"window.open('https://portaly.cc/wpf610', '_blank')\" style='background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:15px;font-weight:bold;width:100%;cursor:pointer;'>Aller à la page de soutien ❤️</button>",
+      btnCollapseCoffee: "Réduire", txtGrpMeta: "ℹ️ Développement & Version",
+      txtMetaContent: "<b>Développé par l'Équipe Sanmu</b><br>Architecture Pédagogique & Technique / Shi-Feng Xu<br>Interface & Design UI / Pei-Fang Wu (Dodo)<br><br>Version v5.11.1 | 2026",
+      txtFooter: "[Usage Pédagogique Uniquement] Les résultats sont des estimations. Ils ne remplacent pas le jugement de terrain, les procédures opérationnelles standards (SOP) et les mesures de sécurité officielles.",
+      kNoteTitle: "Avis", kNoteText: "K=1 représente une hypothèse idéale. En conditions dynamiques, la friction réelle efficace est inférieure à cette estimation.",
+      muPresets: ["Corde ↔ Corde (Usée/Pelucheuse)", "Corde ↔ Métal (Glissant)", "Corde ↔ Métal (Sec/Standard)", "Corde ↔ Écorce (Sèche)", "Corde ↔ Écorce (Humide/Boue)", "Corde ↔ Béton (Sec)", "Corde ↔ Béton (Humide)", "Corde ↔ Corde (Neuve)", "Personnalisé μ (Avancé)"],
+      kPresets: ["Opération stable (Statique/Démo)", "Enseignement général (Semi-Dynamique)", "Opération dynamique (Rapide/Glissant)", "Personnalisé (Jugement Technique)"]
+    },
+    es: {
+      txtMainTitle: "Fórmula del Cabrestante de Cuerda", txtSubtitle: "Equipo Sanmu | Herramienta Didáctica de Apoyo a la Decisión", txtModelTitle: "Modelo de Cálculo y Fórmula",
+      txtF1Title: "Fórmula Fundamental:", txtF1Note: "(Teoría pura, para entender la tendencia de amplificación)",
+      txtF2Title: "Corrección Técnica:", txtF2Note: "(En la práctica, el ángulo nunca es totalmente efectivo)",
+      txtF3Title: "Estimación Real:", txtF3Note: "(Para decisiones en el terreno, confíe en esta línea)",
+      txtFDetailsNote: "<b>Nota:</b> Mayor fricción no significa mayor seguridad; un exceso de fricción dificulta soltar y controlar la cuerda.",
+      txtInputSection: "Condiciones de Entrada", lblN: "Número de vueltas n", lblMuPreset: "Condición de Fricción (Escenario)", lblMuVal: "Coeficiente de fricción μ",
+      txtMuHint1: "Rango: 0.05–0.80 (Varía según el material, humedad, polvo y rugosidad)",
+      txtMuHint2: "Si tiene dudas, elija 'Seco/General', observe la tendencia y luego ajuste.",
+      lblKSel: "Escenario recomendado para k", txtKHint: "Rango: 0.30–1.00 (A mejor contacto y distribución, k se acerca a 1.00)",
+      lblKnownSide: "¿Qué lado se conoce?", btnT1: "Lado mano T1 conocido", btnT2: "Lado carga T2 conocido",
+      forceT1: "Fuerza conocida (T1, kgf)", forceT2: "Fuerza conocida (T2, kgf)",
+      txtForceHint: "Valor: <b>1</b> <span class='pill'>Por defecto</span> (Use 1 para evaluar el factor de amplificación)",
+      btnCalc: "Calcular", btnReset: "Restablecer", txtResultSection: "Resultado (Recomendado para juzgar)",
+      txtMeffSmall: "Multiplicador de Fricción Real (con k)", txtMTheorySmall: "Multiplicador Teórico",
+      txtResT1: "T1 Lado Mano", txtResT2: "T2 Lado Carga",
+      txtExpTitle: "¿Qué significan T1 y T2?",
+      txtExpList: "<li><b>T1 (Lado Mano)</b>: La fuerza manual que aplicas para sostener o controlar la cuerda.</li><li><b>T2 (Lado Carga)</b>: La fuerza de retención amplificada que actúa sobre la carga.</li><li>Este cálculo muestra: <b>Cuánto se multiplica tu fuerza T1 para sostener la carga T2.</b></li>",
+      txtGrpEdu: "📖 Conceptos y Didáctica", txtInfoATitle: "¿Primera vez aquí? Lea esto primero",
+      txtInfoAContent: "<b>[¿Por qué comprobar la fricción?]</b><br>La intuición dicta que <b>más vueltas significan más seguridad.</b><br><br>En la práctica, <b>un exceso de fricción bloquea el control y eleva los riesgos.</b>",
+      txtInfoBTitle: "Significado técnico del factor K",
+      txtInfoBContent: "k representa: <b>La proporción realmente efectiva del ángulo geométrico de envoltura.</b><br><br><span class='mono'>k = θ_eff / θ_total</span>",
+      btnCollapseA: "Contraer", btnCollapseB: "Contraer",
+      txtGrpTools: "🛠️ Herramientas", lblLangSel: "🌐 Ajustes de Idioma", txtAddToHomeTitle: "Añadir a la pantalla de inicio",
+      txtAddToHomeContent: "Funciona directamente mediante enlace. Para añadir un acceso directo, elija 'Añadir a la pantalla de inicio' en las opciones de su navegador.",
+      btnCollapseHome: "Contraer", txtShareBtn: "<span style='font-size:16px;color:#38bdf8;'>🔗</span>Compartir herramienta con compañeros",
+      txtGrpSupport: "💖 Interacción y Apoyo", txtTalkBtn: "<span style='font-size:16px;color:#ef4444;'>💬</span>¿Quieres decirle algo a Dodo?",
+      txtCoffeeSummary: "<span class='menu-icon'>☕</span> <span style='color: var(--warn);'>Invitar un café al equipo / Apoyar</span>",
+      txtCoffeeBox: "<div style='color:#f59e0b;font-size:28px;margin-bottom:4px;'>☕</div><div style='font-size:15px;font-weight:900;color:#f2f6f3;margin-bottom:12px;letter-spacing:1px;'>Apoyar al Equipo de I+D</div><button type='button' onclick=\"window.open('https://portaly.cc/wpf610', '_blank')\" style='background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:15px;font-weight:bold;width:100%;cursor:pointer;'>Ir a la página de apoyo ❤️</button>",
+      btnCollapseCoffee: "Contraer", txtGrpMeta: "ℹ️ Desarrollo y Versión",
+      txtMetaContent: "<b>Desarrollado por el Equipo Sanmu</b><br>Arquitectura Didáctica y Técnica / Shi-Feng Xu<br>Diseño UI e Interfaz / Pei-Fang Wu (Dodo)<br><br>Versión v5.11.1 | 2026",
+      txtFooter: "[Uso Didáctico Exclusivo] Los resultados son estimaciones. No sustituyen el juicio de campo, los procedimientos operativos estándar (SOP) ni las medidas de seguridad oficiales.",
+      kNoteTitle: "Aviso", kNoteText: "K=1 representa una hipótesis ideal. En condiciones dinámicas, la fricción real efectiva es menor que esta estimación.",
+      muPresets: ["Cuerda ↔ Cuerda (Usada/Desgastada)", "Cuerda ↔ Metal (Resbaladizo)", "Cuerda ↔ Metal (Seco/General)", "Cuerda ↔ Corteza (Seca)", "Cuerda ↔ Corteza (Húmeda/Lodo)", "Cuerda ↔ Hormigón (Seco)", "Cuerda ↔ Hormigón (Húmedo)", "Cuerda ↔ Cuerda (Nueva)", "Personalizado μ (Avanzado)"],
+      kPresets: ["Operación estable (Estática/Demo)", "Enseñanza general (Semidinámica)", "Operación dinámica (Rápida/Resbaladiza)", "Personalizado (Juicio Técnico)"]
+    },
+    pt: {
+      txtMainTitle: "Fórmula de Cabrestante de Corda", txtSubtitle: "Equipe Sanmu | Ferramenta Didática de Apoio à Decisão", txtModelTitle: "Modelo de Cálculo e Fórmula",
+      txtF1Title: "Fórmula Fundamental:", txtF1Note: "(Teoria pura, para entender a tendência de amplificação)",
+      txtF2Title: "Correção Técnica:", txtF2Note: "(Na prática, o ângulo nunca é totalmente eficaz)",
+      txtF3Title: "Estimativa Real:", txtF3Note: "(Para decisões no terreno, confie nesta linha)",
+      txtFDetailsNote: "<b>Nota:</b> Maior atrito não significa maior segurança; o excesso de fricção dificulta o alívio e controle da corda.",
+      txtInputSection: "Condições de Entrada", lblN: "Número de voltas n", lblMuPreset: "Condição de Atrito (Cenário)", lblMuVal: "Coeficiente de atrito μ",
+      txtMuHint1: "Faixa: 0.05–0.80 (Varia segundo o material, umidade, poeira e rugosidade)",
+      txtMuHint2: "Se tiver dúvidas, escolha 'Seco/Geral', observe a tendência e depois ajuste.",
+      lblKSel: "Cenário recomendado para k", txtKHint: "Faixa: 0.30–1.00 (Quanto melhor o contato, mais k se aproxima de 1.00)",
+      lblKnownSide: "Qual lado é conhecido?", btnT1: "Lado mão T1 conhecido", btnT2: "Lado carga T2 known",
+      forceT1: "Força conhecida (T1, kgf)", forceT2: "Força conhecida (T2, kgf)",
+      txtForceHint: "Valor: <b>1</b> <span class='pill'>Padrão</span> (Use 1 para avaliar o fator de amplificação)",
+      btnCalc: "Calcular", btnReset: "Redefinir", txtResultSection: "Resultado (Recomendado para julgar)",
+      txtMeffSmall: "Multiplicador de Atrito Real (com k)", txtMTheorySmall: "Multiplicador Teórico",
+      txtResT1: "T1 Lado Mão", txtResT2: "T2 Lado Carga",
+      txtExpTitle: "O que significam T1 e T2?",
+      txtExpList: "<li><b>T1 (Lado Mão)</b>: A força manual que você aplica para segurar ou controlar a corda.</li><li><b>T2 (Lado Carga)</b>: A força de retenção amplificada que atua na carga.</li><li>Este cálculo mostra: <b>Quanto a sua força manual T1 é multiplicada para segurar a carga T2.</b></li>",
+      txtGrpEdu: "📖 Conceitos e Didática", txtInfoATitle: "Primeira vez aqui? Leia isto primeiro",
+      txtInfoAContent: "<b>[Por que verificar o atrito?]</b><br>A intuição sugere que <b>mais voltas significam mais segurança.</b><br><br>Na prática, <b>o excesso de atrito bloqueia o controle e eleva os riscos.</b>",
+      txtInfoBTitle: "Significado técnico do fator K",
+      txtInfoBContent: "k representa: <b>A proporção realmente eficaz do ângulo geométrico de envolvimento.</b><br><br><span class='mono'>k = θ_eff / θ_total</span>",
+      btnCollapseA: "Recolher", btnCollapseB: "Recolher",
+      txtGrpTools: "🛠️ Ferramentas", lblLangSel: "🌐 Ajustes de Idioma", txtAddToHomeTitle: "Adicionar à tela inicial",
+      txtAddToHomeContent: "Funciona diretamente via link. Para adicionar um atalho, escolha 'Adicionar à tela inicial' nas opções do seu navegador.",
+      btnCollapseHome: "Recolher", txtShareBtn: "<span style='font-size:16px;color:#38bdf8;'>🔗</span>Compartilhar ferramenta com parceiros",
+      txtGrpSupport: "💖 Interação e Apoio", txtTalkBtn: "<span style='font-size:16px;color:#ef4444;'>💬</span>Quer dizer algo para a Dodo?",
+      txtCoffeeSummary: "<span class='menu-icon'>☕</span> <span style='color: var(--warn);'>Pagar um café para a equipe / Apoiar</span>",
+      txtCoffeeBox: "<div style='color:#f59e0b;font-size:28px;margin-bottom:4px;'>☕</div><div style='font-size:15px;font-weight:900;color:#f2f6f3;margin-bottom:12px;letter-spacing:1px;'>Apoiar a Equipe de P&D</div><button type='button' onclick=\"window.open('https://portaly.cc/wpf610', '_blank')\" style='background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:15px;font-weight:bold;width:100%;cursor:pointer;'>Ir para a página de apoio ❤️</button>",
+      btnCollapseCoffee: "Recolher", txtGrpMeta: "ℹ️ Desenvolvimento e Versão",
+      txtMetaContent: "<b>Desenvolvido pela Equipe Sanmu</b><br>Arquitetura Didática e Técnica / Shi-Feng Xu<br>Design UI e Interface / Pei-Fang Wu (Dodo)<br><br>Versión v5.11.1 | 2026",
+      txtFooter: "[Apenas para Uso Didático] Os resultados são estimativas. Não substituem o julgamento de campo, os procedimentos operacionais padrão (SOP) nem as medidas de segurança oficiais.",
+      kNoteTitle: "Aviso", kNoteText: "K=1 representa uma hipótese ideal. Em condições dinâmicas, o atrito real eficaz é menor do que esta estimativa.",
+      muPresets: ["Corda ↔ Corda (Usada/Gasta)", "Corda ↔ Metal (Escorregadio)", "Corda ↔ Metal (Seco/Geral)", "Corda ↔ Casca (Seca)", "Corda ↔ Casca (Úmida/Lama)", "Corda ↔ Concreto (Seco)", "Corda ↔ Concreto (Úmido)", "Corda ↔ Corda (Nova)", "Personalizado μ (Avançado)"],
+      kPresets: ["Operação estável (Estática/Demo)", "Ensino geral (Semidinâmica)", "Operação dinâmica (Rápida/Escorregadia)", "Personalizado (Julgamento Técnico)"]
+    }
+  };
+
+  function updateSelectOptions(id, langKey, arrayKey) {
+    const el = document.getElementById(id);
+    if(!el) return;
+    const curVal = el.value;
+    const labels = dict[langKey][arrayKey];
+    for(let i=0; i<el.options.length; i++) {
+      if(labels[i]) el.options[i].text = labels[i];
+    }
+    el.value = curVal;
+  }
+
+  function applyTranslations() {
+    const lang = langSel.value;
+    const d = dict[lang];
+    if(!d) return;
+    
+    window.currentLangDict = d; // 讓 calc() 和 setSide() 可以讀取目前語系字典
+
+    // 基礎文字替換 (包含所有新增的按鈕與提示 ID)
+    const textIds = [
+      "txtMainTitle", "txtSubtitle", "txtModelTitle", "txtF1Title", "txtF1Note",
+      "txtF2Title", "txtF2Note", "txtF3Title", "txtF3Note", "txtFDetailsNote",
+      "txtInputSection", "lblN", "lblMuPreset", "lblMuVal", "txtMuHint1", "txtMuHint2",
+      "lblKSel", "txtKHint", "lblKnownSide", "btnT1", "btnT2", "txtForceHint", "btnCalc", "btnReset", 
+      "txtResultSection", "txtMeffSmall", "txtMTheorySmall", "txtResT1", "txtResT2", 
+      "txtExpTitle", "txtExpList", "txtGrpEdu", "txtInfoATitle", "txtInfoAContent", 
+      "txtInfoBTitle", "txtInfoBContent", "btnCollapseA", "btnCollapseB", "txtGrpTools", 
+      "lblLangSel", "txtAddToHomeTitle", "txtAddToHomeContent", "btnCollapseHome", 
+      "txtShareBtn", "txtGrpSupport", "txtTalkBtn", "txtCoffeeSummary", "txtCoffeeBox", 
+      "btnCollapseCoffee", "txtGrpMeta", "txtMetaContent", "txtFooter"
+    ];
+
+    textIds.forEach(id => {
+      const el = document.getElementById(id);
+      if(el && d[id]) {
+        el.innerHTML = d[id];
+      }
+    });
+
+    // 下拉選單內部選項翻譯
+    updateSelectOptions("muPreset", lang, "muPresets");
+    updateSelectOptions("kSel", lang, "kPresets");
+
+    // 已知端連動狀態文字更新
+    const forceLabel = document.getElementById("forceLabel");
+    if(forceLabel) {
+      forceLabel.textContent = (window.knownSide === "T1") ? d.forceT1 : d.forceT2;
+    }
+    
+    // 理想 K=1 提示框翻譯連動 (如果有顯示的話)
+    const kNote = document.getElementById("kNote");
+    if(kNote && kNote.style.display === "block") {
+      kNote.innerHTML = `<div class="title">${d.kNoteTitle}</div><div>${d.kNoteText}</div>`;
+    }
+    
+    // 儲存使用者的語言選擇
+    try {
+      localStorage.setItem("capstan_lang", lang);
+    } catch(e) {}
+  }
+
+  langSel.addEventListener("change", applyTranslations);
+
+  // 安全攔截與動態勾住 (不破壞、不修改原函式核心)
+  if(window.setSide) {
+    const origSetSide = window.setSide;
+    window.setSide = function(s) {
+      origSetSide(s);
+      applyTranslations(); // 確保標籤文字跟著變換
+    };
+  }
+
+  // --- 自動偵測與記憶功能初始化 ---
+  function initLanguage() {
+    let targetLang = "zh";
+    try {
+      // 1. 先看有沒有上次儲存的記憶
+      const savedLang = localStorage.getItem("capstan_lang");
+      if (savedLang && dict[savedLang]) {
+        targetLang = savedLang;
+      } else {
+        // 2. 如果沒有記憶，就抓取手機系統的語言
+        const browserLang = (navigator.language || navigator.userLanguage || "").toLowerCase();
+        if (browserLang.startsWith("zh")) {
+          targetLang = "zh";
+        } else if (browserLang.startsWith("ja")) {
+          targetLang = "ja";
+        } else if (browserLang.startsWith("ko")) {
+          targetLang = "ko";
+        } else if (browserLang.startsWith("de")) {
+          targetLang = "de";
+        } else if (browserLang.startsWith("fr")) {
+          targetLang = "fr";
+        } else if (browserLang.startsWith("es")) {
+          targetLang = "es";
+        } else if (browserLang.startsWith("pt")) {
+          targetLang = "pt";
+        } else if (browserLang.startsWith("en")) {
+          targetLang = "en";
+        }
+      }
+    } catch(e) {}
+    
+    // 設定下拉選單並執行第一次翻譯
+    langSel.value = targetLang;
+    applyTranslations();
+  }
+
+  // 等待網頁核心載入完畢後，執行語言初始化
+  window.addEventListener("DOMContentLoaded", initLanguage);
+  
+})();
 </script>
 </body>
 </html>
