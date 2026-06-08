@@ -8,9 +8,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Capstan公式"/>
-<link rel="manifest" href="./manifest.json?v=5.11.4"/>
-<link rel="icon" href="./friction_icon-512.png?v=5.11.4"/>
-<link rel="apple-touch-icon" href="./apple-touch-icon.png?v=5.11.4"/>
+<link rel="manifest" href="./manifest.json?v=5.11.5"/>
+<link rel="icon" href="./friction_icon-512.png?v=5.11.5"/>
+<link rel="apple-touch-icon" href="./apple-touch-icon.png?v=5.11.5"/>
 <style>
 :root{
   --bg:#0b1220;--panel:#121a2f;--panel2:#0f172a;--line:#233056;
@@ -281,13 +281,13 @@ details[open] summary{ background:rgba(56,189,248,.06); }
 }
 
 
-/* --- Practical Tools Panel (v5.11.4) --- */
+/* --- Practical Tools Panel (v5.11.5) --- */
 .tools-panel{
   overflow:hidden;
-  border:1px solid rgba(34,197,94,.22);
+  border:1px solid var(--line);
   border-radius:18px;
-  background:linear-gradient(180deg, rgba(6,31,24,.96), rgba(2,18,14,.98));
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
+  background:#020617;
+  box-shadow:none;
 }
 .tools-head{
   display:flex;
@@ -317,9 +317,9 @@ details[open] summary{ background:rgba(56,189,248,.06); }
   gap:12px;
   padding:15px 16px;
   background:transparent;
-  color:#eaf7ee;
+  color:var(--text);
   border:0;
-  border-bottom:1px solid rgba(255,255,255,.07);
+  border-bottom:1px solid var(--line);
   text-align:left;
   font:inherit;
   cursor:pointer;
@@ -339,17 +339,17 @@ details[open] summary{ background:rgba(56,189,248,.06); }
 .tool-title{
   font-size:18px;
   font-weight:1000;
-  color:#f2fff5;
+  color:var(--text);
   line-height:1.25;
 }
 .tool-subtitle{
   margin-top:4px;
   font-size:12px;
-  color:rgba(203,245,213,.68);
+  color:var(--muted);
   line-height:1.35;
 }
 .tool-chevron{
-  color:#86efac;
+  color:var(--muted);
   font-size:30px;
   font-weight:1000;
   line-height:1;
@@ -361,9 +361,9 @@ details[open] summary{ background:rgba(56,189,248,.06); }
   max-width:46vw;
   padding:10px 38px 10px 14px;
   border-radius:14px;
-  border:1px solid rgba(34,197,94,.28);
-  background:#10231a;
-  color:#f2fff5;
+  border:1px solid var(--line);
+  background:#020617;
+  color:var(--text);
   font-size:17px;
   font-weight:900;
 }
@@ -381,17 +381,17 @@ details[open] summary{ background:rgba(56,189,248,.06); }
 }
 .tool-details > summary.tool-row::after{display:none;content:"";}
 .tool-details[open] > summary.tool-row{
-  background:rgba(56,189,248,.045);
-  border-bottom-color:rgba(56,189,248,.16);
+  background:rgba(255,255,255,.04);
+  border-bottom-color:var(--line);
 }
 .tool-details[open] .tool-chevron{transform:rotate(90deg);}
 .tool-detail-body{
   padding:14px 16px 16px 70px;
-  border-bottom:1px solid rgba(255,255,255,.07);
-  background:rgba(0,0,0,.12);
+  border-bottom:1px solid var(--line);
+  background:#020617;
 }
 .tool-detail-body .explain{
-  color:#d9f5e1;
+  color:#cbd5f5;
   line-height:1.7;
 }
 .app-toast{
@@ -403,9 +403,9 @@ details[open] summary{ background:rgba(56,189,248,.06); }
   max-width:min(88vw, 420px);
   padding:12px 16px;
   border-radius:999px;
-  border:1px solid rgba(134,239,172,.25);
-  background:rgba(2,18,14,.94);
-  color:#f2fff5;
+  border:1px solid var(--line);
+  background:#020617;
+  color:var(--text);
   font-size:14px;
   font-weight:900;
   text-align:center;
@@ -537,7 +537,7 @@ details[open] summary{ background:rgba(56,189,248,.06); }
         <div class="title-divider"></div>
         <div class="subtitle" id="txtSubtitle">散木團隊｜教學與判斷輔助工具</div>
       </div>
-      <img class="title-logo" src="./sunmoon_logo.png?v=5.11.4" alt="散木團隊 LOGO"/>
+      <img class="title-logo" src="./sunmoon_logo.png?v=5.11.5" alt="散木團隊 LOGO"/>
     </div>
   </div>
 
@@ -745,7 +745,7 @@ details[open] summary{ background:rgba(56,189,248,.06); }
         <div class="tool-row" role="group" aria-labelledby="lblLangSel">
           <div class="tool-icon">🌐</div>
           <div>
-            <div class="tool-title" id="lblLangSel">語言設定 / Language</div>
+            <div class="tool-title" id="lblLangSel">語言設定</div>
           </div>
           <select id="langSel" class="tool-select" aria-label="語言設定">
             <option value="zh">正體中文</option>
@@ -856,7 +856,7 @@ details[open] summary{ background:rgba(56,189,248,.06); }
       工具設計與互動介面／吳佩芳（朵朵）<br><br>
 
       <b>本工具之摩擦力模型與情境設定，源自「子惠繩」與子惠結在實務操作中的纏繞摩擦需求。</b><br><br>
-      版本 v5.11.4｜2026
+      版本 v5.11.5｜2026
     </div>
   </details>
 
@@ -1037,7 +1037,7 @@ function copyAccount(accText, msgId) {
   setTimeout(() => { msg.style.display = 'none'; }, 2000);
 }
 
-const APP_VERSION = "5.11.4";
+const APP_VERSION = "5.11.5";
 let toastTimer = null;
 
 function getUiText(key, fallback){
@@ -1125,7 +1125,7 @@ window.addEventListener('load', () => {
 <script>
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js?v=5.11.4").catch(() => {});
+    navigator.serviceWorker.register("./sw.js?v=5.11.5").catch(() => {});
   });
 }
 </script>
@@ -1162,7 +1162,7 @@ if ("serviceWorker" in navigator) {
       txtInfoBTitle: "K 的工程意義與使用說明",
       txtInfoBContent: "k 代表：<b>你繞的角度中，有多少比例真的在工作。</b><br><br>理論公式假設每一圈都完全貼合並產生摩擦；但在實際操作中，貼合、受力分佈、動態操作與繩索狀況都會使「有效摩擦角度」小於幾何角度。<br><br>工程上可表示為：<br><span class='mono'>k = θ_eff / θ_total</span>",
       btnCollapseA: "收合", btnCollapseB: "收合",
-      txtGrpTools: "⚙️ 系統設定與支援", lblLangSel: "語言設定 / Language", txtAddToHomeTitle: "加入主畫面說明",
+      txtGrpTools: "⚙️ 系統設定與支援", lblLangSel: "語言設定", txtAddToHomeTitle: "加入主畫面說明",
       txtAddToHomeContent: "你可以直接點開連結使用，不一定要加入主畫面。<br>如果希望之後開啟更方便，可以依照下面步驟，將捷徑加入主畫面。<br><br><b>iOS（iPhone）</b><br>1. 點開連結（可直接從 LINE 開啟）<br>2. 點選下方的「分享」圖示，往下滑<br>3. 選擇「加入主畫面」<br>4. 點選「加入」，即可將捷徑加到主畫面<br><br><b>Android（Samsung、其他 Android 手機）</b><br>1. 點開連結（可直接從 LINE 開啟）<br>2. 點選畫面右下角的「⋮」<br>3. 選擇「使用預設瀏覽器開啟」<br>4. 在畫面右上角點選「⋮」<br>5. 往下滑，選擇「加到主畫面」<br>6. 點選「新增」，即可將捷徑加到主畫面",
       btnCollapseHome: "收合", txtShareBtn: "分享此系統連結", txtCheckUpdateBtn: "檢查並載入新版本",
       shareCopied: "系統連結已複製，可以貼上分享給夥伴。", updateChecking: "正在檢查新版本…", updateDone: "已更新至最新版本。",
@@ -1170,7 +1170,7 @@ if ("serviceWorker" in navigator) {
       txtCoffeeSummary: "<span class='menu-icon'>☕</span> <span style='color: var(--warn);'>請團隊喝咖啡 / 隨喜支持</span>",
       txtCoffeeBox: "<div style='color:#f59e0b;font-size:28px;margin-bottom:4px;'>☕</div><div style='font-size:15px;font-weight:900;color:#f2f6f3;margin-bottom:12px;letter-spacing:1px;'>隨喜支持研發團隊</div><div style='font-size:13.5px;color:#d6d3d1;line-height:1.7;margin:0 0 16px;font-weight:normal;text-align:justify;'>為了保障隱私與資訊安全，本系統全面升級透過官方高安全性金流進行隨喜。<br><br>歡迎點擊下方按鈕，前往我們的無人咖啡廳給予支持。這將是我們開發下一套救援系統的最大動力！</div><button type='button' onclick=\"window.open('https://portaly.cc/wpf610', '_blank')\" style='background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:15px;font-weight:bold;width:100%;cursor:pointer;box-shadow:0 4px 12px rgba(217,119,6,0.25);'>前往無人咖啡廳（隨喜支持） ❤️</button>",
       btnCollapseCoffee: "🔼 收起說明", txtGrpMeta: "ℹ️ 開發與版本資訊",
-      txtMetaContent: "<b>本工具由 散木團隊</b> 開發製作<br>教學架構與工程判斷／徐世豐<br>工具設計與互動介面／吳佩芳（朵朵）<br><br><b>本工具之摩擦力模型與情境設定，源自「子惠繩」與子惠結在實務操作中的纏繞摩擦需求。</b><br><br>版本 v5.11.4｜2026",
+      txtMetaContent: "<b>本工具由 散木團隊</b> 開發製作<br>教學架構與工程判斷／徐世豐<br>工具設計與互動介面／吳佩芳（朵朵）<br><br><b>本工具之摩擦力模型與情境設定，源自「子惠繩」與子惠結在實務操作中的纏繞摩擦需求。</b><br><br>版本 v5.11.5｜2026",
       txtFooter: "【教學使用聲明】本工具為教學與風險判斷輔助使用，所有結果皆為估算值，不得取代現場判斷、標準作業程序（SOP）與安全保護措施。",
       kNoteTitle: "提醒", kNoteText: "K＝1 代表「完全貼合、全角度都在工作」的理想假設；現場動態、鬆緊與接觸狀態不同時，實際有效摩擦通常會小於這個估算。",
       muPresets: ["繩索 ↔ 繩索（舊繩／毛）", "繩索 ↔ 金屬（偏滑）", "繩索 ↔ 金屬（一般乾燥）", "繩索 ↔ 樹皮（乾）", "繩索 ↔ 樹皮（濕/苔/泥）", "繩索 ↔ 水泥/混凝土（乾）", "繩索 ↔ 水泥/混凝土（濕）", "繩索 ↔ 繩索（新繩）", "自訂 μ（進階）"],
@@ -1207,7 +1207,7 @@ if ("serviceWorker" in navigator) {
       txtCoffeeSummary: "<span class='menu-icon'>☕</span> <span style='color: var(--warn);'>Buy Team a Coffee / Support</span>",
       txtCoffeeBox: "<div style='color:#f59e0b;font-size:28px;margin-bottom:4px;'>☕</div><div style='font-size:15px;font-weight:900;color:#f2f6f3;margin-bottom:12px;letter-spacing:1px;'>Support the R&D Team</div><div style='font-size:13.5px;color:#d6d3d1;line-height:1.7;margin:0 0 16px;font-weight:normal;text-align:justify;'>To protect privacy and secure data, we utilize secure official channels for donations.<br><br>Click below to support our digital and physical rescue tools research. Thank you!</div><button type='button' onclick=\"window.open('https://portaly.cc/wpf610', '_blank')\" style='background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:15px;font-weight:bold;width:100%;cursor:pointer;box-shadow:0 4px 12px rgba(217,119,6,0.25);'>Go to Support Page ❤️</button>",
       btnCollapseCoffee: "Collapse", txtGrpMeta: "ℹ️ Development & Version",
-      txtMetaContent: "<b>Developed by Sanmu Team</b><br>Educational Architecture & Engineering / Shi-Feng Xu<br>UI Design & Interface / Pei-Fang Wu (Dodo)<br><br>Model derived from practical requirements of 'Zihui Rope' configurations.<br><br>Version v5.11.4 | 2026",
+      txtMetaContent: "<b>Developed by Sanmu Team</b><br>Educational Architecture & Engineering / Shi-Feng Xu<br>UI Design & Interface / Pei-Fang Wu (Dodo)<br><br>Model derived from practical requirements of 'Zihui Rope' configurations.<br><br>Version v5.11.5 | 2026",
       txtFooter: "[Educational Use Only] All outputs are estimations. They do not replace field judgment, standard operating procedures (SOP), and official safety measures.",
       kNoteTitle: "Notice", kNoteText: "K=1 represents an ideal assumption where all angles are in perfect contact. In dynamic operations, the actual effective friction will be smaller than this estimation.",
       muPresets: ["Rope ↔ Rope (Old/Fuzzy)", "Rope ↔ Metal (Slippery)", "Rope ↔ Metal (Dry/General)", "Rope ↔ Bark (Dry)", "Rope ↔ Bark (Wet/Mud)", "Rope ↔ Concrete (Dry)", "Rope ↔ Concrete (Wet)", "Rope ↔ Rope (New)", "Custom μ (Advanced)"],
@@ -1236,7 +1236,7 @@ if ("serviceWorker" in navigator) {
       txtInfoBTitle: "Kの工学的意味と使用説明",
       txtInfoBContent: "kは：<b>幾何学的な巻き角度のうち、実際に機能している割合を示します。</b><br><br>理論式は全周が完全に密着していると仮定しますが、実際の現場では動的な動きや張力分布により、有効摩擦角度は幾何学的角度より小さくなります。<br><br><span class='mono'>k = θ_eff / θ_total</span>",
       btnCollapseA: "閉じる", btnCollapseB: "閉じる",
-      txtGrpTools: "⚙️ システム設定とサポート", lblLangSel: "言語設定 / Language", txtAddToHomeTitle: "ホーム画面への追加手順",
+      txtGrpTools: "⚙️ システム設定とサポート", lblLangSel: "言語設定", txtAddToHomeTitle: "ホーム画面への追加手順",
       txtAddToHomeContent: "ブラウザから直接利用可能ですが、ホーム画面にショートカットを追加すると便利です。<br><br><b>iOS (iPhone)</b><br>1. Safariでリンクを開きます。<br>2. 共有アイコンをタップし、「ホーム画面に追加」を選択します。<br><br><b>Android</b><br>1. 標準ブラウザで開き、メニューから「ホーム画面に追加」を選択します。",
       btnCollapseHome: "閉じる", txtShareBtn: "このシステムリンクを共有", txtCheckUpdateBtn: "新しいバージョンを確認して読み込む",
       shareCopied: "システムリンクをコピーしました。仲間に共有できます。", updateChecking: "新しいバージョンを確認しています…", updateDone: "最新バージョンに更新されました。",
@@ -1244,7 +1244,7 @@ if ("serviceWorker" in navigator) {
       txtCoffeeSummary: "<span class='menu-icon'>☕</span> <span style='color: var(--warn);'>チームを応援する / コーヒーを奢る</span>",
       txtCoffeeBox: "<div style='color:#f59e0b;font-size:28px;margin-bottom:4px;'>☕</div><div style='font-size:15px;font-weight:900;color:#f2f6f3;margin-bottom:12px;letter-spacing:1px;'>開発チームを支援する</div><div style='font-size:13.5px;color:#d6d3d1;line-height:1.7;margin:0 0 16px;font-weight:normal;text-align:justify;'>安全な決済システムを通じてサポートを受け付けています。今後のシステム開発の励みになります。</div><button type='button' onclick=\"window.open('https://portaly.cc/wpf610', '_blank')\" style='background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:15px;font-weight:bold;width:100%;cursor:pointer;'>支援ページへ行く ❤️</button>",
       btnCollapseCoffee: "閉じる", txtGrpMeta: "ℹ️ 開発情報・バージョン",
-      txtMetaContent: "<b>散木チーム開発</b><br>教育設計・工学判断／徐世豊<br>UIデザイン・インターフェース／吳佩芳（Dodo）<br><br>バージョン v5.11.4｜2026",
+      txtMetaContent: "<b>散木チーム開発</b><br>教育設計・工学判断／徐世豊<br>UIデザイン・インターフェース／吳佩芳（Dodo）<br><br>バージョン v5.11.5｜2026",
       txtFooter: "【教育用免責事項】本ツールは教育およびリスク判断の補助用です。すべての結果は見積もり値であり、現場での実際の判断や安全保護措置に代わるものではありません。",
       kNoteTitle: "注意", kNoteText: "K=1はすべての角度が完全に接触している理想的な仮定です。動的な操作では、実際の有効摩擦はこの見積もりより小さくなります。",
       muPresets: ["ロープ ↔ ロープ（古い/毛羽立ち）", "ロープ ↔ 金属（滑りやすい）", "ロープ ↔ 金属（一般乾燥）", "ロープ ↔ 樹皮（乾燥）", "ロープ ↔ 樹皮（湿気/泥）", "ロープ ↔ コンクリート（乾燥）", "ロープ ↔ コンクリート（湿気）", "ロープ ↔ ロープ（新品）", "カスタム μ（上級）"],
@@ -1281,7 +1281,7 @@ if ("serviceWorker" in navigator) {
       txtCoffeeSummary: "<span class='menu-icon'>☕</span> <span style='color: var(--warn);'>팀에게 커피 한 잔 후원하기</span>",
       txtCoffeeBox: "<div style='color:#f59e0b;font-size:28px;margin-bottom:4px;'>☕</div><div style='font-size:15px;font-weight:900;color:#f2f6f3;margin-bottom:12px;letter-spacing:1px;'>연구개발 팀 후원</div><button type='button' onclick=\"window.open('https://portaly.cc/wpf610', '_blank')\" style='background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:15px;font-weight:bold;width:100%;cursor:pointer;'>후원 페이지로 이동 ❤️</button>",
       btnCollapseCoffee: "접기", txtGrpMeta: "ℹ️ 개발 및 버전 정보",
-      txtMetaContent: "<b>산무 팀 개발</b><br>교육 아키텍처 및 공학 판단 / 서세풍<br>UI 디자인 및 인터페이스 / 오패방 (도도)<br><br>버전 v5.11.4 | 2026",
+      txtMetaContent: "<b>산무 팀 개발</b><br>교육 아키텍처 및 공학 판단 / 서세풍<br>UI 디자인 및 인터페이스 / 오패방 (도도)<br><br>버전 v5.11.5 | 2026",
       txtFooter: "[교육용 안내] 본 도구는 교육 및 위험 판단 보조용입니다. 모든 결과는 추정치이며 현장 판단이나 정식 안전 조치를 대체할 수 없습니다.",
       kNoteTitle: "안내", kNoteText: "K=1은 모든 각도가 완전히 접촉된 이상적인 가정입니다. 동적 조작 시 실제 유효 마찰은 이 추정치보다 작아집니다.",
       muPresets: ["로프 ↔ 로프 (낡은/보풀)", "로프 ↔ 금속 (미끄러움)", "로프 ↔ 금속 (일반 건조)", "로프 ↔ 나무껍질 (건조)", "로프 ↔ 나무껍질 (습함/진흙)", "로프 ↔ 콘크리트 (건조)", "로프 ↔ 콘크리트 (습함)", "로프 ↔ 로프 (새 로프)", "사용자 정의 μ (고급)"],
@@ -1318,7 +1318,7 @@ if ("serviceWorker" in navigator) {
       txtCoffeeSummary: "<span class='menu-icon'>☕</span> <span style='color: var(--warn);'>Dem Team einen Kaffee ausgeben</span>",
       txtCoffeeBox: "<div style='color:#f59e0b;font-size:28px;margin-bottom:4px;'>☕</div><div style='font-size:15px;font-weight:900;color:#f2f6f3;margin-bottom:12px;letter-spacing:1px;'>F&E-Team unterstützen</div><button type='button' onclick=\"window.open('https://portaly.cc/wpf610', '_blank')\" style='background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:15px;font-weight:bold;width:100%;cursor:pointer;'>Zur Support-Seite ❤️</button>",
       btnCollapseCoffee: "Schließen", txtGrpMeta: "ℹ️ Entwicklung & Version",
-      txtMetaContent: "<b>Entwickelt vom Sanmu-Team</b><br>Ausbildung & Technik / Shi-Feng Xu<br>UI-Design / Pei-Fang Wu (Dodo)<br><br>Version v5.11.4 | 2026",
+      txtMetaContent: "<b>Entwickelt vom Sanmu-Team</b><br>Ausbildung & Technik / Shi-Feng Xu<br>UI-Design / Pei-Fang Wu (Dodo)<br><br>Version v5.11.5 | 2026",
       txtFooter: "[Nur für Ausbildungszwecke] Alle Ergebnisse sind Schätzungen. Sie ersetzen keine professionelle Beurteilung vor Ort, Standardarbeitsanweisungen (SOP) oder offizielle Sicherheitsmaßnahmen.",
       kNoteTitle: "Hinweis", kNoteText: "K=1 ist eine ideale Annahme. Im dynamischen Betrieb ist die tatsächliche Reibung geringer als diese Schätzung.",
       muPresets: ["Seil ↔ Seil (Alt/Fasrig)", "Seil ↔ Metall (Glatt)", "Seil ↔ Metall (Trocken/Normal)", "Seil ↔ Rinde (Trocken)", "Seil ↔ Rinde (Nass/Schlamm)", "Seil ↔ Beton (Trocken)", "Seil ↔ Beton (Nass)", "Seil ↔ Seil (Neu)", "Benutzerdefiniert μ (Erweitert)"],
@@ -1355,7 +1355,7 @@ if ("serviceWorker" in navigator) {
       txtCoffeeSummary: "<span class='menu-icon'>☕</span> <span style='color: var(--warn);'>Offrir un café à l'équipe / Soutenir</span>",
       txtCoffeeBox: "<div style='color:#f59e0b;font-size:28px;margin-bottom:4px;'>☕</div><div style='font-size:15px;font-weight:900;color:#f2f6f3;margin-bottom:12px;letter-spacing:1px;'>Soutenir l'équipe R&D</div><button type='button' onclick=\"window.open('https://portaly.cc/wpf610', '_blank')\" style='background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:15px;font-weight:bold;width:100%;cursor:pointer;'>Aller à la page de soutien ❤️</button>",
       btnCollapseCoffee: "Réduire", txtGrpMeta: "ℹ️ Développement & Version",
-      txtMetaContent: "<b>Développé par l'Équipe Sanmu</b><br>Architecture Pédagogique & Technique / Shi-Feng Xu<br>Interface & Design UI / Pei-Fang Wu (Dodo)<br><br>Version v5.11.4 | 2026",
+      txtMetaContent: "<b>Développé par l'Équipe Sanmu</b><br>Architecture Pédagogique & Technique / Shi-Feng Xu<br>Interface & Design UI / Pei-Fang Wu (Dodo)<br><br>Version v5.11.5 | 2026",
       txtFooter: "[Usage Pédagogique Uniquement] Les résultats sont des estimations. Ils ne remplacent pas le jugement de terrain, les procédures opérationnelles standards (SOP) et les mesures de sécurité officielles.",
       kNoteTitle: "Avis", kNoteText: "K=1 représente une hypothèse idéale. En conditions dynamiques, la friction réelle efficace est inférieure à cette estimation.",
       muPresets: ["Corde ↔ Corde (Usée/Pelucheuse)", "Corde ↔ Métal (Glissant)", "Corde ↔ Métal (Sec/Standard)", "Corde ↔ Écorce (Sèche)", "Corde ↔ Écorce (Humide/Boue)", "Corde ↔ Béton (Sec)", "Corde ↔ Béton (Humide)", "Corde ↔ Corde (Neuve)", "Personnalisé μ (Avancé)"],
@@ -1392,7 +1392,7 @@ if ("serviceWorker" in navigator) {
       txtCoffeeSummary: "<span class='menu-icon'>☕</span> <span style='color: var(--warn);'>Invitar un café al equipo / Apoyar</span>",
       txtCoffeeBox: "<div style='color:#f59e0b;font-size:28px;margin-bottom:4px;'>☕</div><div style='font-size:15px;font-weight:900;color:#f2f6f3;margin-bottom:12px;letter-spacing:1px;'>Apoyar al Equipo de I+D</div><button type='button' onclick=\"window.open('https://portaly.cc/wpf610', '_blank')\" style='background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:15px;font-weight:bold;width:100%;cursor:pointer;'>Ir a la página de apoyo ❤️</button>",
       btnCollapseCoffee: "Contraer", txtGrpMeta: "ℹ️ Desarrollo y Versión",
-      txtMetaContent: "<b>Desarrollado por el Equipo Sanmu</b><br>Arquitectura Didáctica y Técnica / Shi-Feng Xu<br>Diseño UI e Interfaz / Pei-Fang Wu (Dodo)<br><br>Versão v5.11.4 | 2026",
+      txtMetaContent: "<b>Desarrollado por el Equipo Sanmu</b><br>Arquitectura Didáctica y Técnica / Shi-Feng Xu<br>Diseño UI e Interfaz / Pei-Fang Wu (Dodo)<br><br>Versão v5.11.5 | 2026",
       txtFooter: "[Uso Didáctico Exclusivo] Los resultados son estimaciones. No sustituyen el juicio de campo, los procedimientos operativos estándar (SOP) ni las medidas de seguridad oficiales.",
       kNoteTitle: "Aviso", kNoteText: "K=1 representa una hipótesis ideal. En condiciones dinámicas, la fricción real efectiva es menor que esta estimación.",
       muPresets: ["Cuerda ↔ Cuerda (Usada/Desgastada)", "Cuerda ↔ Metal (Resbaladizo)", "Cuerda ↔ Metal (Seco/General)", "Cuerda ↔ Corteza (Seca)", "Cuerda ↔ Corteza (Húmeda/Lodo)", "Cuerda ↔ Hormigón (Seco)", "Cuerda ↔ Hormigón (Húmedo)", "Cuerda ↔ Cuerda (Nueva)", "Personalizado μ (Avanzado)"],
@@ -1429,7 +1429,7 @@ if ("serviceWorker" in navigator) {
       txtCoffeeSummary: "<span class='menu-icon'>☕</span> <span style='color: var(--warn);'>Pagar um café para a equipe / Apoiar</span>",
       txtCoffeeBox: "<div style='color:#f59e0b;font-size:28px;margin-bottom:4px;'>☕</div><div style='font-size:15px;font-weight:900;color:#f2f6f3;margin-bottom:12px;letter-spacing:1px;'>Apoiar a Equipe de P&D</div><button type='button' onclick=\"window.open('https://portaly.cc/wpf610', '_blank')\" style='background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:15px;font-weight:bold;width:100%;cursor:pointer;'>Ir para a página de apoio ❤️</button>",
       btnCollapseCoffee: "Recolher", txtGrpMeta: "ℹ️ Desenvolvimento e Versão",
-      txtMetaContent: "<b>Desenvolvido pela Equipe Sanmu</b><br>Arquitetura Didática e Técnica / Shi-Feng Xu<br>Design UI e Interface / Pei-Fang Wu (Dodo)<br><br>Versão v5.11.4 | 2026",
+      txtMetaContent: "<b>Desenvolvido pela Equipe Sanmu</b><br>Arquitetura Didática e Técnica / Shi-Feng Xu<br>Design UI e Interface / Pei-Fang Wu (Dodo)<br><br>Versão v5.11.5 | 2026",
       txtFooter: "[Apenas para Uso Didático] Os resultados são estimativas. Não substituem o julgamento de campo, os procedimentos operacionais padrão (SOP) nem as medidas de segurança oficiais.",
       kNoteTitle: "Aviso", kNoteText: "K=1 representa uma hipótese ideal. Em condições dinâmicas, o atrito real eficaz é menor do que esta estimativa.",
       muPresets: ["Corda ↔ Corda (Usada/Gasta)", "Corda ↔ Metal (Escorregadio)", "Corda ↔ Metal (Seco/Geral)", "Corda ↔ Casca (Seca)", "Corda ↔ Casca (Úmida/Lama)", "Corda ↔ Concreto (Seco)", "Corda ↔ Concreto (Úmido)", "Corda ↔ Corda (Nova)", "Personalizado μ (Avançado)"],
