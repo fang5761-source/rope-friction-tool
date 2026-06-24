@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Capstan 繩索張力放大公式</title>
+<title>Capstan 繩索纏繞摩擦估算</title>
 <meta name="theme-color" content="#0b1220"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<meta name="apple-mobile-web-app-title" content="Capstan公式"/>
+<meta name="apple-mobile-web-app-title" content="Capstan估算"/>
 <link rel="manifest" href="./manifest.json?v=5.11.7"/>
 <link rel="icon" href="./friction_icon-512.png?v=5.11.7"/>
 <link rel="apple-touch-icon" href="./apple-touch-icon.png?v=5.11.7"/>
@@ -559,7 +559,7 @@ details[open] summary{ background:rgba(56,189,248,.06); }
   <div class="card hero">
     <div class="title-wrap">
       <div class="title-text">
-        <h1 id="txtMainTitle">Capstan 繩索張力放大公式</h1>
+        <h1 id="txtMainTitle">Capstan 繩索纏繞摩擦估算</h1>
         <div class="title-divider"></div>
         <div class="subtitle" id="txtSubtitle">散木團隊｜教學與判斷輔助工具</div>
       </div>
@@ -1100,7 +1100,7 @@ function copyText(text){
 
 function shareApp() {
   const shareData = {
-    title: 'Capstan 繩索張力放大公式',
+    title: 'Capstan 繩索纏繞摩擦估算',
     text: '推薦這個實用的繩索張力輔助工具給你！',
     url: window.location.href
   };
@@ -1166,7 +1166,7 @@ if ("serviceWorker" in navigator) {
 
   const dict = {
     zh: {
-      txtMainTitle: "Capstan 繩索張力放大公式", txtSubtitle: "散木團隊｜教學與判斷輔助工具", txtModelTitle: "計算模型與公式",
+      txtMainTitle: "Capstan 繩索纏繞摩擦估算", txtSubtitle: "散木團隊｜教學與判斷輔助工具", txtModelTitle: "計算模型與公式",
       txtF1Title: "核心公式：", txtF1Note: "（純理論，用來理解摩擦放大的趨勢）",
       txtF2Title: "工程修正：", txtF2Note: "（實際操作時，角度不可能全部有效）",
       txtF3Title: "實際估算：", txtF3Note: "（現場判斷時，看這一行就好）",
@@ -1203,7 +1203,7 @@ if ("serviceWorker" in navigator) {
       kPresets: ["穩定操作（示範 / 靜態｜站定、慢慢做）", "一般教學（半動態｜邊講邊做、偶爾移動）", "動態操作（快速 / 濕滑｜走動、調整、容易滑）", "自訂（工程判斷）"]
     },
     en: {
-      txtMainTitle: "Capstan Rope Tension Multiplier Formula", txtSubtitle: "Sanmu Team | Educational & Judgment Assist Tool", txtModelTitle: "Calculation Model & Formula",
+      txtMainTitle: "Capstan Rope Wrap Friction Estimator", txtSubtitle: "Sanmu Team | Educational & Judgment Assist Tool", txtModelTitle: "Calculation Model & Formula",
       txtF1Title: "Core Formula:", txtF1Note: "(Pure theory, used to understand friction amplification trends)",
       txtF2Title: "Engineering Correction:", txtF2Note: "(In practice, the entire angle cannot be fully effective)",
       txtF3Title: "Actual Estimation:", txtF3Note: "(For on-site judgment, just look at this row)",
@@ -1240,7 +1240,7 @@ if ("serviceWorker" in navigator) {
       kPresets: ["Stable Operation (Static/Demo)", "General Teaching (Semi-Dynamic)", "Dynamic Operation (Fast/Slippery)", "Custom (Engineering Judgment)"]
     },
     ja: {
-      txtMainTitle: "Capstan ロープ張力倍率公式", txtSubtitle: "散木チーム｜教育・判断補助ツール", txtModelTitle: "計算モデルと公式",
+      txtMainTitle: "Capstan ロープ巻き付け摩擦推定", txtSubtitle: "散木チーム｜教育・判断補助ツール", txtModelTitle: "計算モデルと公式",
       txtF1Title: "基本公式：", txtF1Note: "（純粋な理論値、摩擦増幅の傾向を理解するため）",
       txtF2Title: "工学的修正：", txtF2Note: "（実際の操作では、角度全体が有効になるとは限りません）",
       txtF3Title: "実測見積もり：", txtF3Note: "（現場での判断は、この行を確認してください）",
@@ -1277,7 +1277,7 @@ if ("serviceWorker" in navigator) {
       kPresets: ["安定操作（静的/デモ）", "一般講習（準動的）", "動的操作（迅速/滑りやすい）", "カスタム（工学的判断）"]
     },
     ko: {
-      txtMainTitle: "Capstan 로프 장력 증폭 공식", txtSubtitle: "산무 팀 | 교육 및 판단 보조 도구", txtModelTitle: "계산 모델 및 공식",
+      txtMainTitle: "Capstan 로프 감김 마찰 추정", txtSubtitle: "산무 팀 | 교육 및 판단 보조 도구", txtModelTitle: "계산 모델 및 공식",
       txtF1Title: "핵심 공식:", txtF1Note: "(순수 이론값, 마찰 증폭 경향 이해용)",
       txtF2Title: "공학적 수정:", txtF2Note: "(실제 조작 시 모든 각도가 유효할 수는 없음)",
       txtF3Title: "실제 추정:", txtF3Note: "(현장 판단 시 이 행을 확인하십시오)",
@@ -1314,7 +1314,7 @@ if ("serviceWorker" in navigator) {
       kPresets: ["안정된 조작 (정적/시연)", "일반 교육 (반동적)", "동적 조작 (신속/미끄러움)", "사용자 정의 (공학적 판단)"]
     },
     de: {
-      txtMainTitle: "Capstan Seilreibungsgleichung", txtSubtitle: "Sanmu Team | Ausbildung & Entscheidungshilfe", txtModelTitle: "Berechnungsmodell & Formel",
+      txtMainTitle: "Capstan Schätzung der Seilumschlingungsreibung", txtSubtitle: "Sanmu Team | Ausbildung & Entscheidungshilfe", txtModelTitle: "Berechnungsmodell & Formel",
       txtF1Title: "Kernformel:", txtF1Note: "(Reine Theorie zum Verständnis des Reibungsverstärkungstrends)",
       txtF2Title: "Technische Korrektur:", txtF2Note: "(In der Praxis ist der Winkel nie vollständig wirksam)",
       txtF3Title: "Praktische Schätzung:", txtF3Note: "(Für die Beurteilung vor Ort reicht diese Zeile)",
@@ -1351,7 +1351,7 @@ if ("serviceWorker" in navigator) {
       kPresets: ["Stabiler Betrieb (Statisch/Demo)", "Allgemeine Lehre (Semi-Dynamisch)", "Dynamischer Betrieb (Schnell/Glatt)", "Benutzerdefiniert (Technisches Urteil)"]
     },
     fr: {
-      txtMainTitle: "Formule de Frottement Cabestan", txtSubtitle: "Équipe Sanmu | Outil Pédagogique d'Aide à la Décision", txtModelTitle: "Modèle de Calcul & Formule",
+      txtMainTitle: "Estimation du frottement par enroulement Capstan", txtSubtitle: "Équipe Sanmu | Outil Pédagogique d'Aide à la Décision", txtModelTitle: "Modèle de Calcul & Formule",
       txtF1Title: "Formule Fondamentale :", txtF1Note: "(Théorie pure, pour comprendre la tendance à l'amplification)",
       txtF2Title: "Correction Technique :", txtF2Note: "(En pratique, l'angle n'est jamais efficace à 100%)",
       txtF3Title: "Estimation Réelle :", txtF3Note: "(Pour l'analyse sur le terrain, fiez-vous à cette ligne)",
@@ -1388,7 +1388,7 @@ if ("serviceWorker" in navigator) {
       kPresets: ["Opération stable (Statique/Démo)", "Enseignement général (Semi-Dynamique)", "Opération dynamique (Rapide/Glissant)", "Personnalisé (Jugement Technique)"]
     },
     es: {
-      txtMainTitle: "Fórmula del Cabrestante de Cuerda", txtSubtitle: "Equipo Sanmu | Herramienta Didáctica de Apoyo a la Decisión", txtModelTitle: "Modelo de Cálculo y Fórmula",
+      txtMainTitle: "Estimador de fricción por vueltas Capstan", txtSubtitle: "Equipo Sanmu | Herramienta Didáctica de Apoyo a la Decisión", txtModelTitle: "Modelo de Cálculo y Fórmula",
       txtF1Title: "Fórmula Fundamental:", txtF1Note: "(Teoría pura, para entender la tendencia de amplificación)",
       txtF2Title: "Corrección Técnica:", txtF2Note: "(En la práctica, el ángulo nunca es totalmente efectivo)",
       txtF3Title: "Estimación Real:", txtF3Note: "(Para decisiones en el terreno, confíe en esta línea)",
@@ -1425,7 +1425,7 @@ if ("serviceWorker" in navigator) {
       kPresets: ["Operación estable (Estática/Demo)", "Enseñanza general (Semidinámica)", "Operación dinámica (Rápida/Resbaladiza)", "Personalizado (Juicio Técnico)"]
     },
     pt: {
-      txtMainTitle: "Fórmula de Cabrestante de Corda", txtSubtitle: "Equipe Sanmu | Ferramenta Didática de Apoio à Decisão", txtModelTitle: "Modelo de Cálculo e Fórmula",
+      txtMainTitle: "Estimador de atrito por voltas Capstan", txtSubtitle: "Equipe Sanmu | Ferramenta Didática de Apoio à Decisão", txtModelTitle: "Modelo de Cálculo e Fórmula",
       txtF1Title: "Fórmula Fundamental:", txtF1Note: "(Teoria pura, para entender a tendência de amplificação)",
       txtF2Title: "Correção Técnica:", txtF2Note: "(Na prática, o ângulo nunca é totalmente eficaz)",
       txtF3Title: "Estimativa Real:", txtF3Note: "(Para decisões no terreno, confie nesta linha)",
