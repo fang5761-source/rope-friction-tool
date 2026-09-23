@@ -918,6 +918,7 @@ const badge = document.getElementById("badge");
 
 function setSide(s){
   knownSide=s;
+  window.knownSide=s;
   btnT1.classList.toggle("active",s==="T1");
   btnT2.classList.toggle("active",s==="T2");
   
